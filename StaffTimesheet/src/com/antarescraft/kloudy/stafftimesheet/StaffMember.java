@@ -4,26 +4,28 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
+
 public class StaffMember
 {
 	private String playerName;
-	private String playerUUID;
+	private UUID playerUUID;
 	private boolean superAdmin;
 	private String clockInPermission;
-	private String monthlyTimeGoal;
+	private TimeFormat monthlyTimeGoal;
 	private String rankTitle;
-	private String hoursLoggedThisMonth;
+	private TimeFormat hoursLoggedThisMonth;
 	
 	public StaffMember(String playerName, String playerUUID, boolean superAdmin, String clockInPermission, String monthlyTimeGoal, 
 			String rankTitle, String hoursLoggedThisMonth)
 	{
 		this.playerName = playerName;
-		this.playerUUID = playerUUID;
+		this.playerUUID = UUID.fromString(playerUUID);
 		this.superAdmin = superAdmin;
 		this.clockInPermission = clockInPermission;
-		this.monthlyTimeGoal = monthlyTimeGoal;
+		this.monthlyTimeGoal = TimeFormat.parseTimeFormat(monthlyTimeGoal);
 		this.rankTitle = rankTitle;
-		this.hoursLoggedThisMonth = hoursLoggedThisMonth;
+		this.hoursLoggedThisMonth = TimeFormat.parseTimeFormat(hoursLoggedThisMonth);
 	}
 	
 	public String getPlayerName()
@@ -33,7 +35,7 @@ public class StaffMember
 	
 	public UUID getPlayerUUID()
 	{
-		return UUID.fromString(playerUUID);
+		return playerUUID;
 	}
 	
 	public boolean isSuperAdmin()
@@ -44,5 +46,26 @@ public class StaffMember
 	public String getClockInPermission()
 	{
 		return clockInPermission;
+	}
+	
+	public TimeFormat getMonthlyTimeGoal()
+	{
+		return monthlyTimeGoal;
+	}
+	
+	public String getRateTitle()
+	{
+		return rankTitle;
+	}
+	
+	public TimeFormat getHoursLoggedThisMonth()
+	{
+		return hoursLoggedThisMonth;
+	}
+	
+	public void setHoursLoggedThisMonth(TimeFormat hoursLoggedThisMonth)
+	{
+		this.hoursLoggedThisMonth = hoursLoggedThisMonth;
+		
 	}
 }

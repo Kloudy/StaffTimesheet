@@ -3,30 +3,49 @@ package com.antarescraft.kloudy.stafftimesheet.events;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.hologui.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.command.CommandHandler;
 import com.antarescraft.kloudy.plugincore.command.CommandParser;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class CommandEvent implements CommandExecutor
 {
 	private StaffTimesheet staffTimesheet;
+	private ConfigManager configManager;
 	
-	public CommandEvent(StaffTimesheet staffTimesheet)
+	public CommandEvent(StaffTimesheet staffTimesheet, ConfigManager configManager)
 	{
 		this.staffTimesheet = staffTimesheet;
+		this.configManager = configManager;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
 	{
-		return CommandParser.parseCommand(this, staffTimesheet, "staff", cmd.getName(), sender, args);
+		return CommandParser.parseCommand(this, "staff", cmd.getName(), sender, args);
 	}
 	
 	@CommandHandler(description = "Starts the shift for the staff member", mustBePlayer = true, permission = "shift.staff", subcommands = "start")
 	public void shiftStart(CommandSender sender, String[] args)
 	{
-		//TODO
+		Player player = (Player)sender;
+		
+		StaffMember staffMember = configManager.getStaffMembers().get(player.getUniqueId());
+		if(staffMember != null)
+		{
+			ShiftManager.getInstance().startShift(player);
+			
+			player.sendMessage(configManager.getShiftStartMessage());
+		}
+		else
+		{
+			sender.sendMessage(configManager.getErrorMessageNotStaff());
+		}
 	}
 	
 	@CommandHandler(description = "Ends the shift for the staff member", mustBePlayer = false, permission = "shift.staff", subcommands = "end")

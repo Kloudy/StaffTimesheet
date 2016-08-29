@@ -2,6 +2,7 @@ package com.antarescraft.kloudy.stafftimesheet;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.entity.Player;
 
@@ -70,7 +71,18 @@ public class ShiftManager
 	
 	public void endShift(Player player)
 	{
-		timeCards.remove(player.getUniqueId());
+		TimeCard timeCard = timeCards.get(player.getUniqueId());
+		if(timeCard != null)
+		{
+			long shiftEndTime = System.currentTimeMillis();
+			long elapsedMilliseconds = shiftEndTime - timeCard.getStartTime();
+			
+			long hours = TimeUnit.MILLISECONDS.toHours(elapsedMilliseconds);
+			
+			
+					
+			timeCards.remove(player.getUniqueId());
+		}
 	}
 	
 	public void endShift(String playerName)

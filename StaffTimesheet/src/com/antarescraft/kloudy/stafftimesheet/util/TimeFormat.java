@@ -5,7 +5,7 @@ package com.antarescraft.kloudy.stafftimesheet.util;
  * Max time value: 99:59:59 (99 hours, 59 minutes, 59 seconds)
  * Min time value: 00:00:00 (0 hours, 0 minutes, 0 seconds)
  */
-public class TimeFormat 
+public class TimeFormat implements Comparable<TimeFormat>
 {
 	public static final TimeFormat MAX_VALUE = parseTimeFormat("99:59:59");
 	public static final TimeFormat MIN_VALUE = parseTimeFormat("00:00:00");
@@ -87,8 +87,8 @@ public class TimeFormat
 	/**
 	 * Adds the specified timeFormat to this TimeFormat object
 	 * 
-	 * @param timeFormat
-	 * @return TimeFormat representing this instance of TimeFormat added to timeFormat
+	 * @param timeFormat the TimeFormat to be added to this TimeFormat object
+	 * @return TimeFormat representing the addition of the input timeFormat and this TimeFormat object
 	 */
 	public TimeFormat addTime(TimeFormat timeFormat)
 	{
@@ -116,10 +116,36 @@ public class TimeFormat
 		return new TimeFormat(hours, minutes, seconds);
 	}
 	
+	/**
+	 * Subtracts the specified timeFormat to this TimeFormat object
+	 * 
+	 * @param timeFormat the TimeFormat to be added to this TimeFormat object
+	 * @return TimeFormat representing the subtracting of the input timeFormat and this TimeFormat object
+	 */
 	public TimeFormat subtractTime(TimeFormat timeFormat)
 	{
-		//TODO
-		return null;
+		int hours = this.hours - timeFormat.getHours();
+		int minutes = this.minutes - timeFormat.getMinutes();
+		int seconds = this.seconds - timeFormat.getSeconds();
+		
+		if(seconds < 0)
+		{
+			minutes--;
+			seconds = 59 - seconds;
+		}
+		
+		if(minutes < 0)
+		{
+			hours--;
+			minutes = 59 - minutes;
+		}
+		
+		if(hours < 0)
+		{
+			hours = 0;
+		}
+		
+		return new TimeFormat(hours, minutes, seconds);
 	}
 	
 	/*
@@ -144,5 +170,36 @@ public class TimeFormat
 	public String toString()
 	{
 		return hours + ":" + minutes + ":" + seconds;
+	}
+
+	@Override
+	public int compareTo(TimeFormat timeFormat)
+	{
+		if(timeFormat == null)
+		{
+			throw new NullPointerException();
+		}
+		
+		if(this.hours == timeFormat.getHours() && 
+				this.minutes == timeFormat.getMinutes() && 
+				this.seconds == timeFormat.getSeconds())
+		{
+			return 0;//times are equal
+		}
+		
+		if(this.hours > timeFormat.getHours())
+		{
+			return 1;
+		}
+		else if(this.minutes > timeFormat.getMinutes())
+		{
+			return 1;
+		}
+		else if(this.seconds > timeFormat.getSeconds())
+		{
+			return 1;
+		}
+		
+		return -1;
 	}
 }

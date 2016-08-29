@@ -85,7 +85,7 @@
                   <shadedPattern>com.antarescraft.kloudy.stafftimesheet.plugincore</shadedPattern>
                 </relocation>
               </relocations>
-              <outputDirectory>D:\Tim\Spigot 1.10 Server\plugins</outputDirectory>
+              <outputDirectory>C:\Users\timke\Dropbox\Spigot 1.10 Server\plugins</outputDirectory>
             </configuration>
           </execution>
         </executions>

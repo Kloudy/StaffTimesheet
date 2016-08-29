@@ -1,3 +1,5 @@
+debug-mode: false;    #Print debug information in the console
+
 #         Messages to display to staff members when their shift starts or ends           #
 ################################################
 
@@ -43,3 +45,4 @@ staff-members:                                                                  
 ################################################
 
 error-message-negative-time: "&4Removing this much time will cause this staff member to have negative hours! Please don't remove more time than this staff member has already logged."
+error-message-not-staff: "&4You are not part of the staff members list!"             #Displayed to the player if they attempt /staff shift start but they are not configured under the 'staff-members' section of the config
