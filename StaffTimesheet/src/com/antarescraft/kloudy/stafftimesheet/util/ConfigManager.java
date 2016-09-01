@@ -100,6 +100,19 @@ public class ConfigManager
 		return staffMembers.get(player.getUniqueId());
 	}
 	
+	public StaffMember getStaffMember(String playerName)
+	{
+		for(StaffMember staffMember : staffMembers.values())
+		{
+			if(staffMember.getPlayerName().equals(playerName))
+			{
+				return staffMember;
+			}
+		}
+		
+		return null;
+	}
+	
 	public String getEndShiftAFKMessage()
 	{
 		return shiftEndAFKMessage;
