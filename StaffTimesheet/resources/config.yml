@@ -1,4 +1,4 @@
-debug-mode: false;    #Print debug information in the console
+debug-mode: false    #Print debug information in the console
 
 #         Messages to display to staff members when their shift starts or ends           #
 ################################################
@@ -16,6 +16,7 @@ shift-start-message: "&aYour shift has started. Your time is being logged!"
 shift-end-label-afk: "[&4AFK]"
 shift-end-label-disconnected: "[&4Disconnected]"
 shift-end-label-clockout: "[&4Clocked Out]"
+shift-end-plugin-disabled: "[&4Plugin Disabled]"
 
 
 
@@ -34,9 +35,9 @@ staff-members:                                                                  
     uuid: "b8a93b92-fab4-4906-b71d-309a051fb2d7"                       #Staff member uuid
     super-admin: true                                                                                          #(Default: false) (true or false) if the staff member is a super admin
     clock-in-permission: "mystaff.permission"                                       #(Default: none) pex permission group to place the staff member in during their shift. This permission is removed from the staff member when they clock out.
-    monthly-time-goal: "15:00:00"                                                               #Monthly time goal for the staff member. Time format: "hh:mm:ss
+    time-goal: "15:00:00"                                                               #Monthly time goal for the staff member. Time format: "hh:mm:ss
     rank-title: "Junior Mod"                                                                               #(Default: none) Name of staff member's rank
-    hours-logged-this-month: "00:00:00"                                                 #(Default: 0) Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
+    logged-time: "00:00:00"                                                 #(Default: 0) Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
 
 
 
@@ -46,3 +47,5 @@ staff-members:                                                                  
 
 error-message-negative-time: "&4Removing this much time will cause this staff member to have negative hours! Please don't remove more time than this staff member has already logged."
 error-message-not-staff: "&4You are not part of the staff members list!"             #Displayed to the player if they attempt /staff shift start but they are not configured under the 'staff-members' section of the config
+error-message-not-clocked-in: "&4You are not currently clocked in!"                    #Displayed if a player tries to use /staff shift end but they are not currently on the clock
+

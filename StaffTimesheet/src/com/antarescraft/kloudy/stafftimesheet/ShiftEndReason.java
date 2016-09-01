@@ -1,8 +1,9 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
-public enum ShiftEndedReason
+public enum ShiftEndReason
 {
 	AFK,
 	CLOCKED_OUT,
-	PLAYER_QUIT
+	PLAYER_QUIT,
+	PLUGIN_DISABLED
 }

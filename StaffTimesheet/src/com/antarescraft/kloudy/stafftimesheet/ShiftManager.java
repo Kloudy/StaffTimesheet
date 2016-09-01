@@ -1,16 +1,24 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 
+import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
+
+/**
+ * Shift Manager
+ *
+ * Handles the clocking in and clocking out of staff members.
+ * 
+ */
 public class ShiftManager
 {
 	private static ShiftManager instance;
 	
-	private HashMap<UUID, TimeCard> timeCards;//collection containing active staff
+	private HashMap<UUID, TimeCard> timeCards;//collection containing active staff time cards
 	
 	public static ShiftManager getInstance()
 	{
@@ -27,85 +35,59 @@ public class ShiftManager
 		timeCards = new HashMap<UUID, TimeCard>();
 	}
 	
-	public boolean onTheClock(Player player)
+	public boolean onTheClock(StaffMember staffMember)
 	{
-		return timeCards.containsKey(player.getUniqueId());
+		return timeCards.containsKey(staffMember.getUUID());
 	}
 	
-	public boolean onTheClock(String playerName)
+	public TimeCard getTimeCard(StaffMember staffMember)
 	{
-		for(TimeCard timeCard : timeCards.values())
+		return timeCards.get(staffMember.getUUID());
+	}
+	
+	public void clockIn(StaffMember staffMember)
+	{
+		if(!timeCards.containsKey(staffMember.getUUID()))
 		{
-			if(timeCard.getPlayer().getName().equals(playerName))
-			{
-				return true;
-			}
+			TimeCard timeCard = new TimeCard(staffMember, System.currentTimeMillis());
+			timeCards.put(staffMember.getUUID(), timeCard);
+			
+			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s add %s", 
+					staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
 		}
-		
-		return false;
 	}
 	
-	public TimeCard getTimeCard(Player player)
+	public void clockOut(StaffMember staffMember, ShiftEndReason shiftEndedReason)
 	{
-		return timeCards.get(player.getUniqueId());
-	}
-	
-	public TimeCard getTimeCard(String playerName)
-	{
-		for(TimeCard timeCard : timeCards.values())
-		{
-			if(timeCard.getPlayer().getName().equals(playerName))
-			{
-				return timeCard;
-			}
-		}
-		
-		return null;
-	}
-	
-	public void startShift(Player player)
-	{
-		TimeCard timeCard = new TimeCard(player, System.currentTimeMillis());
-		timeCards.put(player.getUniqueId(), timeCard);
-	}
-	
-	public void endShift(Player player)
-	{
-		TimeCard timeCard = timeCards.get(player.getUniqueId());
+		TimeCard timeCard = timeCards.get(staffMember.getUUID());
 		if(timeCard != null)
 		{
 			long shiftEndTime = System.currentTimeMillis();
 			long elapsedMilliseconds = shiftEndTime - timeCard.getStartTime();
+						
+			Duration shiftTime = Duration.ofMillis(elapsedMilliseconds);
+			staffMember.addLoggedTime(shiftTime);
 			
-			long hours = TimeUnit.MILLISECONDS.toHours(elapsedMilliseconds);
-			
-			
-					
-			timeCards.remove(player.getUniqueId());
-		}
-	}
-	
-	public void endShift(String playerName)
-	{
-		UUID playerUUID = null;
-		
-		for(TimeCard timeCard : timeCards.values())
-		{
-			if(timeCard.getPlayer().getName().equals(playerName))
+			if(StaffTimesheet.debugMode)
 			{
-				playerUUID = timeCard.getPlayer().getUniqueId();
-				break;
+				System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getTimeFormat(shiftTime));
 			}
-		}
-		
-		if(playerUUID != null)
-		{
-			timeCards.remove(playerUUID);
+			
+			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s remove %s",
+					staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
+								
+			timeCards.remove(staffMember.getUUID());
 		}
 	}
 	
-	public void logEntry()
+	public void clockOutAll(ShiftEndReason shiftEndedReason)
 	{
+		HashMap<UUID, TimeCard> tempTimeCards = new HashMap<UUID, TimeCard>(timeCards);
+		for(TimeCard timeCard : tempTimeCards.values())
+		{
+			clockOut(timeCard.getStaffMember(), shiftEndedReason);
+		}
 		
+		timeCards.clear();
 	}
 }

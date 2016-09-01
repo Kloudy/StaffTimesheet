@@ -1,21 +1,22 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
-import org.bukkit.entity.Player;
-
+/**
+ * Represents a staff member's time card
+ */
 public class TimeCard
 {
-	private Player player;
+	private StaffMember staffMember;
 	private long startTime;//milliseconds
 	
-	public TimeCard(Player player, long startTime)
+	public TimeCard(StaffMember staffMember, long startTime)
 	{
-		this.player = player;
+		this.staffMember = staffMember;
 		this.startTime = startTime;
 	}
 	
-	public Player getPlayer()
+	public StaffMember getStaffMember()
 	{
-		return player;
+		return staffMember;
 	}
 	
 	public long getStartTime()

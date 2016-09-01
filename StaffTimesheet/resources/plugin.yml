@@ -4,24 +4,24 @@ version: 1.0
 author: Kloudy
 website: www.antarescraft.com
 
-depend: [EssentialsX, PermissionsEx, HoloGUI]
+depend: [Essentials, PermissionsEx, HoloGUI]
 
 commands:
-  shift:
+  staff:
     description: used to define commands for the StaffTimesheet plugin
 
 permissions:
-  shift.*:
+  staff.*:
     description: Gives the staff member access to all commands and features
     children:
       hg.admin: true
       hg.see: true
       hg.stationary: true
 
-  shift.admin:
+  staff.admin:
     description: Gives the staff memeber access to shift admin admin commands
     default: op
 
-  shift.staff:
+  staff.shift:
     description: Gives the player the ability to use shift commands
     default: true
