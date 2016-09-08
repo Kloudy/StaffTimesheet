@@ -9,7 +9,7 @@
 	<repositories>
 	  	<repository>
 	  	  <id>Antarescraft</id>
-          <url>http://nexus.antarescraft.com/content/groups/public/</url>
+          <url>https://nexus.minefyre.com/content/groups/public/</url>
         </repository>
     </repositories>
     <dependencies>

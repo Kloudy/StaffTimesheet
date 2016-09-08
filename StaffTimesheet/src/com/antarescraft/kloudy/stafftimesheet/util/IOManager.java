@@ -1,8 +1,10 @@
 package com.antarescraft.kloudy.stafftimesheet.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.bukkit.Bukkit;
 
@@ -50,19 +52,38 @@ public class IOManager
 			try
 			{
 				logFile.createNewFile();
-				
-				FileWriter fileWriter = new FileWriter(logFile);
-				fileWriter.append(text);
-				fileWriter.close();
 			} 
 			catch (IOException e)
 			{
 				if(StaffTimesheet.debugMode) e.printStackTrace();
 				
-				MessageManager.error(Bukkit.getConsoleSender(), 
-						String.format("[%s] An error occured while attempting to create a log entry for staff member %s", 
-								StaffTimesheet.pluginName, staffMember.getPlayerName()));
+				error(staffMember);
 			}
 		}
+		
+		PrintWriter out = null;
+		try
+		{
+			FileWriter fileWriter = new FileWriter(logFile, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			out = new PrintWriter(bufferedWriter);
+			
+			out.println(text);
+			
+			out.close();
+		} 
+		catch (IOException e)
+		{
+			if(StaffTimesheet.debugMode) e.printStackTrace();
+			
+			error(staffMember);
+		}
+	}
+	
+	private static void error(StaffMember staffMember)
+	{
+		MessageManager.error(Bukkit.getConsoleSender(), 
+				String.format("[%s] An error occured while attempting to create a log entry for staff member %s", 
+						StaffTimesheet.pluginName, staffMember.getPlayerName()));
 	}
 }

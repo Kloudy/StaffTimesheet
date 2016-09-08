@@ -34,6 +34,7 @@ public class AfkStatusChangeEventListener implements Listener
 			
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			shiftManager.clockOut(staffMember, ShiftEndReason.AFK);
+			staffMember.logEntry(configManager.getShiftEndLabelAFK());
 		}
 	}
 }

@@ -21,6 +21,7 @@ public class ConfigManager
 	private String shiftEndAFKMessage;
 	private String shiftEndClockoutMessage;
 	private String shiftStartMessage;
+	private String shiftStartLabel;
 	private String shiftEndLabelAFK;
 	private String shiftEndLabelDisconnected;
 	private String shiftEndLabelClockedOut;
@@ -49,6 +50,7 @@ public class ConfigManager
 		shiftEndAFKMessage = root.getString("shift-end-afk-message", "").replace("&", "§");
 		shiftEndClockoutMessage = root.getString("shift-end-clockout-message", "").replace("&", "§");
 		shiftStartMessage = root.getString("shift-start-message", "").replace("&", "§");
+		shiftStartLabel = root.getString("shift-start-label").replace("&", "§");;
 		shiftEndLabelAFK = root.getString("shift-end-label-afk").replace("&", "§");
 		shiftEndLabelDisconnected = root.getString("shift-end-label-disconnected", "").replace("&", "§");
 		shiftEndLabelClockedOut = root.getString("shift-end-label-clocked-out", "").replace("&", "§");
@@ -62,12 +64,13 @@ public class ConfigManager
 				String playerUUID = staffMembersSection.getString(playerName + ".uuid");
 				boolean superAdmin = staffMembersSection.getBoolean(playerName + ".super-admin");
 				String clockInPermission = staffMembersSection.getString(playerName + ".clock-in-permission");
-				String timeGoal = staffMembersSection.getString(playerName + ".time-goal");
+				String timeGoal = staffMembersSection.getString(playerName + ".time-goal", "15:00:00");
 				String rankTitle = staffMembersSection.getString(playerName + ".rank-title");
-				String loggedTime = staffMembersSection.getString(playerName + ".logged-time");
+				String loggedTime = staffMembersSection.getString(playerName + ".logged-time", "00:00:00");
+				boolean startShiftOnLogin = staffMembersSection.getBoolean("start-shift-on-login", false);
 				
 				StaffMember staffMember = new StaffMember(playerName, playerUUID, superAdmin, clockInPermission,
-						timeGoal, rankTitle, loggedTime);
+						timeGoal, rankTitle, loggedTime, startShiftOnLogin);
 				
 				staffMembers.put(UUID.fromString(playerUUID), staffMember);
 			}
@@ -88,7 +91,15 @@ public class ConfigManager
 			yaml.save(configFile);
 			
 		}catch(Exception e){MessageManager.error(Bukkit.getConsoleSender(), 
-				String.format("[%s]Error saving values to the config file. Does the file still exist?", staffTimesheetPlugin.getDescription().getName()));}
+				String.format("[%s]Error saving values to the config file. Does the file still exist?", staffTimesheetPlugin.getName()));}
+	}
+	
+	private String setPlaceholders(StaffMember staffMember, String text)
+	{	
+		text = text.replace("%stafftimesheet_current-logged-time%", "(hh:mm:ss) " + staffMember.getLoggedTime());
+		text = text.replace("%stafftimesheet_time-goal%", "(hh:mm:ss) " + staffMember.getTimeGoal());
+
+		return text;
 	}
 	
 	/*
@@ -113,19 +124,24 @@ public class ConfigManager
 		return null;
 	}
 	
-	public String getEndShiftAFKMessage()
+	public String getEndShiftAFKMessage(StaffMember staffMember)
 	{
-		return shiftEndAFKMessage;
+		return setPlaceholders(staffMember, shiftEndAFKMessage);
 	}
 	
-	public String getEndShiftClockOutMessage()
+	public String getEndShiftClockOutMessage(StaffMember staffMember)
 	{
-		return shiftEndClockoutMessage;
+		return setPlaceholders(staffMember, shiftEndClockoutMessage);
 	}
 	
-	public String getShiftStartMessage()
+	public String getShiftStartMessage(StaffMember staffMember)
 	{
-		return shiftStartMessage;
+		return setPlaceholders(staffMember, shiftStartMessage);
+	}
+	
+	public String getShiftStartLabel()
+	{
+		return shiftStartLabel;
 	}
 	
 	public String getShiftEndLabelAFK()

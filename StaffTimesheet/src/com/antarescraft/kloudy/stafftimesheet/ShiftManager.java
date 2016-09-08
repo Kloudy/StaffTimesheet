@@ -59,24 +59,27 @@ public class ShiftManager
 	
 	public void clockOut(StaffMember staffMember, ShiftEndReason shiftEndedReason)
 	{
-		TimeCard timeCard = timeCards.get(staffMember.getUUID());
-		if(timeCard != null)
+		if(staffMember != null)
 		{
-			long shiftEndTime = System.currentTimeMillis();
-			long elapsedMilliseconds = shiftEndTime - timeCard.getStartTime();
-						
-			Duration shiftTime = Duration.ofMillis(elapsedMilliseconds);
-			staffMember.addLoggedTime(shiftTime);
-			
-			if(StaffTimesheet.debugMode)
+			TimeCard timeCard = timeCards.get(staffMember.getUUID());
+			if(timeCard != null)
 			{
-				System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getTimeFormat(shiftTime));
+				long shiftEndTime = System.currentTimeMillis();
+				long elapsedMilliseconds = shiftEndTime - timeCard.getStartTime();
+							
+				Duration shiftTime = Duration.ofMillis(elapsedMilliseconds);
+				staffMember.addLoggedTime(shiftTime);
+				
+				if(StaffTimesheet.debugMode)
+				{
+					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getTimeFormat(shiftTime));
+				}
+				
+				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s remove %s",
+						staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
+												
+				timeCards.remove(staffMember.getUUID());
 			}
-			
-			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s remove %s",
-					staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
-								
-			timeCards.remove(staffMember.getUUID());
 		}
 	}
 	

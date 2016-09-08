@@ -18,17 +18,19 @@ import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
 public class CommandEvent implements CommandExecutor
 {
+	private StaffTimesheet staffTimesheet;
 	private ConfigManager configManager;
 	
 	public CommandEvent(StaffTimesheet staffTimesheet, ConfigManager configManager)
 	{
+		this.staffTimesheet = staffTimesheet;
 		this.configManager = configManager;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
 	{
-		return CommandParser.parseCommand(this, "staff", cmd.getName(), sender, args);
+		return CommandParser.parseCommand(staffTimesheet, this, "staff", cmd.getName(), sender, args);
 	}
 	
 	@CommandHandler(description = "Reloads the values contained in the config file",
@@ -47,9 +49,11 @@ public class CommandEvent implements CommandExecutor
 		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember != null)
 		{
+			staffMember.logEntry(configManager.getShiftStartLabel());
+			
 			ShiftManager.getInstance().clockIn(staffMember);
 			
-			player.sendMessage(configManager.getShiftStartMessage());
+			player.sendMessage(configManager.getShiftStartMessage(staffMember));
 		}
 		else
 		{
@@ -70,7 +74,9 @@ public class CommandEvent implements CommandExecutor
 			if(shiftManager.onTheClock(staffMember))
 			{
 				shiftManager.clockOut(staffMember, ShiftEndReason.CLOCKED_OUT);
-				sender.sendMessage(configManager.getEndShiftClockOutMessage());
+				sender.sendMessage(configManager.getEndShiftClockOutMessage(staffMember));
+				
+				staffMember.logEntry(configManager.getShiftLabelClockedOut());
 			}
 			else
 			{

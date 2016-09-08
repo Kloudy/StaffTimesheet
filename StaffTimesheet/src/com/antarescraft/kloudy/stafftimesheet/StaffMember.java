@@ -20,9 +20,10 @@ public class StaffMember
 	private String rankTitle;
 	private Duration timeGoal;
 	private Duration loggedTime;
+	private boolean startShiftOnLogin;
 	
 	public StaffMember(String playerName, String playerUUID, boolean superAdmin, String clockInPermission, String timeGoal, 
-			String rankTitle, String loggedTime)
+			String rankTitle, String loggedTime, boolean startShiftOnLogin)
 	{
 		this.playerName = playerName;
 		this.playerUUID = UUID.fromString(playerUUID);
@@ -31,6 +32,7 @@ public class StaffMember
 		this.rankTitle = rankTitle;
 		this.timeGoal = TimeFormat.parseTimeFormat(timeGoal);
 		this.loggedTime = TimeFormat.parseTimeFormat(loggedTime);
+		this.startShiftOnLogin = startShiftOnLogin;
 	}
 	
 	public void addLoggedTime(Duration time)
@@ -119,5 +121,10 @@ public class StaffMember
 	public String getLoggedTime()
 	{
 		return TimeFormat.getTimeFormat(loggedTime);
+	}
+	
+	public boolean startShiftOnLogin()
+	{
+		return startShiftOnLogin;
 	}
 }
