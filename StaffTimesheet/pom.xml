@@ -98,6 +98,7 @@
         <includes>
           <include>plugin.yml</include>
           <include>config.yml</include>
+          <include>staff-members.yml</include>
         </includes>
       </resource>
     </resources>

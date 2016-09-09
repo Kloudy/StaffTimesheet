@@ -1,0 +1,18 @@
+#                                         Staff Members                                        #
+#                Use the following example format to define a staff memeber                    #
+#          You can use http://mcuuid.net/ to determine player uuids by player name             #
+################################################################################################
+
+#                                Example Staff Member Config Format                            #
+
+staff-members:  #List of staff member configurations
+
+  #Example Staff Member Config Format - Add staff members to the 'staff-members' list with the following example's format
+  Kloudy:                                                                                                                 #Staff member player name
+    uuid: "b8a93b92-fab4-4906-b71d-309a051fb2d7"  #Staff member uuid
+    super-admin: true                             #(Default: false) (true or false) if the staff member is a super admin
+    clock-in-permission: "mystaff.permission"     #(Default: none) pex permission group to place the staff member in during their shift. This permission is removed from the staff member when they clock out.
+    time-goal: "15:00:00"                         #(Default: "15:00:00") Monthly time goal for the staff member. Time format: "hh:mm:ss
+    rank-title: "Junior Mod"                      #(Default: none) Name of staff member's rank
+    logged-time: "00:00:00"                       #(Default: "00:00:00") Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
+    start-shift-on-login: false                   #(Default: false) (true or false) if the plugin should start logging staff member's time as soon as they log in

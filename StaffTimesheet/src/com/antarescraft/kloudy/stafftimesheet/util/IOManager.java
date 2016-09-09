@@ -2,10 +2,13 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
+import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
@@ -14,7 +17,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 public class IOManager 
 {	
-	public static void initFileStructure()
+	public static void initFileStructure(StaffTimesheet staffTimesheet)
 	{
 		try
 		{
@@ -22,6 +25,18 @@ public class IOManager
 			if(!folder.exists())//plugin data folder
 			{
 				folder.mkdir();
+			}
+			
+			//copy the staff-members.yml file into the plugin data folder
+			InputStream inputStream = staffTimesheet.getResource("staff-members.yml");
+			File staffMembersYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheet.getName()));
+			if(!staffMembersYmlFile.exists())
+			{
+				FileOutputStream output = new FileOutputStream(staffMembersYmlFile);
+				output.write(IOUtils.toByteArray(inputStream));
+				
+				inputStream.close();
+				output.close();
 			}
 			
 			folder = new File("plugins/" + StaffTimesheet.pluginName + "/staff_logs");

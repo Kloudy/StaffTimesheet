@@ -55,7 +55,9 @@ public class ConfigManager
 		shiftEndLabelDisconnected = root.getString("shift-end-label-disconnected", "").replace("&", "§");
 		shiftEndLabelClockedOut = root.getString("shift-end-label-clocked-out", "").replace("&", "§");
 		
-		ConfigurationSection staffMembersSection = root.getConfigurationSection("staff-members");
+		YamlConfiguration staffMembersYaml = YamlConfiguration.loadConfiguration(new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName())));
+		ConfigurationSection staffMembersSection = staffMembersYaml.getConfigurationSection("staff-members");
+		
 		if(staffMembersSection != null)
 		{
 			for(String key : staffMembersSection.getKeys(false))
@@ -85,7 +87,7 @@ public class ConfigManager
 	{
 		try
 		{	
-			File configFile = new File("plugins/" + staffTimesheetPlugin.getName() + "/config.yml");
+			File configFile = new File("plugins/" + staffTimesheetPlugin.getName() + "/staff-members.yml");
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(configFile);
 			yaml.set(path, value);
 			yaml.save(configFile);

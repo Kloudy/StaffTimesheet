@@ -25,7 +25,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 				
 		getHoloGUI().getHoloGUIPluginManager().hookHoloGUIPlugin(this);
 		
-		IOManager.initFileStructure();
+		IOManager.initFileStructure(this);
 		
 		configManager = new ConfigManager(this);
 		configManager.loadConfigValues();
