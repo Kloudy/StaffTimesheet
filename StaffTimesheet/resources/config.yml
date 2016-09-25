@@ -1,9 +1,9 @@
-debug-mode: false    #Print debug information in the console
+debug-mode: false       #Print debug information in the console
 
-log-cycle-duration: 4   #(Default: 4 weeks) Specify how many weeks are in the log cycle. Current logged hours of staff members resets after this amount of time.
+billing-period: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
                         #Log cycle reports are generated at the end of the log cycle
 
-update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin updates staff member log files
+update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin writes staff member logs to file
 
 #             Messages to display to staff members when their shift starts or ends             #
 #                                                                                              #
@@ -19,16 +19,27 @@ shift-start-message: "&aYour shift has started. Your time is being logged!"
 
 
 
+#                                  Command Result Messages                                     #
+#                                                                                              #
+#   These messages are displayed to the command invoker as a result of a command being run     #
+################################################################################################
+
+reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
+add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
+subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed 
+
+
+
+
 #                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-max-log-result-count: 25  #(Default: 25) The maximum number of logs that can be returned when querying logs within a date range. 
+max-log-range: 60         #(Default: 60) The maximum number of logs that can be returned when querying logs within a date range. 
                           #This is so that if a huge date range is put in it'll stop after a certain number of days are searched.
                           #Why this is important: 
                           #If an admin searches for logs for a staff member in range of year 2016 through year 5000, the plugin would loop
                           #through all the days in this range and collect all the logs. This would be very slow.
                           #This value ensures that the plugin will search at most a certain number of days regardless of the range input by the admin
-                          #Books can contain up to 50 pages so this value will always have a hard limit of 50 no matter what
 
 
 #                  Logbook Text Header will evaluate the following placeholders:               #
@@ -53,8 +64,12 @@ shift-end-plugin-disabled: "[&4Plugin Disabled]"  #Text to log when the plugin i
 #                                         Error Messages                                       #
 ################################################################################################
 
-error-message-negative-time: "&4You cannot remove more time than the staff member has logged!"  #Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.
-error-message-not-staff: "&4You are not a staff member!"                                        #Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml
-error-message-not-clocked-in: "&4You are not currently clocked in!"                             #Error message displayed if a player tries to use /staff shift end but they are not currently on the clock
-error-message-staff-member-does-not-exist: "&4No staff member exists with that name!"           #Error message displayed when a 
-error-message-no-staff-log: "&4Couldn't find any logs for that staff member!"                   #Error message displayed when the plugin is unable to load a staff member's logs
+error-message-negative-time: "&4You cannot remove more time than the staff member has logged!"          #Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.
+error-message-not-staff: "&4You are not a staff member!"                                                #Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml
+error-message-not-clocked-in: "&4You are not currently clocked in!"                                     #Error message displayed if a player tries to use /staff shift end but they are not currently on the clock
+error-message-staff-member-does-not-exist: "&4No staff member exists with that name!"                   #Error message displayed when an a staff command is run with a player name that doesn't belong to any staff member
+error-message-no-staff-log: "&4Couldn't find any logs for that staff member!"                           #Error message displayed when the plugin is unable to load a staff member's logs
+error-message-invalid-duration-format: "&4Invalid duration format. Please use format: hh:mm:ss"         #Error message displayed when an invalid duration format is entered from the user 
+error-message-invalid-date-format: "&4Invalid date format. Please use format: yyyy/mm/dd"               #Error message displayed when an invalid date format is entered from the user
+error-message-start-date-end-date-mismatch: "&4You entered a start date that comes after the end date!  #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date
+

@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import java.util.logging.Logger;
+
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
@@ -11,6 +13,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
 public class StaffTimesheet extends HoloGUIPlugin
 {
+	public static Logger logger;
 	public static boolean debugMode;
 	public static String pluginName;
 	
@@ -19,6 +22,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void onEnable()
 	{
+		logger = this.getLogger();
+		
 		saveDefaultConfig();
 		
 		pluginName = getName();

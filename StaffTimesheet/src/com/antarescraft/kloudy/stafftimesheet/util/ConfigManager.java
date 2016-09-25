@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
 
 public class ConfigManager
 {	
@@ -24,7 +25,10 @@ public class ConfigManager
 	private String shiftEndAFKMessage;
 	private String shiftEndClockoutMessage;
 	private String shiftStartMessage;
-	private int maxLogResultCount;
+	private String resetStaffMemberLoggedTimeMessage;
+	private String addLoggedTimeForStaffMemberMessage;
+	private String subtractLoggedTimeForStaffMemberMessage;
+	private int maxLogRange;
 	private String logbookTextHeader;
 	private String shiftStartLabel;
 	private String shiftEndLabelAFK;
@@ -33,7 +37,11 @@ public class ConfigManager
 	private String errorMessageNegativeTime;
 	private String errorMessageNotStaff;
 	private String errorMessageNotClockedIn;
+	private String errorMessageStaffMemberDoesNotExist;
 	private String errorMessageNoStaffLog;
+	private String errorMessageInvalidDurationFormat;
+	private String errorMessageInvalidDateFormat;
+	private String errorMessageStartDateEndDateMismatch;
 	private HashMap<UUID, StaffMember> staffMembers;
 	
 	public ConfigManager(StaffTimesheet staffTimesheet)
@@ -55,12 +63,26 @@ public class ConfigManager
 		
 		logCycleDuration = root.getInt("log-cycle-duration", 4);
 		
-		updateStaffLogsPeriod = TimeFormat.parseTimeFormat(root.getString("update-staff-logs-period", "00:01:00"));
+		try
+		{
+			updateStaffLogsPeriod = TimeFormat.parseTimeFormat(root.getString("update-staff-logs-period", "00:01:00"));
+		}
+		catch(InvalidDurationFormatException e)
+		{
+			this.logInvalidDurationConfigValue("update-staff-logs-period", "00:01:00");
+			try 
+			{
+				updateStaffLogsPeriod = TimeFormat.parseTimeFormat("00:01:00");
+			} catch (InvalidDurationFormatException de) {}
+		}
 		
 		shiftEndAFKMessage = root.getString("shift-end-afk-message", "").replace("&", "§");
 		shiftEndClockoutMessage = root.getString("shift-end-clockout-message", "").replace("&", "§");
 		shiftStartMessage = root.getString("shift-start-message", "").replace("&", "§");
-		maxLogResultCount = root.getInt("max-log-result-count", 25);
+		resetStaffMemberLoggedTimeMessage = root.getString("reset-staff-member-logged-time-message", "").replace("&", "§");
+		addLoggedTimeForStaffMemberMessage = root.getString("add-logged-time-for-staff-member-message", "").replace("&", "§");
+		subtractLoggedTimeForStaffMemberMessage = root.getString("subtract-logged-time-for-staff-member-message", "").replace("&", "§");
+		maxLogRange = root.getInt("max-log-range", 60);
 		logbookTextHeader = root.getString("logbook-text-header", "").replace("&", "§");
 		shiftStartLabel = root.getString("shift-start-label").replace("&", "§");;
 		shiftEndLabelAFK = root.getString("shift-end-label-afk").replace("&", "§");
@@ -73,6 +95,7 @@ public class ConfigManager
 			IOManager.initFileStructure(staffTimesheetPlugin);
 		}
 		
+		//parse staff-members.yml
 		YamlConfiguration staffMembersYaml = YamlConfiguration.loadConfiguration(staffMembersYmlFile);
 		ConfigurationSection staffMembersSection = staffMembersYaml.getConfigurationSection("staff-members");
 		
@@ -89,8 +112,43 @@ public class ConfigManager
 				String loggedTime = staffMembersSection.getString(playerName + ".logged-time", "00:00:00");
 				boolean startShiftOnLogin = staffMembersSection.getBoolean("start-shift-on-login", false);
 				
+				Duration timeGoalDuration = null;
+				Duration loggedTimeDuration = null;
+				
+				//check 'time-goal-duration' format
+				try
+				{
+					timeGoalDuration = TimeFormat.parseTimeFormat(timeGoal);
+				}
+				catch(InvalidDurationFormatException e)
+				{
+					logInvalidDurationConfigValue(playerName + ".time-goal", "15:00:00");
+					
+					try 
+					{
+						timeGoalDuration = TimeFormat.parseTimeFormat("15:00:00");
+					} catch (InvalidDurationFormatException e1) {}
+				}
+				
+				//check 'logged-time' format
+				try
+				{
+					loggedTimeDuration = TimeFormat.parseTimeFormat(loggedTime);
+				}
+				catch(InvalidDurationFormatException e)
+				{
+					logInvalidDurationConfigValue(playerName + ".logged-time", "00:00:00");
+					
+					try 
+					{
+						loggedTimeDuration = TimeFormat.parseTimeFormat("00:00:00");
+					} catch (InvalidDurationFormatException e1) {}
+				}
+				
+				
 				StaffMember staffMember = new StaffMember(playerName, playerUUID, superAdmin, clockInPermission,
-						timeGoal, rankTitle, loggedTime, startShiftOnLogin);
+						timeGoalDuration, rankTitle, loggedTimeDuration, startShiftOnLogin);
+				
 				
 				staffMembers.put(UUID.fromString(playerUUID), staffMember);
 			}
@@ -99,7 +157,17 @@ public class ConfigManager
 		errorMessageNegativeTime = root.getString("error-message-negative-time", "").replace("&", "§");
 		errorMessageNotStaff = root.getString("error-message-not-staff", "").replace("&", "§");
 		errorMessageNotClockedIn = root.getString("error-message-not-clocked-in", "").replace("&", "§");
+		errorMessageStaffMemberDoesNotExist = root.getString("error-message-staff-member-does-not-exist", "").replace("&", "§");
 		errorMessageNoStaffLog = root.getString("error-message-no-staff-log", "").replace("&", "§");
+		errorMessageInvalidDurationFormat = root.getString("error-message-invalid-duration-format", "").replace("&", "§");
+		errorMessageInvalidDateFormat = root.getString("error-message-invalid-date-format", "").replace("&", "§");
+		errorMessageStartDateEndDateMismatch = root.getString("error-message-start-date-end-date-mismatch", "").replace("&", "§");
+	}
+	
+	private void logInvalidDurationConfigValue(String property, String defaultValue)
+	{
+		StaffTimesheet.logger.warning(String.format("Invalid duration format for config property: '%s'. Using default value: '%s'. Use duration format hh:mm:ss", 
+				property, defaultValue));
 	}
 	
 	public static void writePropertyToConfigFile(String path, Object value)
@@ -117,11 +185,11 @@ public class ConfigManager
 	
 	private String setPlaceholders(StaffMember staffMember, String text)
 	{	
-		text = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTime());
-		text = text.replace("%stafftimesheet_time-goal%", staffMember.getTimeGoal());
-		text = text.replace("%stafftimesheet_staff-member-name%", staffMember.getPlayerName());
+		String setText = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTime());
+		setText = text.replace("%stafftimesheet_time-goal%", staffMember.getTimeGoal());
+		setText = text.replace("%stafftimesheet_staff-member-name%", staffMember.getPlayerName());
 		
-		return text;
+		return setText;
 	}
 	
 	/*
@@ -171,9 +239,24 @@ public class ConfigManager
 		return setPlaceholders(staffMember, shiftStartMessage);
 	}
 	
-	public int getMaxLogResultCount()
+	public String getResetStaffMemberLoggedTimeMessage()
 	{
-		return maxLogResultCount;
+		return resetStaffMemberLoggedTimeMessage;
+	}
+	
+	public String getAddLoggedTimeForStaffMemberMessage()
+	{
+		return addLoggedTimeForStaffMemberMessage;
+	}
+	
+	public String getSubtractLoggedTimeForStaffMemberMessage()
+	{
+		return subtractLoggedTimeForStaffMemberMessage;
+	}
+	
+	public int getMaxLogRange()
+	{
+		return maxLogRange;
 	}
 	
 	public String getLogbookTextHeader()
@@ -216,8 +299,28 @@ public class ConfigManager
 		return errorMessageNotClockedIn;
 	}
 	
+	public String getErrorMessageStaffMemberDoesNotExist()
+	{
+		return errorMessageStaffMemberDoesNotExist;
+	}
+	
 	public String getErrorMessageNoStaffLog()
 	{
 		return errorMessageNoStaffLog;
+	}
+	
+	public String getErrorMessageInvalidDurationFormat()
+	{
+		return errorMessageInvalidDurationFormat;
+	}
+	
+	public String getErrorMessageInvalidDateFormat()
+	{
+		return errorMessageInvalidDateFormat;
+	}
+	
+	public String getErrorMessageStartDateEndDateMismatch()
+	{
+		return errorMessageStartDateEndDateMismatch;
 	}
 }

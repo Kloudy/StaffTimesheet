@@ -42,7 +42,7 @@ public class StaffMemberLogbook
 	 * @param player the player to whom the logbook will be given
 	 * @return ArrayList<Log> containing all the logs in this StaffMemberLogbook's startDate and endDate
 	 */
-	public void getLogbook(final StaffTimesheet staffTimesheet, final Player player)
+	public void getLogbook(final StaffTimesheet staffTimesheet, final Player player, final int maxLogRange)
 	{
 		new BukkitRunnable()//Async thread
 		{
@@ -53,16 +53,19 @@ public class StaffMemberLogbook
 				
 				//iterate over date range and add collect log files in the range
 				Calendar date = (Calendar)startDate.clone();
-				while(date.compareTo(endDate) <= 0)
+				int count = 0;
+				while(date.compareTo(endDate) <= 0 && count < maxLogRange)
 				{
 					ArrayList<String> lines = IOManager.getLogFile(staffMember, date);
-					System.out.println(lines);
+					
 					if(lines != null)
 					{
 						logs.add(new Log(date, lines));
 					}
 					
 					date.add(Calendar.DATE, 1);
+					
+					count++;
 				}
 				
 				new BukkitRunnable()//Sync thread

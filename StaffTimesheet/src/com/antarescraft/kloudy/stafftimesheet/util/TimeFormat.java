@@ -5,13 +5,21 @@ import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDateFormatException;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
+
 /**
  * Utility class for doing operations on date time formats
  */
 public class TimeFormat
 {
-	public static Duration parseTimeFormat(String timeFormat)
+	public static Duration parseTimeFormat(String timeFormat) throws InvalidDurationFormatException
 	{
+		if(!timeFormat.matches("\\d{2}:\\d{2}:\\d{2}"))//check format is ##:##:##
+		{
+			throw new InvalidDurationFormatException();
+		}
+		
 		Duration time = Duration.ZERO;
 		
 		String[] timeTokens = timeFormat.split(":");
@@ -23,7 +31,10 @@ public class TimeFormat
 				time = time.plusMinutes(Long.parseLong(timeTokens[1]));
 				time = time.plusSeconds(Long.parseLong(timeTokens[2]));
 			}
-			catch(NumberFormatException e){}
+			catch(NumberFormatException e)
+			{
+				throw new InvalidDurationFormatException();
+			}
 		}
 
 		return time;
@@ -44,8 +55,13 @@ public class TimeFormat
 		return simpleDateFormat.format(date.getTime());
 	}
 	
-	public static Calendar parseDateFormat(String dateFormat)
+	public static Calendar parseDateFormat(String dateFormat) throws InvalidDateFormatException
 	{
+		if(!dateFormat.matches("\\d{4}/\\d{2}/\\d{2}"))//check format is ####/##/##
+		{
+			throw new InvalidDateFormatException();
+		}
+		
 		String[] dateTokens = dateFormat.split("/");
 		
 		try
@@ -53,6 +69,11 @@ public class TimeFormat
 			int year = Integer.parseInt(dateTokens[0]);
 			int month = Integer.parseInt(dateTokens[1]);
 			int date = Integer.parseInt(dateTokens[2]);
+			
+			if(year <= 0 || month <= 0 || month > 12 || date <= 0 || date > 31)//check for bad input
+			{
+				throw new InvalidDateFormatException();
+			}
 						
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(year, month-1, date);
@@ -61,10 +82,8 @@ public class TimeFormat
 		}
 		catch(NumberFormatException e)
 		{
-			//TODO
+			throw new InvalidDateFormatException();
 		}
-		
-		return null;
 	}
 	
 	public static String generateTimestamp(String dateFormat)

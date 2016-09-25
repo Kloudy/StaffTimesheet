@@ -16,6 +16,8 @@ import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDateFormatException;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
@@ -94,36 +96,43 @@ public class CommandEvent implements CommandExecutor
 	
 	@CommandHandler(description = "Resets a staff memeber's time for the current month", 
 			mustBePlayer = true, permission = "shift.admin", subcommands = "staff manage <player_name> reset")
-	public void shiftAdminManageReset(CommandSender sender, String[] args)
+	public void resetStaffMemberTime(CommandSender sender, String[] args)
 	{
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
 		if(staffMember != null)
 		{
 			staffMember.resetLoggedTime();
 			
-			//TODO add message
+			sender.sendMessage(configManager.getResetStaffMemberLoggedTimeMessage());
 		}
 		else
 		{
-			//TODO
+			sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
 		}
 	}
 	
 	@CommandHandler(description = "Adds the specified amount of time to the specified staff member's time for the current month with format: [hh:mm:ss]", 
 			mustBePlayer = true, permission = "shift.admin", subcommands = "staff manage <player_name> add <formatted_time>")
-	public void shiftAdminManageAddTime(CommandSender sender, String[] args)
+	public void addStaffMemberTime(CommandSender sender, String[] args)
 	{
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
 		if(staffMember != null)
 		{
-			Duration time = TimeFormat.parseTimeFormat(args[4]);
-			staffMember.addLoggedTime(time);
-			
-			//TODO add message
+			try
+			{
+				Duration time = TimeFormat.parseTimeFormat(args[4]);
+				staffMember.addLoggedTime(time);
+				
+				sender.sendMessage(configManager.getAddLoggedTimeForStaffMemberMessage());
+			}
+			catch(InvalidDurationFormatException e)
+			{
+				sender.sendMessage(configManager.getErrorMessageInvalidDurationFormat());
+			}
 		}
 		else
 		{
-			//TODO add message
+			sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
 		}
 	}
 	
@@ -134,28 +143,51 @@ public class CommandEvent implements CommandExecutor
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
 		if(staffMember != null)
 		{
-			Duration time = TimeFormat.parseTimeFormat(args[4]);
-			staffMember.subtractLoggedTime(time);
-			
-			//TODO add message
+			try
+			{
+				Duration time = TimeFormat.parseTimeFormat(args[4]);
+				staffMember.subtractLoggedTime(time);
+				
+				sender.sendMessage(configManager.getSubtractLoggedTimeForStaffMemberMessage());
+			}
+			catch(InvalidDurationFormatException e)
+			{
+				sender.sendMessage(configManager.getErrorMessageInvalidDurationFormat());
+			}
 		}
 		else
 		{
-			//TODO add message
+			sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
 		}
 	}
 	
-	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "logs <staff_member_player_name> <start_date> <end_date>")
+	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd. If no end date is specified the end date becomes the current date", 
+			mustBePlayer = true, permission = "shift.admin", subcommands = "logs <staff_member_player_name> <start_date> [end_date]")
 	public void staffLogbook(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
 		
-		Calendar startDate = TimeFormat.parseDateFormat(args[2]);
-		Calendar endDate = TimeFormat.parseDateFormat(args[3]);
+		Calendar startDate = null;
+		Calendar endDate = null;
 		
-		//TODO - add checks for correct date format
-		
+		try
+		{
+			startDate = TimeFormat.parseDateFormat(args[2]);
+			
+			if(args.length == 2)//no end date specified, make the end date be today
+			{
+				endDate = Calendar.getInstance();
+			}
+			else
+			{
+				endDate = TimeFormat.parseDateFormat(args[3]);
+			}
+		}
+		catch(InvalidDateFormatException e)
+		{
+			sender.sendMessage(configManager.getErrorMessageInvalidDateFormat());
+		}
+				
 		if(startDate.compareTo(endDate) <= 0)
 		{
 			StaffMember staffMember = configManager.getStaffMember(args[1]);
@@ -164,16 +196,16 @@ public class CommandEvent implements CommandExecutor
 				MessageManager.info(sender, "Loading staff member log files...");
 				
 				StaffMemberLogbook logbook = new StaffMemberLogbook(staffMember, startDate, endDate);
-				logbook.getLogbook(staffTimesheet, player);
+				logbook.getLogbook(staffTimesheet, player, configManager.getMaxLogRange());
 			}
 			else
 			{
-				sender.sendMessage(configManager.getErrorMessageNotStaff());
+				sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
 			}
 		}
 		else
 		{
-			//TODO - start date greater than end date error
+			sender.sendMessage(configManager.getErrorMessageStartDateEndDateMismatch());
 		}
 	}
 }

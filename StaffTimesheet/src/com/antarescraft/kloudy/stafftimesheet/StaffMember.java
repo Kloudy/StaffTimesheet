@@ -22,17 +22,17 @@ public class StaffMember
 	private Duration loggedTime;
 	private boolean startShiftOnLogin;
 	
-	public StaffMember(String playerName, String playerUUID, boolean superAdmin, String clockInPermission, String timeGoal, 
-			String rankTitle, String loggedTime, boolean startShiftOnLogin)
+	public StaffMember(String playerName, String playerUUID, boolean superAdmin, String clockInPermission, Duration timeGoal, 
+			String rankTitle, Duration loggedTime, boolean startShiftOnLogin)
 	{
 		this.playerName = playerName;
 		this.playerUUID = UUID.fromString(playerUUID);
 		this.superAdmin = superAdmin;
 		this.clockInPermission = clockInPermission;
 		this.rankTitle = rankTitle;
-		this.timeGoal = TimeFormat.parseTimeFormat(timeGoal);
-		this.loggedTime = TimeFormat.parseTimeFormat(loggedTime);
 		this.startShiftOnLogin = startShiftOnLogin;
+		this.timeGoal = timeGoal;
+		this.loggedTime = loggedTime;
 	}
 	
 	public void addLoggedTime(Duration time)
