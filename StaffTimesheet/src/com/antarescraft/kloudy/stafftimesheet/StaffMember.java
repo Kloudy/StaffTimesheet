@@ -108,7 +108,7 @@ public class StaffMember
 		return clockInPermission;
 	}
 	
-	public String getRateTitle()
+	public String getRankTitle()
 	{
 		return rankTitle;
 	}

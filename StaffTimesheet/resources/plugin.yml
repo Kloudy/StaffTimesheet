@@ -19,7 +19,7 @@ permissions:
       hg.stationary: true
 
   staff.admin:
-    description: Gives the staff memeber access to shift admin admin commands
+    description: Gives the staff member access to shift admin commands
     default: op
 
   staff.shift:

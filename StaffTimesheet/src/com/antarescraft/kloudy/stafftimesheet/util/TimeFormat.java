@@ -38,6 +38,35 @@ public class TimeFormat
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
 	
+	public static String getDateFormat(Calendar date)
+	{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		return simpleDateFormat.format(date.getTime());
+	}
+	
+	public static Calendar parseDateFormat(String dateFormat)
+	{
+		String[] dateTokens = dateFormat.split("/");
+		
+		try
+		{
+			int year = Integer.parseInt(dateTokens[0]);
+			int month = Integer.parseInt(dateTokens[1]);
+			int date = Integer.parseInt(dateTokens[2]);
+						
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month-1, date);
+			
+			return calendar;
+		}
+		catch(NumberFormatException e)
+		{
+			//TODO
+		}
+		
+		return null;
+	}
+	
 	public static String generateTimestamp(String dateFormat)
 	{
 		Calendar calendar = Calendar.getInstance();

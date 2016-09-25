@@ -7,6 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
@@ -50,7 +54,7 @@ public class IOManager
 	
 	public static void saveLogEntry(StaffMember staffMember, String text)
 	{	
-		String timeFormat = TimeFormat.generateTimestamp("MM-dd-yyyy");
+		String timeFormat = TimeFormat.generateTimestamp("yyyy-MM-dd");
 		
 		File staffMemberFolder = new File(String.format("plugins/%s/staff_logs/%s", 
 				StaffTimesheet.pluginName, staffMember.getPlayerName()));
@@ -93,6 +97,32 @@ public class IOManager
 			
 			error(staffMember);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param staffTimesheet
+	 * @param staffMember
+	 * @return an ArrayList of the lines in the log file for the specified staff member
+	 */
+	public static ArrayList<String> getLogFile(StaffMember staffMember, Calendar date)
+	{
+		File logFile = new File(String.format("plugins/%s/staff_logs/%s/%s.txt", 
+				StaffTimesheet.pluginName, staffMember.getPlayerName(), TimeFormat.getDateFormat(date).replace("/", "-")));
+		
+		if(logFile.exists())
+		{ 
+			try 
+			{
+				return (ArrayList<String>)Files.readAllLines(logFile.toPath(), StandardCharsets.UTF_16);
+			} 
+			catch (IOException e)
+			{
+				if(StaffTimesheet.debugMode) e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 	
 	private static void error(StaffMember staffMember)

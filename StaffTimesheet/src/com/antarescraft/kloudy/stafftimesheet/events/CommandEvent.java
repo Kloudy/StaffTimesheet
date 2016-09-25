@@ -1,17 +1,20 @@
 package com.antarescraft.kloudy.stafftimesheet.events;
 
 import java.time.Duration;
+import java.util.Calendar;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.hologui.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.command.CommandHandler;
 import com.antarescraft.kloudy.plugincore.command.CommandParser;
 import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
@@ -142,10 +145,35 @@ public class CommandEvent implements CommandExecutor
 		}
 	}
 	
-	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log", 
-			mustBePlayer = false, permission = "shift.admin", subcommands = "staff log <staff_member_player_name>")
-	public void shiftAdminTimeCard(CommandSender sender, String[] args)
+	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd", 
+			mustBePlayer = true, permission = "shift.admin", subcommands = "logs <staff_member_player_name> <start_date> <end_date>")
+	public void staffLogbook(CommandSender sender, String[] args)
 	{
-		//TODO
+		Player player = (Player)sender;
+		
+		Calendar startDate = TimeFormat.parseDateFormat(args[2]);
+		Calendar endDate = TimeFormat.parseDateFormat(args[3]);
+		
+		//TODO - add checks for correct date format
+		
+		if(startDate.compareTo(endDate) <= 0)
+		{
+			StaffMember staffMember = configManager.getStaffMember(args[1]);
+			if(staffMember != null)
+			{
+				MessageManager.info(sender, "Loading staff member log files...");
+				
+				StaffMemberLogbook logbook = new StaffMemberLogbook(staffMember, startDate, endDate);
+				logbook.getLogbook(staffTimesheet, player);
+			}
+			else
+			{
+				sender.sendMessage(configManager.getErrorMessageNotStaff());
+			}
+		}
+		else
+		{
+			//TODO - start date greater than end date error
+		}
 	}
 }

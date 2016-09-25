@@ -1,6 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.util;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -18,9 +19,13 @@ public class ConfigManager
 {	
 	private static StaffTimesheet staffTimesheetPlugin;
 	
+	private int logCycleDuration;
+	private Duration updateStaffLogsPeriod;
 	private String shiftEndAFKMessage;
 	private String shiftEndClockoutMessage;
 	private String shiftStartMessage;
+	private int maxLogResultCount;
+	private String logbookTextHeader;
 	private String shiftStartLabel;
 	private String shiftEndLabelAFK;
 	private String shiftEndLabelDisconnected;
@@ -28,6 +33,7 @@ public class ConfigManager
 	private String errorMessageNegativeTime;
 	private String errorMessageNotStaff;
 	private String errorMessageNotClockedIn;
+	private String errorMessageNoStaffLog;
 	private HashMap<UUID, StaffMember> staffMembers;
 	
 	public ConfigManager(StaffTimesheet staffTimesheet)
@@ -47,15 +53,27 @@ public class ConfigManager
 		
 		StaffTimesheet.debugMode = root.getBoolean("debug-mode", false);
 		
+		logCycleDuration = root.getInt("log-cycle-duration", 4);
+		
+		updateStaffLogsPeriod = TimeFormat.parseTimeFormat(root.getString("update-staff-logs-period", "00:01:00"));
+		
 		shiftEndAFKMessage = root.getString("shift-end-afk-message", "").replace("&", "§");
 		shiftEndClockoutMessage = root.getString("shift-end-clockout-message", "").replace("&", "§");
 		shiftStartMessage = root.getString("shift-start-message", "").replace("&", "§");
+		maxLogResultCount = root.getInt("max-log-result-count", 25);
+		logbookTextHeader = root.getString("logbook-text-header", "").replace("&", "§");
 		shiftStartLabel = root.getString("shift-start-label").replace("&", "§");;
 		shiftEndLabelAFK = root.getString("shift-end-label-afk").replace("&", "§");
 		shiftEndLabelDisconnected = root.getString("shift-end-label-disconnected", "").replace("&", "§");
 		shiftEndLabelClockedOut = root.getString("shift-end-label-clocked-out", "").replace("&", "§");
 		
-		YamlConfiguration staffMembersYaml = YamlConfiguration.loadConfiguration(new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName())));
+		File staffMembersYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName()));
+		if(!staffMembersYmlFile.exists())
+		{
+			IOManager.initFileStructure(staffTimesheetPlugin);
+		}
+		
+		YamlConfiguration staffMembersYaml = YamlConfiguration.loadConfiguration(staffMembersYmlFile);
 		ConfigurationSection staffMembersSection = staffMembersYaml.getConfigurationSection("staff-members");
 		
 		if(staffMembersSection != null)
@@ -81,6 +99,7 @@ public class ConfigManager
 		errorMessageNegativeTime = root.getString("error-message-negative-time", "").replace("&", "§");
 		errorMessageNotStaff = root.getString("error-message-not-staff", "").replace("&", "§");
 		errorMessageNotClockedIn = root.getString("error-message-not-clocked-in", "").replace("&", "§");
+		errorMessageNoStaffLog = root.getString("error-message-no-staff-log", "").replace("&", "§");
 	}
 	
 	public static void writePropertyToConfigFile(String path, Object value)
@@ -98,9 +117,10 @@ public class ConfigManager
 	
 	private String setPlaceholders(StaffMember staffMember, String text)
 	{	
-		text = text.replace("%stafftimesheet_current-logged-time%", "(hh:mm:ss) " + staffMember.getLoggedTime());
-		text = text.replace("%stafftimesheet_time-goal%", "(hh:mm:ss) " + staffMember.getTimeGoal());
-
+		text = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTime());
+		text = text.replace("%stafftimesheet_time-goal%", staffMember.getTimeGoal());
+		text = text.replace("%stafftimesheet_staff-member-name%", staffMember.getPlayerName());
+		
 		return text;
 	}
 	
@@ -126,6 +146,16 @@ public class ConfigManager
 		return null;
 	}
 	
+	public int getLogCycleDuration()
+	{
+		return logCycleDuration;
+	}
+	
+	public Duration getUpdateStaffLogsPeriod()
+	{
+		return updateStaffLogsPeriod;
+	}
+	
 	public String getEndShiftAFKMessage(StaffMember staffMember)
 	{
 		return setPlaceholders(staffMember, shiftEndAFKMessage);
@@ -139,6 +169,16 @@ public class ConfigManager
 	public String getShiftStartMessage(StaffMember staffMember)
 	{
 		return setPlaceholders(staffMember, shiftStartMessage);
+	}
+	
+	public int getMaxLogResultCount()
+	{
+		return maxLogResultCount;
+	}
+	
+	public String getLogbookTextHeader()
+	{
+		return logbookTextHeader;
 	}
 	
 	public String getShiftStartLabel()
@@ -174,5 +214,10 @@ public class ConfigManager
 	public String getErrorMessageNotClockedIn()
 	{
 		return errorMessageNotClockedIn;
+	}
+	
+	public String getErrorMessageNoStaffLog()
+	{
+		return errorMessageNoStaffLog;
 	}
 }

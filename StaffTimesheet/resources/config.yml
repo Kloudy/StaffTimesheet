@@ -1,23 +1,51 @@
 debug-mode: false    #Print debug information in the console
 
+log-cycle-duration: 4   #(Default: 4 weeks) Specify how many weeks are in the log cycle. Current logged hours of staff members resets after this amount of time.
+                        #Log cycle reports are generated at the end of the log cycle
+
+update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin updates staff member log files
+
 #             Messages to display to staff members when their shift starts or ends             #
+#                                                                                              #
+#                   These messages will evaluate the following placeholders:                   #
+#   %stafftimesheet_current-logged-time% => Time staff member logged in this billing period    #
+#     %stafftimesheet_time-goal% => Time goal for the staff member in this billing period      #
 ################################################################################################
 
-shift-end-afk-message: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-hours%. Your Monthly Goal: %stafftimesheet_time-goal%."
+shift-end-afk-message: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
 shift-end-clockout-message: "&a Shift ended. Your time has been logged! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
 shift-start-message: "&aYour shift has started. Your time is being logged!"
 
 
 
 
-#                         Shift end labels for use in the staff logbooks                       #
+#                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-shift-start-label: "[&aClocked In]"
-shift-end-label-afk: "[&4AFK]"
-shift-end-label-disconnected: "[&4Disconnected]"
-shift-end-label-clockout: "[&4Clocked Out]"
-shift-end-plugin-disabled: "[&4Plugin Disabled]"
+max-log-result-count: 25  #(Default: 25) The maximum number of logs that can be returned when querying logs within a date range. 
+                          #This is so that if a huge date range is put in it'll stop after a certain number of days are searched.
+                          #Why this is important: 
+                          #If an admin searches for logs for a staff member in range of year 2016 through year 5000, the plugin would loop
+                          #through all the days in this range and collect all the logs. This would be very slow.
+                          #This value ensures that the plugin will search at most a certain number of days regardless of the range input by the admin
+                          #Books can contain up to 50 pages so this value will always have a hard limit of 50 no matter what
+
+
+#                  Logbook Text Header will evaluate the following placeholders:               #
+#           %stafftimesheet_staff-member-name% => Player name of the staff member              #
+#   %stafftimesheet_current-logged-time% => Time staff member logged in this billing period    #
+#     %stafftimesheet_time-goal% => Time goal for the staff member in this billing period      #
+################################################################################################                                                  
+logbook-text-header: "&a&l%stafftimesheet_staff-member-name% Logbook"  #Header text displayed on the first line of a staff member log book
+
+
+#Log Book Event Labels#
+
+shift-start-label: "[&aClocked In]"               #Text to log when the staff member starts their shift
+shift-end-label-afk: "[&4AFK]"                    #Text to log when the staff member goes AFK
+shift-end-label-disconnected: "[&4Disconnected]"  #Text to log when the staff member disconnects from the server
+shift-end-label-clockout: "[&4Clocked Out]"       #Text to log when the staff member clocks out
+shift-end-plugin-disabled: "[&4Plugin Disabled]"  #Text to log when the plugin is disabled
 
 
 
@@ -25,7 +53,8 @@ shift-end-plugin-disabled: "[&4Plugin Disabled]"
 #                                         Error Messages                                       #
 ################################################################################################
 
-error-message-negative-time: "&4Removing this much time will cause this staff member to have negative hours! Please don't remove more time than this staff member has already logged."
-error-message-not-staff: "&4You are not part of the staff members list!"  #Displayed to the player if they attempt /staff shift start but they are not configured under the 'staff-members' section of the config
-error-message-not-clocked-in: "&4You are not currently clocked in!"       #Displayed if a player tries to use /staff shift end but they are not currently on the clock
-error-message-staff-member-does-not-exist: "&4No staff member exists with that name!"
+error-message-negative-time: "&4You cannot remove more time than the staff member has logged!"  #Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.
+error-message-not-staff: "&4You are not a staff member!"                                        #Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml
+error-message-not-clocked-in: "&4You are not currently clocked in!"                             #Error message displayed if a player tries to use /staff shift end but they are not currently on the clock
+error-message-staff-member-does-not-exist: "&4No staff member exists with that name!"           #Error message displayed when a 
+error-message-no-staff-log: "&4Couldn't find any logs for that staff member!"                   #Error message displayed when the plugin is unable to load a staff member's logs
