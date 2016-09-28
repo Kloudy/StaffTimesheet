@@ -2,7 +2,9 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -16,6 +18,8 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class ConfigManager
 {	
 	private static StaffTimesheet staffTimesheetPlugin;
@@ -28,8 +32,11 @@ public class ConfigManager
 	private String resetStaffMemberLoggedTimeMessage;
 	private String addLoggedTimeForStaffMemberMessage;
 	private String subtractLoggedTimeForStaffMemberMessage;
+	private String loadingStaffMemberLogbookMessage;
+	private String loadedStaffMemberLogbookMessage;
 	private int maxLogRange;
 	private String logbookTextHeader;
+	private List<String> logbookLoreText;
 	private String shiftStartLabel;
 	private String shiftEndLabelAFK;
 	private String shiftEndLabelDisconnected;
@@ -82,12 +89,20 @@ public class ConfigManager
 		resetStaffMemberLoggedTimeMessage = root.getString("reset-staff-member-logged-time-message", "").replace("&", "§");
 		addLoggedTimeForStaffMemberMessage = root.getString("add-logged-time-for-staff-member-message", "").replace("&", "§");
 		subtractLoggedTimeForStaffMemberMessage = root.getString("subtract-logged-time-for-staff-member-message", "").replace("&", "§");
-		maxLogRange = root.getInt("max-log-range", 60);
+		loadingStaffMemberLogbookMessage = root.getString("loading-staff-member-logbook-message", "").replace("&", "§");
+		loadedStaffMemberLogbookMessage = root.getString("loaded-staff-member-logbook-message", "").replace("&", "§");
+		maxLogRange = root.getInt("max-log-range", 365);
 		logbookTextHeader = root.getString("logbook-text-header", "").replace("&", "§");
+		logbookLoreText = root.getStringList("logbook-lore-text");
 		shiftStartLabel = root.getString("shift-start-label").replace("&", "§");;
 		shiftEndLabelAFK = root.getString("shift-end-label-afk").replace("&", "§");
 		shiftEndLabelDisconnected = root.getString("shift-end-label-disconnected", "").replace("&", "§");
 		shiftEndLabelClockedOut = root.getString("shift-end-label-clocked-out", "").replace("&", "§");
+		
+		for(String loreTextLine : logbookLoreText)
+		{
+			loreTextLine = loreTextLine.replace("&", "§");
+		}
 		
 		File staffMembersYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName()));
 		if(!staffMembersYmlFile.exists())
@@ -254,6 +269,16 @@ public class ConfigManager
 		return subtractLoggedTimeForStaffMemberMessage;
 	}
 	
+	public String getLoadingStaffMemberLogbookMessage()
+	{
+		return loadingStaffMemberLogbookMessage;
+	}
+	
+	public String getLoadedStaffMemberLogbookMessage()
+	{
+		return loadedStaffMemberLogbookMessage;
+	}
+	
 	public int getMaxLogRange()
 	{
 		return maxLogRange;
@@ -262,6 +287,19 @@ public class ConfigManager
 	public String getLogbookTextHeader()
 	{
 		return logbookTextHeader;
+	}
+	
+	public List<String> getLogbookLoreText(StaffMember staffMember)
+	{
+		ArrayList<String> setLogbookLoreText = new ArrayList<String>();
+		for(String loreTextLine : setLogbookLoreText)
+		{
+			String line = ChatColor.translateAlternateColorCodes('&', loreTextLine);
+			line = setPlaceholders(staffMember, loreTextLine);
+			setLogbookLoreText.add(line);
+		}
+		
+		return setLogbookLoreText;
 	}
 	
 	public String getShiftStartLabel()

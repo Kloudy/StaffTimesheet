@@ -27,6 +27,8 @@ shift-start-message: "&aYour shift has started. Your time is being logged!"
 reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
 add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
 subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed 
+loading-staff-member-logbook-message: "&6Fetching staff member logbook..."                         #Message displayed after command /staff logbook <player_name> <start_date> [end_date] when the plugin starts querying the log files
+loaded-staff-member-logbook-message: "&aSuccessfully loaded logbook!"                              #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
 
 
 
@@ -34,7 +36,7 @@ subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time f
 #                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-max-log-range: 60         #(Default: 60) The maximum number of logs that can be returned when querying logs within a date range. 
+max-log-range: 365        #(Default: 365) The maximum number of logs that can be returned when querying logs within a date range. 
                           #This is so that if a huge date range is put in it'll stop after a certain number of days are searched.
                           #Why this is important: 
                           #If an admin searches for logs for a staff member in range of year 2016 through year 5000, the plugin would loop
@@ -43,12 +45,17 @@ max-log-range: 60         #(Default: 60) The maximum number of logs that can be 
 
 
 #                  Logbook Text Header will evaluate the following placeholders:               #
-#           %stafftimesheet_staff-member-name% => Player name of the staff member              #
-#   %stafftimesheet_current-logged-time% => Time staff member logged in this billing period    #
-#     %stafftimesheet_time-goal% => Time goal for the staff member in this billing period      #
+#                                                                                              #
+#%stafftimesheet_staff-member-name%    => Player name of the staff member                      #
+#%stafftimesheet_current-logged-time%  => Time staff member logged in this billing period      #
+#%stafftimesheet_time-goal%            => Time goal for the staff member in this billing period#
+#%stafftimesheet_percent_time_logged%  => The percentage of the staff member's time goal logged#
 ################################################################################################                                                  
-logbook-text-header: "&a&l%stafftimesheet_staff-member-name% Logbook"  #Header text displayed on the first line of a staff member log book
 
+logbook-text-header: "&a&l%stafftimesheet_staff-member-name% Logbook"  #Header text displayed on the first line of a staff member log book
+logbook-lore-text:                                                     #A collection of strings to display in the logbook lore
+  - "Staff Logbook: %stafftimesheet_staff-member-name%"
+  - "Time Goal: %staffmember_percent_time_logged%% logged"
 
 #Log Book Event Labels#
 
@@ -71,5 +78,5 @@ error-message-staff-member-does-not-exist: "&4No staff member exists with that n
 error-message-no-staff-log: "&4Couldn't find any logs for that staff member!"                           #Error message displayed when the plugin is unable to load a staff member's logs
 error-message-invalid-duration-format: "&4Invalid duration format. Please use format: hh:mm:ss"         #Error message displayed when an invalid duration format is entered from the user 
 error-message-invalid-date-format: "&4Invalid date format. Please use format: yyyy/mm/dd"               #Error message displayed when an invalid date format is entered from the user
-error-message-start-date-end-date-mismatch: "&4You entered a start date that comes after the end date!  #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date
+error-message-start-date-end-date-mismatch: "&4You entered a start date that comes after the end date!" #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date
 

@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -114,7 +113,7 @@ public class IOManager
 		{ 
 			try 
 			{
-				return (ArrayList<String>)Files.readAllLines(logFile.toPath(), StandardCharsets.UTF_16);
+				return (ArrayList<String>)Files.readAllLines(logFile.toPath());
 			} 
 			catch (IOException e)
 			{

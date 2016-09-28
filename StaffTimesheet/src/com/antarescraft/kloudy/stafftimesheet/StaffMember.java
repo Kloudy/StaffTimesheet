@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.UUID;
 
@@ -86,6 +88,21 @@ public class StaffMember
 		}
 		
 		return player;
+	}
+	
+	public double getPercentageTimeCompleted()
+	{
+		long loggedTimeSeconds = loggedTime.getSeconds();
+		long timeGoalSeconds = timeGoal.getSeconds();
+		int deltaTime = (int)(timeGoalSeconds - loggedTimeSeconds);
+		double percentageCompleted = deltaTime / timeGoalSeconds;
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		double percent = Double.parseDouble(df.format(percentageCompleted));
+		if(percent > 1) percent = 1;
+		
+		return percent * 100;
 	}
 	
 	public String getPlayerName()

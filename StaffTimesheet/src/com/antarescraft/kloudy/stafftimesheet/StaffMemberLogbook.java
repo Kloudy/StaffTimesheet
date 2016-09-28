@@ -42,7 +42,7 @@ public class StaffMemberLogbook
 	 * @param player the player to whom the logbook will be given
 	 * @return ArrayList<Log> containing all the logs in this StaffMemberLogbook's startDate and endDate
 	 */
-	public void getLogbook(final StaffTimesheet staffTimesheet, final Player player, final int maxLogRange)
+	public void getLogbook(final StaffTimesheet staffTimesheet, final Player player, final int maxLogRange, final String loadedStaffMemberLogbookMessage)
 	{
 		new BukkitRunnable()//Async thread
 		{
@@ -80,6 +80,7 @@ public class StaffMemberLogbook
 						
 						ArrayList<String> loreStrings = new ArrayList<String>();
 						loreStrings.add(TimeFormat.getDateFormat(startDate) + " - " + TimeFormat.getDateFormat(endDate));
+						loreStrings.add(staffMember.getPercentageTimeCompleted() + "% of time goal logged");
 						bookMeta.setLore(loreStrings);
 						
 						ArrayList<String> bookPages = new ArrayList<String>();
@@ -91,7 +92,11 @@ public class StaffMemberLogbook
 							Log log = logs.get(i);
 							
 							StringBuilder strBuilder = new StringBuilder();
-							strBuilder.append("Date: " + TimeFormat.getDateFormat(log.getDate()));
+							strBuilder.append("Date: " + TimeFormat.getDateFormat(log.getDate()) + "\n");
+							for(String line : log.getLines())
+							{
+								strBuilder.append(line + "\n");
+							}
 							
 							bookPages.add(strBuilder.toString());
 						}
@@ -102,6 +107,8 @@ public class StaffMemberLogbook
 						//TODO insert log lines into book
 						
 						player.getInventory().addItem(book);
+						
+						player.sendMessage(loadedStaffMemberLogbookMessage);
 					}
 				}.runTask(staffTimesheet);
 			}
@@ -123,6 +130,7 @@ public class StaffMemberLogbook
 		}
 		
 		strBuilder.append("Staff Member:" + "\n");
+		strBuilder.append("Progress: " + staffMember.getPercentageTimeCompleted() + "% time logged");
 		strBuilder.append(ChatColor.RED + "" + ChatColor.BOLD + playerName + ChatColor.RESET + "\n\n");
 		strBuilder.append("Logged Time: " + ChatColor.ITALIC + staffMember.getLoggedTime() + "\n\n");
 		strBuilder.append(ChatColor.RESET + "Time Goal: " + ChatColor.ITALIC + staffMember.getTimeGoal() + "\n");

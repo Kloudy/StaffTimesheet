@@ -14,6 +14,7 @@ public class Log
 	public Log(Calendar date, ArrayList<String> lines)
 	{
 		this.date = date;
+		this.lines = lines;
 	}
 	
 	public Calendar getDate()

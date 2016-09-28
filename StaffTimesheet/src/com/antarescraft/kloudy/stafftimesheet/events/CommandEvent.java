@@ -8,7 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologui.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.command.CommandHandler;
 import com.antarescraft.kloudy.plugincore.command.CommandParser;
 import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
@@ -95,7 +94,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Resets a staff memeber's time for the current month", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "staff manage <player_name> reset")
+			mustBePlayer = true, permission = "shift.admin", subcommands = "manage <player_name> reset")
 	public void resetStaffMemberTime(CommandSender sender, String[] args)
 	{
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
@@ -112,7 +111,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Adds the specified amount of time to the specified staff member's time for the current month with format: [hh:mm:ss]", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "staff manage <player_name> add <formatted_time>")
+			mustBePlayer = true, permission = "shift.admin", subcommands = "manage <player_name> add <formatted_time>")
 	public void addStaffMemberTime(CommandSender sender, String[] args)
 	{
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
@@ -137,7 +136,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Subtracts the specified amount of time from the specified staff member's time for the current month with format: [hh:mm:ss]", 
-			mustBePlayer = false, permission = "", subcommands = "staff manage <player_name> subtract <formatted_time>")
+			mustBePlayer = false, permission = "", subcommands = "manage <player_name> subtract <formatted_time>")
 	public void shiftAdminManageSubtractTime(CommandSender sender, String[] args)
 	{
 		StaffMember staffMember = configManager.getStaffMember(args[2]);
@@ -162,7 +161,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd. If no end date is specified the end date becomes the current date", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "logs <staff_member_player_name> <start_date> [end_date]")
+			mustBePlayer = true, permission = "shift.admin", subcommands = "logbook <staff_member_player_name> <start_date> [end_date]")
 	public void staffLogbook(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
@@ -174,7 +173,7 @@ public class CommandEvent implements CommandExecutor
 		{
 			startDate = TimeFormat.parseDateFormat(args[2]);
 			
-			if(args.length == 2)//no end date specified, make the end date be today
+			if(args.length == 3)//no end date specified, make the end date be today
 			{
 				endDate = Calendar.getInstance();
 			}
@@ -193,10 +192,10 @@ public class CommandEvent implements CommandExecutor
 			StaffMember staffMember = configManager.getStaffMember(args[1]);
 			if(staffMember != null)
 			{
-				MessageManager.info(sender, "Loading staff member log files...");
+				sender.sendMessage(configManager.getLoadingStaffMemberLogbookMessage());
 				
 				StaffMemberLogbook logbook = new StaffMemberLogbook(staffMember, startDate, endDate);
-				logbook.getLogbook(staffTimesheet, player, configManager.getMaxLogRange());
+				logbook.getLogbook(staffTimesheet, player, configManager.getMaxLogRange(), configManager.getLoadedStaffMemberLogbookMessage());
 			}
 			else
 			{
