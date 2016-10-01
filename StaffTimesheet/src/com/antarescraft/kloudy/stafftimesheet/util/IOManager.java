@@ -3,10 +3,10 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,16 +79,25 @@ public class IOManager
 			}
 		}
 		
-		PrintWriter out = null;
+		//PrintWriter out = null;
 		try
 		{
-			FileWriter fileWriter = new FileWriter(logFile, true);
+			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("outfilename"), "UTF-8"));
+			try 
+			{
+			    out.write(text);
+			} 
+			finally
+			{
+			    out.close();
+			}
+			/*FileWriter fileWriter = new FileWriter(logFile, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			out = new PrintWriter(bufferedWriter);
 			
 			out.println(text);
 			
-			out.close();
+			out.close();*/
 		} 
 		catch (IOException e)
 		{

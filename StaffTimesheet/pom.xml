@@ -101,6 +101,20 @@
           <include>staff-members.yml</include>
         </includes>
       </resource>
+      <resource>
+      	<directory>resources/images</directory>
+      	<includes>
+			<include>*</include>
+		</includes>
+		<targetPath>${project.build.outputDirectory}\resources\images</targetPath>
+      </resource>
+      <resource>
+      	<directory>resources/yamls</directory>
+      	<includes>
+      		<include>*</include>
+      	</includes>
+      	<targetPath>${project.build.outputDirectory}\resources\yamls</targetPath>
+      </resource>
     </resources>
   </build>
 </project>

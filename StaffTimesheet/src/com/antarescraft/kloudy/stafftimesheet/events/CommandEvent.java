@@ -15,6 +15,8 @@ import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationUnderflowException;
 import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
@@ -39,13 +41,21 @@ public class CommandEvent implements CommandExecutor
 	
 	@CommandHandler(description = "Reloads the values contained in the config file",
 			mustBePlayer = false, permission = "staff.admin", subcommands = "reloadconfig")
-	public void reloadConfig()
+	public void reloadConfig(CommandSender sender, String[] args)
 	{
+		staffTimesheet.loadGUIContainersFromYaml(sender);
 		configManager.loadConfigValues();
 	}
 	
+	@CommandHandler(description = "Opens the Staff Timesheet HoloGUI menu",
+			mustBePlayer = true, permission = "staff.shift", subcommands = "menu")
+	public void openMenu(CommandSender sender, String[] args)
+	{
+		staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, (Player)sender, "timesheet-home");
+	}
+	
 	@CommandHandler(description = "Starts the shift for the staff member", 
-			mustBePlayer = true, permission = "shift.staff", subcommands = "shift clockin")
+			mustBePlayer = true, permission = "staff.shift", subcommands = "shift clockin")
 	public void shiftStart(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
@@ -66,7 +76,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Ends the shift for the staff member",
-			mustBePlayer = true, permission = "shift.staff", subcommands = "shift clockout")
+			mustBePlayer = true, permission = "staff.shift", subcommands = "shift clockout")
 	public void shiftEnd(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
@@ -94,10 +104,10 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Resets a staff memeber's time for the current month", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "manage <player_name> reset")
+			mustBePlayer = true, permission = "staff.admin", subcommands = "manage <player_name> reset")
 	public void resetStaffMemberTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMember(args[2]);
+		StaffMember staffMember = configManager.getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			staffMember.resetLoggedTime();
@@ -111,18 +121,27 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Adds the specified amount of time to the specified staff member's time for the current month with format: [hh:mm:ss]", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "manage <player_name> add <formatted_time>")
+			mustBePlayer = true, permission = "staff.admin", subcommands = "manage <player_name> add <formatted_time>")
 	public void addStaffMemberTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMember(args[2]);
+		StaffMember staffMember = configManager.getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			try
 			{
-				Duration time = TimeFormat.parseTimeFormat(args[4]);
-				staffMember.addLoggedTime(time);
+				Duration time = TimeFormat.parseDurationFormat(args[3]);
 				
-				sender.sendMessage(configManager.getAddLoggedTimeForStaffMemberMessage());
+				try
+				{
+					staffMember.addLoggedTime(time);
+					
+					sender.sendMessage(configManager.getAddLoggedTimeForStaffMemberMessage());
+				}
+				catch(DurationOverflowException e)//trying to add more time than is allowed, set to max duration
+				{
+					sender.sendMessage(configManager.getErrorMessageDurationOverflow());
+				}
+				
 			}
 			catch(InvalidDurationFormatException e)
 			{
@@ -136,18 +155,32 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Subtracts the specified amount of time from the specified staff member's time for the current month with format: [hh:mm:ss]", 
-			mustBePlayer = false, permission = "", subcommands = "manage <player_name> subtract <formatted_time>")
+			mustBePlayer = false, permission = "staff.admin", subcommands = "manage <player_name> subtract <formatted_time>")
 	public void shiftAdminManageSubtractTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMember(args[2]);
+		StaffMember staffMember = configManager.getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			try
 			{
-				Duration time = TimeFormat.parseTimeFormat(args[4]);
-				staffMember.subtractLoggedTime(time);
-				
-				sender.sendMessage(configManager.getSubtractLoggedTimeForStaffMemberMessage());
+				Duration time = TimeFormat.parseDurationFormat(args[3]);
+				if(time.compareTo(staffMember.getLoggedTime()) <= 0)
+				{
+					try
+					{
+						staffMember.subtractLoggedTime(time);
+						
+						sender.sendMessage(configManager.getSubtractLoggedTimeForStaffMemberMessage());
+					}
+					catch(DurationUnderflowException e)//trying to subtract more time than has been logged, set to min duration
+					{
+						sender.sendMessage(configManager.getErrorMessageDurationUnderflow());
+					}
+				}
+				else//trying to subtract more time than the staff member already has logged
+				{
+					sender.sendMessage(configManager.getErrorMessageDurationUnderflow());
+				}
 			}
 			catch(InvalidDurationFormatException e)
 			{
@@ -161,7 +194,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd. If no end date is specified the end date becomes the current date", 
-			mustBePlayer = true, permission = "shift.admin", subcommands = "logbook <staff_member_player_name> <start_date> [end_date]")
+			mustBePlayer = true, permission = "staff.admin", subcommands = "logbook <staff_member_player_name> <start_date> [end_date]")
 	public void staffLogbook(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;

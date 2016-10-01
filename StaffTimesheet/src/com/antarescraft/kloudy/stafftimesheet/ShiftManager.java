@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
+import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
 /**
@@ -68,11 +69,20 @@ public class ShiftManager
 				long elapsedMilliseconds = shiftEndTime - timeCard.getStartTime();
 							
 				Duration shiftTime = Duration.ofMillis(elapsedMilliseconds);
-				staffMember.addLoggedTime(shiftTime);
+				
+				try
+				{
+					staffMember.addLoggedTime(shiftTime);
+				}
+				catch(DurationOverflowException e)//overflowed duration, set staff member logged time to the maximum duration allowed
+				{
+					staffMember.setLoggedTime(TimeFormat.getMaxDuration());
+				}
+				
 				
 				if(StaffTimesheet.debugMode)
 				{
-					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getTimeFormat(shiftTime));
+					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getDurationFormatString(shiftTime));
 				}
 				
 				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s remove %s",

@@ -26,9 +26,11 @@ public class ConfigManager
 	
 	private int logCycleDuration;
 	private Duration updateStaffLogsPeriod;
+	
 	private String shiftEndAFKMessage;
 	private String shiftEndClockoutMessage;
 	private String shiftStartMessage;
+	
 	private String resetStaffMemberLoggedTimeMessage;
 	private String addLoggedTimeForStaffMemberMessage;
 	private String subtractLoggedTimeForStaffMemberMessage;
@@ -37,11 +39,14 @@ public class ConfigManager
 	private int maxLogRange;
 	private String logbookTextHeader;
 	private List<String> logbookLoreText;
+	
 	private String shiftStartLabel;
 	private String shiftEndLabelAFK;
 	private String shiftEndLabelDisconnected;
 	private String shiftEndLabelClockedOut;
-	private String errorMessageNegativeTime;
+	
+	private String errorMessageDurationUnderflow;
+	private String errorMessageDurationOverflow;
 	private String errorMessageNotStaff;
 	private String errorMessageNotClockedIn;
 	private String errorMessageStaffMemberDoesNotExist;
@@ -49,6 +54,7 @@ public class ConfigManager
 	private String errorMessageInvalidDurationFormat;
 	private String errorMessageInvalidDateFormat;
 	private String errorMessageStartDateEndDateMismatch;
+	
 	private HashMap<UUID, StaffMember> staffMembers;
 	
 	public ConfigManager(StaffTimesheet staffTimesheet)
@@ -72,32 +78,32 @@ public class ConfigManager
 		
 		try
 		{
-			updateStaffLogsPeriod = TimeFormat.parseTimeFormat(root.getString("update-staff-logs-period", "00:01:00"));
+			updateStaffLogsPeriod = TimeFormat.parseDurationFormat(root.getString("update-staff-logs-period", "00:01:00"));
 		}
 		catch(InvalidDurationFormatException e)
 		{
 			this.logInvalidDurationConfigValue("update-staff-logs-period", "00:01:00");
 			try 
 			{
-				updateStaffLogsPeriod = TimeFormat.parseTimeFormat("00:01:00");
+				updateStaffLogsPeriod = TimeFormat.parseDurationFormat("00:01:00");
 			} catch (InvalidDurationFormatException de) {}
 		}
 		
-		shiftEndAFKMessage = root.getString("shift-end-afk-message", "").replace("&", "§");
-		shiftEndClockoutMessage = root.getString("shift-end-clockout-message", "").replace("&", "§");
-		shiftStartMessage = root.getString("shift-start-message", "").replace("&", "§");
-		resetStaffMemberLoggedTimeMessage = root.getString("reset-staff-member-logged-time-message", "").replace("&", "§");
-		addLoggedTimeForStaffMemberMessage = root.getString("add-logged-time-for-staff-member-message", "").replace("&", "§");
-		subtractLoggedTimeForStaffMemberMessage = root.getString("subtract-logged-time-for-staff-member-message", "").replace("&", "§");
-		loadingStaffMemberLogbookMessage = root.getString("loading-staff-member-logbook-message", "").replace("&", "§");
-		loadedStaffMemberLogbookMessage = root.getString("loaded-staff-member-logbook-message", "").replace("&", "§");
+		shiftEndAFKMessage = setFormattingCodes(root.getString("shift-end-afk-message", ""));
+		shiftEndClockoutMessage = setFormattingCodes(root.getString("shift-end-clockout-message", ""));
+		shiftStartMessage = setFormattingCodes(root.getString("shift-start-message", ""));
+		resetStaffMemberLoggedTimeMessage = setFormattingCodes(root.getString("reset-staff-member-logged-time-message", ""));
+		addLoggedTimeForStaffMemberMessage = setFormattingCodes(root.getString("add-logged-time-for-staff-member-message", ""));
+		subtractLoggedTimeForStaffMemberMessage = setFormattingCodes(root.getString("subtract-logged-time-for-staff-member-message", ""));
+		loadingStaffMemberLogbookMessage = setFormattingCodes(root.getString("loading-staff-member-logbook-message", ""));
+		loadedStaffMemberLogbookMessage = setFormattingCodes(root.getString("loaded-staff-member-logbook-message", ""));
 		maxLogRange = root.getInt("max-log-range", 365);
-		logbookTextHeader = root.getString("logbook-text-header", "").replace("&", "§");
+		logbookTextHeader = setFormattingCodes(root.getString("logbook-text-header", ""));
 		logbookLoreText = root.getStringList("logbook-lore-text");
-		shiftStartLabel = root.getString("shift-start-label").replace("&", "§");;
-		shiftEndLabelAFK = root.getString("shift-end-label-afk").replace("&", "§");
-		shiftEndLabelDisconnected = root.getString("shift-end-label-disconnected", "").replace("&", "§");
-		shiftEndLabelClockedOut = root.getString("shift-end-label-clocked-out", "").replace("&", "§");
+		shiftStartLabel = setFormattingCodes(root.getString("shift-start-label", ""));
+		shiftEndLabelAFK = setFormattingCodes(root.getString("shift-end-label-afk"));
+		shiftEndLabelDisconnected = setFormattingCodes(root.getString("shift-end-label-disconnected", ""));
+		shiftEndLabelClockedOut = setFormattingCodes(root.getString("shift-end-label-clocked-out", ""));
 		
 		for(String loreTextLine : logbookLoreText)
 		{
@@ -133,7 +139,7 @@ public class ConfigManager
 				//check 'time-goal-duration' format
 				try
 				{
-					timeGoalDuration = TimeFormat.parseTimeFormat(timeGoal);
+					timeGoalDuration = TimeFormat.parseDurationFormat(timeGoal);
 				}
 				catch(InvalidDurationFormatException e)
 				{
@@ -141,14 +147,14 @@ public class ConfigManager
 					
 					try 
 					{
-						timeGoalDuration = TimeFormat.parseTimeFormat("15:00:00");
+						timeGoalDuration = TimeFormat.parseDurationFormat("15:00:00");
 					} catch (InvalidDurationFormatException e1) {}
 				}
 				
 				//check 'logged-time' format
 				try
 				{
-					loggedTimeDuration = TimeFormat.parseTimeFormat(loggedTime);
+					loggedTimeDuration = TimeFormat.parseDurationFormat(loggedTime);
 				}
 				catch(InvalidDurationFormatException e)
 				{
@@ -156,7 +162,7 @@ public class ConfigManager
 					
 					try 
 					{
-						loggedTimeDuration = TimeFormat.parseTimeFormat("00:00:00");
+						loggedTimeDuration = TimeFormat.parseDurationFormat("00:00:00");
 					} catch (InvalidDurationFormatException e1) {}
 				}
 				
@@ -169,14 +175,20 @@ public class ConfigManager
 			}
 		}
 		
-		errorMessageNegativeTime = root.getString("error-message-negative-time", "").replace("&", "§");
-		errorMessageNotStaff = root.getString("error-message-not-staff", "").replace("&", "§");
-		errorMessageNotClockedIn = root.getString("error-message-not-clocked-in", "").replace("&", "§");
-		errorMessageStaffMemberDoesNotExist = root.getString("error-message-staff-member-does-not-exist", "").replace("&", "§");
-		errorMessageNoStaffLog = root.getString("error-message-no-staff-log", "").replace("&", "§");
-		errorMessageInvalidDurationFormat = root.getString("error-message-invalid-duration-format", "").replace("&", "§");
-		errorMessageInvalidDateFormat = root.getString("error-message-invalid-date-format", "").replace("&", "§");
-		errorMessageStartDateEndDateMismatch = root.getString("error-message-start-date-end-date-mismatch", "").replace("&", "§");
+		errorMessageDurationUnderflow = setFormattingCodes(root.getString("error-message-negative-time", ""));
+		errorMessageDurationOverflow = setFormattingCodes(root.getString("error-message-duration-overflow", ""));
+		errorMessageNotStaff = setFormattingCodes(root.getString("error-message-not-staff", ""));
+		errorMessageNotClockedIn = setFormattingCodes(root.getString("error-message-not-clocked-in", ""));
+		errorMessageStaffMemberDoesNotExist = setFormattingCodes(root.getString("error-message-staff-member-does-not-exist", ""));
+		errorMessageNoStaffLog = setFormattingCodes(root.getString("error-message-no-staff-log", ""));
+		errorMessageInvalidDurationFormat = setFormattingCodes(root.getString("error-message-invalid-duration-format", ""));
+		errorMessageInvalidDateFormat = setFormattingCodes(root.getString("error-message-invalid-date-format", ""));
+		errorMessageStartDateEndDateMismatch = setFormattingCodes(root.getString("error-message-start-date-end-date-mismatch", ""));
+	}
+	
+	private String setFormattingCodes(String text)
+	{
+		return ChatColor.translateAlternateColorCodes('&', text);
 	}
 	
 	private void logInvalidDurationConfigValue(String property, String defaultValue)
@@ -200,7 +212,7 @@ public class ConfigManager
 	
 	private String setPlaceholders(StaffMember staffMember, String text)
 	{	
-		String setText = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTime());
+		String setText = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTimeString());
 		setText = text.replace("%stafftimesheet_time-goal%", staffMember.getTimeGoal());
 		setText = text.replace("%stafftimesheet_staff-member-name%", staffMember.getPlayerName());
 		
@@ -294,7 +306,7 @@ public class ConfigManager
 		ArrayList<String> setLogbookLoreText = new ArrayList<String>();
 		for(String loreTextLine : setLogbookLoreText)
 		{
-			String line = ChatColor.translateAlternateColorCodes('&', loreTextLine);
+			String line = setFormattingCodes(loreTextLine);
 			line = setPlaceholders(staffMember, loreTextLine);
 			setLogbookLoreText.add(line);
 		}
@@ -322,9 +334,14 @@ public class ConfigManager
 		return shiftEndLabelClockedOut;
 	}
 	
-	public String getErrorMessageNegativeTime()
+	public String getErrorMessageDurationUnderflow()
 	{
-		return errorMessageNegativeTime;
+		return errorMessageDurationUnderflow;
+	}
+	
+	public String getErrorMessageDurationOverflow()
+	{
+		return errorMessageDurationOverflow;
 	}
 	
 	public String getErrorMessageNotStaff()

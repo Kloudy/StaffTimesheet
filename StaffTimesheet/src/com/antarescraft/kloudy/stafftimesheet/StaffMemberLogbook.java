@@ -60,7 +60,7 @@ public class StaffMemberLogbook
 					
 					if(lines != null)
 					{
-						logs.add(new Log(date, lines));
+						logs.add(new Log((Calendar)date.clone(), lines));
 					}
 					
 					date.add(Calendar.DATE, 1);
@@ -92,19 +92,18 @@ public class StaffMemberLogbook
 							Log log = logs.get(i);
 							
 							StringBuilder strBuilder = new StringBuilder();
-							strBuilder.append("Date: " + TimeFormat.getDateFormat(log.getDate()) + "\n");
+														
+							strBuilder.append("Date: " + TimeFormat.getDateFormat(log.getDate()) + "\n\n");
 							for(String line : log.getLines())
 							{
-								strBuilder.append(line + "\n");
+								line = ChatColor.translateAlternateColorCodes('&', line);
+								strBuilder.append(line + "\n\n");
 							}
 							
 							bookPages.add(strBuilder.toString());
 						}
-						
 						bookMeta.setPages(bookPages);
 						book.setItemMeta(bookMeta);
-						
-						//TODO insert log lines into book
 						
 						player.getInventory().addItem(book);
 						
@@ -130,10 +129,10 @@ public class StaffMemberLogbook
 		}
 		
 		strBuilder.append("Staff Member:" + "\n");
-		strBuilder.append("Progress: " + staffMember.getPercentageTimeCompleted() + "% time logged");
 		strBuilder.append(ChatColor.RED + "" + ChatColor.BOLD + playerName + ChatColor.RESET + "\n\n");
-		strBuilder.append("Logged Time: " + ChatColor.ITALIC + staffMember.getLoggedTime() + "\n\n");
-		strBuilder.append(ChatColor.RESET + "Time Goal: " + ChatColor.ITALIC + staffMember.getTimeGoal() + "\n");
+		strBuilder.append("Logged Time: " + ChatColor.ITALIC + staffMember.getLoggedTimeString() + "\n\n");
+		strBuilder.append(ChatColor.RESET + "Time Goal: " + ChatColor.ITALIC + staffMember.getTimeGoal() + "\n\n");
+		strBuilder.append(ChatColor.RESET + "Progress: " + ChatColor.ITALIC + staffMember.getPercentageTimeCompleted() + "%");
 		
 		return strBuilder.toString();
 	}
