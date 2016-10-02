@@ -41,27 +41,20 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 		
 		LabelComponent labelComponent = (LabelComponent)guiComponent;
 
-		System.out.println("Made it - label not null");
 		StaffMember staffMember = configManager.getStaffMember(playerName);
 		if(staffMember == null) return;
-		System.out.println("Made it - staff member not null");
 		try
 		{
+			System.out.println(dateFormat);
 			Calendar date = TimeFormat.parseDateFormat(dateFormat);
 			ArrayList<String> logLines = IOManager.getLogFile(staffMember, date);
 			if(logLines == null) return;
-			
-			System.out.println("logLines not null");
-			
+						
 			String[] lines = new String[logLines.size()];
 			logLines.toArray(lines);
-			
-			System.out.println(logLines.size());
-			
+						
 			labelComponent.setLines(lines);
 		}
 		catch (InvalidDateFormatException e){}
 	}
-	
-	
 }
