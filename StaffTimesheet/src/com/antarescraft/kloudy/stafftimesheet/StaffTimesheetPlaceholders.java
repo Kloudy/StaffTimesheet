@@ -5,8 +5,8 @@ import java.util.Calendar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
-import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 
@@ -53,7 +53,7 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 				}
 				return "No";
 			}
-			else if(identifier.equals("default-start-time") || identifier.equals("default-end-time"))
+			else if(identifier.equals("default-date"))
 			{
 				Calendar now = Calendar.getInstance();
 				return TimeFormat.getDateFormat(now);

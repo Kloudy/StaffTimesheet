@@ -24,6 +24,7 @@ public class HoloGUIClickEventListener implements Listener
 		{
 			if(clickedComponent.getContainerId().equals("timesheet-home"))
 			{
+				if(clickedComponent.getId().equals("logbook-btn"))
 				{
 					staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, event.getPlayer(), "timesheet-log");
 				}
