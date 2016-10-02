@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
+import com.antarescraft.kloudy.stafftimesheet.events.HoloGUIClickEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerJoinEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerQuitEventListener;
@@ -38,11 +39,14 @@ public class StaffTimesheet extends HoloGUIPlugin
 		configManager = new ConfigManager(this);
 		configManager.loadConfigValues();
 		
+		new StaffTimesheetPlaceholders(this, "stafftimesheet", configManager).hook();
+		
 		getCommand("staff").setExecutor(new CommandEvent(this, configManager));
 		getServer().getPluginManager().registerEvents(new AfkStatusChangeEventListener(configManager), this);
 		getServer().getPluginManager().registerEvents(new PlayerQuitEventListener(configManager), this);
 		getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessEventListener(configManager), this);
 		getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(configManager), this);
+		getServer().getPluginManager().registerEvents(new HoloGUIClickEventListener(this), this);
 	}
 	
 	@Override

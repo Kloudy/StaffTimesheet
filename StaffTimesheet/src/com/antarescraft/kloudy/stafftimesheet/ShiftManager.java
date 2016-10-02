@@ -79,7 +79,6 @@ public class ShiftManager
 					staffMember.setLoggedTime(TimeFormat.getMaxDuration());
 				}
 				
-				
 				if(StaffTimesheet.debugMode)
 				{
 					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getDurationFormatString(shiftTime));

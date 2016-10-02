@@ -18,6 +18,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.exceptions.InvalidDurationFormatException;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class ConfigManager
@@ -49,6 +50,7 @@ public class ConfigManager
 	private String errorMessageDurationOverflow;
 	private String errorMessageNotStaff;
 	private String errorMessageNotClockedIn;
+	private String errorMessageAlreadyClockedIn;
 	private String errorMessageStaffMemberDoesNotExist;
 	private String errorMessageNoStaffLog;
 	private String errorMessageInvalidDurationFormat;
@@ -179,6 +181,7 @@ public class ConfigManager
 		errorMessageDurationOverflow = setFormattingCodes(root.getString("error-message-duration-overflow", ""));
 		errorMessageNotStaff = setFormattingCodes(root.getString("error-message-not-staff", ""));
 		errorMessageNotClockedIn = setFormattingCodes(root.getString("error-message-not-clocked-in", ""));
+		errorMessageAlreadyClockedIn = setFormattingCodes(root.getString("error-message-already-clocked-in", ""));
 		errorMessageStaffMemberDoesNotExist = setFormattingCodes(root.getString("error-message-staff-member-does-not-exist", ""));
 		errorMessageNoStaffLog = setFormattingCodes(root.getString("error-message-no-staff-log", ""));
 		errorMessageInvalidDurationFormat = setFormattingCodes(root.getString("error-message-invalid-duration-format", ""));
@@ -208,15 +211,6 @@ public class ConfigManager
 			
 		}catch(Exception e){MessageManager.error(Bukkit.getConsoleSender(), 
 				String.format("[%s]Error saving values to the config file. Does the file still exist?", staffTimesheetPlugin.getName()));}
-	}
-	
-	private String setPlaceholders(StaffMember staffMember, String text)
-	{	
-		String setText = text.replace("%stafftimesheet_current-logged-time%", staffMember.getLoggedTimeString());
-		setText = text.replace("%stafftimesheet_time-goal%", staffMember.getTimeGoal());
-		setText = text.replace("%stafftimesheet_staff-member-name%", staffMember.getPlayerName());
-		
-		return setText;
 	}
 	
 	/*
@@ -251,19 +245,19 @@ public class ConfigManager
 		return updateStaffLogsPeriod;
 	}
 	
-	public String getEndShiftAFKMessage(StaffMember staffMember)
+	public String getShiftEndAFKMessage(StaffMember staffMember)
 	{
-		return setPlaceholders(staffMember, shiftEndAFKMessage);
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftEndAFKMessage);
 	}
 	
-	public String getEndShiftClockOutMessage(StaffMember staffMember)
+	public String getShiftEndClockoutMessage(StaffMember staffMember)
 	{
-		return setPlaceholders(staffMember, shiftEndClockoutMessage);
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftEndClockoutMessage);
 	}
 	
 	public String getShiftStartMessage(StaffMember staffMember)
 	{
-		return setPlaceholders(staffMember, shiftStartMessage);
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftStartMessage);
 	}
 	
 	public String getResetStaffMemberLoggedTimeMessage()
@@ -307,7 +301,7 @@ public class ConfigManager
 		for(String loreTextLine : setLogbookLoreText)
 		{
 			String line = setFormattingCodes(loreTextLine);
-			line = setPlaceholders(staffMember, loreTextLine);
+			line = PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), line);
 			setLogbookLoreText.add(line);
 		}
 		
@@ -352,6 +346,11 @@ public class ConfigManager
 	public String getErrorMessageNotClockedIn()
 	{
 		return errorMessageNotClockedIn;
+	}
+	
+	public String getErrorMessageAlreadyClockedIn()
+	{
+		return errorMessageAlreadyClockedIn;
 	}
 	
 	public String getErrorMessageStaffMemberDoesNotExist()

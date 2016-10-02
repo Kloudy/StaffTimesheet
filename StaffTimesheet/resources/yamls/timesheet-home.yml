@@ -1,23 +1,92 @@
 timesheet-home:
   components:
-    
+
     logo:
       type: "image"
       image-src: "logo.png"
+      symmetrical: true
       width: 25
       height: 25
       position:
         x: 0
-        y: 1
-        
+        y: 0.8
+
     close-btn:
       type: "button"
       label: "Close Menu"
+      symmetrical: true
       mini: true
-      icon: "red-x.png"
+      icon: "x-red.gif"
       onclick: "hg close"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.8
         y: 0.8
-    
+
+    stafftimesheet-label:
+      type: "label"
+      label-distance: 8
+      text:
+        - "%scroll%      &b&lStaff Timesheet      "
+      position:
+        x: 0
+        y: 0.85
+
+    staff-member-label:
+      type: "label"
+      text:
+        - "&n&lStaff Member&r: &c&l%stafftimesheet_staff-member-name%"
+        - ""
+        - "&n&lTime Goal&r: &a&o&l%stafftimesheet_time-goal%"
+        - ""
+        - "&n&lTime Logged&r: &a&o&l%stafftimesheet_current-logged-time%"
+        - ""
+        - "&n&lProgress&r: &6&o&l%stafftimesheet_percent-time-logged%%"
+        - ""
+        - "&n&lClocked In&r: &6&o&l%stafftimesheet_clocked-in%"
+      position:
+        x: 0
+        y: 0.18
+
+    clock-in-btn:
+      type: "button"
+      mini: true
+      always-show-label: true
+      label: "&lCLOCK IN"
+      symmetrical: true
+      icon: "clock-in.png"
+      onclick: "staff clockin"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.4
+        y: -0.2
+
+    logbook-btn:
+      type: "item"
+      item-id: "ENCHANTED_BOOK"
+      label: "&lLOGBOOK"
+      label-distance: 14
+      label-zoom-distance: 3
+      always-show-label: true
+      onclick: ""
+      onclick-sound: "UI_BUTTON_CLICK"
+      rotation:
+        x: 0
+        y: 90
+        z: 0
+      position:
+        x: 0
+        y: -0.32
+
+    clock-out-btn:
+      type: "button"
+      mini: true
+      always-show-label: true
+      label: "&lCLOCK OUT"
+      symmetrical: true
+      icon: "clock-out.png"
+      onclick: "staff clockout"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.4
+        y: -0.2

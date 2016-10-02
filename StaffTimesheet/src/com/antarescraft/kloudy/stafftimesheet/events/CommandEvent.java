@@ -55,7 +55,7 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Starts the shift for the staff member", 
-			mustBePlayer = true, permission = "staff.shift", subcommands = "shift clockin")
+			mustBePlayer = true, permission = "staff.shift", subcommands = "clockin")
 	public void shiftStart(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
@@ -63,11 +63,20 @@ public class CommandEvent implements CommandExecutor
 		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember != null)
 		{
-			staffMember.logEntry(configManager.getShiftStartLabel());
+			ShiftManager shiftManager = ShiftManager.getInstance();
 			
-			ShiftManager.getInstance().clockIn(staffMember);
-			
-			player.sendMessage(configManager.getShiftStartMessage(staffMember));
+			if(!shiftManager.onTheClock(staffMember))
+			{
+				staffMember.logEntry(configManager.getShiftStartLabel());
+
+				shiftManager.clockIn(staffMember);
+				
+				player.sendMessage(configManager.getShiftStartMessage(staffMember));
+			}
+			else
+			{
+				player.sendMessage(configManager.getErrorMessageAlreadyClockedIn());
+			}
 		}
 		else
 		{
@@ -76,19 +85,20 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Ends the shift for the staff member",
-			mustBePlayer = true, permission = "staff.shift", subcommands = "shift clockout")
+			mustBePlayer = true, permission = "staff.shift", subcommands = "clockout")
 	public void shiftEnd(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
-		ShiftManager shiftManager = ShiftManager.getInstance();
 		
 		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember != null)
 		{
+			ShiftManager shiftManager = ShiftManager.getInstance();
+
 			if(shiftManager.onTheClock(staffMember))
 			{
 				shiftManager.clockOut(staffMember, ShiftEndReason.CLOCKED_OUT);
-				sender.sendMessage(configManager.getEndShiftClockOutMessage(staffMember));
+				sender.sendMessage(configManager.getShiftEndClockoutMessage(staffMember));
 				
 				staffMember.logEntry(configManager.getShiftLabelClockedOut());
 			}
