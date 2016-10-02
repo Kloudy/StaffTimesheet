@@ -96,7 +96,7 @@ public class IOManager
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			out = new PrintWriter(bufferedWriter);
 			
-			text = text.replace("", "")
+			text = text.replace("§", "&");
 			out.println(text);
 			
 			out.close();
