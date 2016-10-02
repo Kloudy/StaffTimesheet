@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
-import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
 import net.md_5.bungee.api.ChatColor;
 

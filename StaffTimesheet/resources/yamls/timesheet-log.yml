@@ -36,12 +36,12 @@ timesheet-log:
 
     date-value-scroller:
       type: "value-scroller"
-      label: "&lStart Date: &o&l%start-date-value-scroller_value%"
+      label: "&lDate: &o&l%stafftimesheet_default-date%"
       always-show-label: true
-      default-value: "%stafftimesheet_default-start-time%"
+      default-value: "%stafftimesheet_default-date%"
       onscroll-sound: "BLOCK_LAVA_POP"
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.4
+        x: 0
         y: 0.1

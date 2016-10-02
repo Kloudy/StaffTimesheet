@@ -40,6 +40,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		configManager.loadConfigValues();
 		
 		new StaffTimesheetPlaceholders(this, "stafftimesheet", configManager).hook();
+		this.registerCallbackFunctions(new HoloGUICallbackFunctions(this, configManager));
 		
 		getCommand("staff").setExecutor(new CommandEvent(this, configManager));
 		getServer().getPluginManager().registerEvents(new AfkStatusChangeEventListener(configManager), this);

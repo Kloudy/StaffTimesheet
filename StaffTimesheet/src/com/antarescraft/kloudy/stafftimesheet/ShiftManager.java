@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
-import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationOverflowException;
-import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
+import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 
 /**
  * Shift Manager

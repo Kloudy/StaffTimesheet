@@ -3,10 +3,10 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
@@ -79,10 +80,10 @@ public class IOManager
 			}
 		}
 		
-		//PrintWriter out = null;
+		PrintWriter out = null;
 		try
 		{
-			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("outfilename"), "UTF-8"));
+			/*Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFile), "UTF-8"));
 			try 
 			{
 			    out.write(text);
@@ -90,14 +91,15 @@ public class IOManager
 			finally
 			{
 			    out.close();
-			}
-			/*FileWriter fileWriter = new FileWriter(logFile, true);
+			}*/
+			FileWriter fileWriter = new FileWriter(logFile, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			out = new PrintWriter(bufferedWriter);
 			
+			text = text.replace("", "")
 			out.println(text);
 			
-			out.close();*/
+			out.close();
 		} 
 		catch (IOException e)
 		{

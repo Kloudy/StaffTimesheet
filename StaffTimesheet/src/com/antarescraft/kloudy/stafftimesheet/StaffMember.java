@@ -3,16 +3,18 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationOverflowException;
-import com.antarescraft.kloudy.stafftimesheet.exceptions.DurationUnderflowException;
+import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.plugincore.exceptions.DurationUnderflowException;
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
-import com.antarescraft.kloudy.stafftimesheet.util.TimeFormat;
 
 public class StaffMember
 {
@@ -92,6 +94,11 @@ public class StaffMember
 		IOManager.saveLogEntry(this, logEntryLine);
 	}
 	
+	public ArrayList<String> getLogEntry(Calendar date)
+	{
+		return IOManager.getLogFile(this, date);
+	}
+	
 	/*
 	 * Getter functions
 	 */
@@ -118,7 +125,7 @@ public class StaffMember
 		double loggedTimeSeconds = (double)loggedTime.getSeconds();
 		double timeGoalSeconds = (double)timeGoal.getSeconds();
 
-		DecimalFormat df = new DecimalFormat("#.##");
+		DecimalFormat df = new DecimalFormat("#.###");
 		df.setRoundingMode(RoundingMode.HALF_UP);
 		double percent = Double.parseDouble(df.format(loggedTimeSeconds / timeGoalSeconds));
 		if(percent > 1) percent = 1;
