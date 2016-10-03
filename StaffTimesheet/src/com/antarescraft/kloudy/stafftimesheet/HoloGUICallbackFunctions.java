@@ -3,6 +3,8 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.bukkit.entity.Player;
+
 import com.antarescraft.kloudy.hologui.CallbackTrigger;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.LabelComponent;
@@ -34,6 +36,8 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 	 */
 	public void displayStaffMemberLog(String guiContainerId, String logTextLabelId, String playerName, String dateFormat)
 	{	
+		System.out.println(String.format("guiPageid: %, logTextLabelId: %s, playerName: %s, dateFormat: %s", 
+				guiContainerId, logTextLabelId, playerName, dateFormat));
 		if(guiContainerId == null || logTextLabelId == null || playerName == null || dateFormat == null) return;
 		
 		GUIComponent guiComponent = staffTimesheet.getGUIComponent(guiContainerId, logTextLabelId);
@@ -48,11 +52,6 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 			Calendar date = TimeFormat.parseDateFormat(dateFormat);
 			ArrayList<String> logLines = IOManager.getLogFile(staffMember, date);
 			if(logLines == null) return;
-			
-			for(String line : logLines)
-			{
-				System.out.println(line);
-			}
 						
 			String[] lines = new String[logLines.size()];
 			logLines.toArray(lines);
@@ -60,5 +59,14 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 			labelComponent.setLines(lines);
 		}
 		catch (InvalidDateFormatException e){}
+	}
+	
+	/**
+	 * Opens the specified gui page
+	 * @param guiPageId id of the gui page to open
+	 */
+	public void openGUIPage(Player player, String guiPageId)
+	{
+		staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, guiPageId);
 	}
 }
