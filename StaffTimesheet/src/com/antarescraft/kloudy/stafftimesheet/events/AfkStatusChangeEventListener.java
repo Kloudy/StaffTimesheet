@@ -31,9 +31,9 @@ public class AfkStatusChangeEventListener implements Listener
 		{
 			Player player = user.getBase();
 			StaffMember staffMember = configManager.getStaffMember(player);
-			if(staffMember != null)
+			ShiftManager shiftManager = ShiftManager.getInstance();
+			if(staffMember != null && shiftManager.onTheClock(staffMember))
 			{
-				ShiftManager shiftManager = ShiftManager.getInstance();
 				shiftManager.clockOut(staffMember, ShiftEndReason.AFK);
 				staffMember.logEntry(configManager.getShiftEndLabelAFK());
 			}

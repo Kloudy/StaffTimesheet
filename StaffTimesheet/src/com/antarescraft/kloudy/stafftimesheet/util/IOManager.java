@@ -120,6 +120,9 @@ public class IOManager
 		File logFile = new File(String.format("plugins/%s/staff_logs/%s/%s.txt", 
 				StaffTimesheet.pluginName, staffMember.getPlayerName(), TimeFormat.getDateFormat(date).replace("/", "-")));
 		
+		System.out.println(String.format("plugins/%s/staff_logs/%s/%s.txt", 
+				StaffTimesheet.pluginName, staffMember.getPlayerName(), TimeFormat.getDateFormat(date).replace("/", "-")));
+		
 		if(logFile.exists())
 		{ 
 			try 

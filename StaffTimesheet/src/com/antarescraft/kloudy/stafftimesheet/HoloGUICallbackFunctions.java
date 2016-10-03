@@ -45,10 +45,14 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 		if(staffMember == null) return;
 		try
 		{
-			System.out.println(dateFormat);
 			Calendar date = TimeFormat.parseDateFormat(dateFormat);
 			ArrayList<String> logLines = IOManager.getLogFile(staffMember, date);
 			if(logLines == null) return;
+			
+			for(String line : logLines)
+			{
+				System.out.println(line);
+			}
 						
 			String[] lines = new String[logLines.size()];
 			logLines.toArray(lines);

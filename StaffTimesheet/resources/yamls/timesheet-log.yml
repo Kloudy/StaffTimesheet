@@ -36,12 +36,49 @@ timesheet-log:
 
     date-value-scroller:
       type: "value-scroller"
-      label: "&lDate: &o&l%stafftimesheet_default-date%"
+      label: "&lChoose A Date: &6&o&l%date-value-scroller_value%"
       always-show-label: true
+      value-type: "date"
       default-value: "%stafftimesheet_default-date%"
       onscroll-sound: "BLOCK_LAVA_POP"
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: 0.1
+        y: 0.6
+
+    log-btn:
+      type: "button"
+      mini: true
+      symmetrical: true
+      label: "&a&lFind Log"
+      always-show-label: true
+      icon: "next-btn.png"
+      onclick: "$displayStaffMemberLog('timesheet-log', 'log-text', %player_name%, %date-value-scroller_value%)"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0
+        y: 0.4
+
+    log-text:
+      type: "label"
+      text:
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+      position:
+        x: 0
+        y: 0

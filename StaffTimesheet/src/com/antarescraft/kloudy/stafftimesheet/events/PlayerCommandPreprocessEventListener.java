@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
@@ -23,7 +24,7 @@ public class PlayerCommandPreprocessEventListener implements Listener
 		Player player = event.getPlayer();
 		
 		StaffMember staffMember = configManager.getStaffMember(player);
-		if(staffMember != null)
+		if(staffMember != null && ShiftManager.getInstance().onTheClock(staffMember))
 		{
 			staffMember.logEntry(event.getMessage());
 		}
