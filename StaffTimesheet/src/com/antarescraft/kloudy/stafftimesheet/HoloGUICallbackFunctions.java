@@ -34,18 +34,16 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 	 * @param playerName The name of the staff member whose log is being looked up
 	 * @param dateFormat Date format of the date of the log file
 	 */
-	public void displayStaffMemberLog(String guiContainerId, String logTextLabelId, String playerName, String dateFormat)
+	public void displayStaffMemberLog(Player player, String guiContainerId, String logTextLabelId, String dateFormat)
 	{	
-		System.out.println(String.format("guiPageid: %, logTextLabelId: %s, playerName: %s, dateFormat: %s", 
-				guiContainerId, logTextLabelId, playerName, dateFormat));
-		if(guiContainerId == null || logTextLabelId == null || playerName == null || dateFormat == null) return;
+		if(guiContainerId == null || logTextLabelId == null || player == null || dateFormat == null) return;
 		
 		GUIComponent guiComponent = staffTimesheet.getGUIComponent(guiContainerId, logTextLabelId);
 		if(guiComponent != null && !(guiComponent instanceof LabelComponent)) return;
 		
 		LabelComponent labelComponent = (LabelComponent)guiComponent;
 
-		StaffMember staffMember = configManager.getStaffMember(playerName);
+		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember == null) return;
 		try
 		{

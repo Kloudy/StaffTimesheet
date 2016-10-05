@@ -60,11 +60,11 @@ logbook-lore-text:                                                     #A collec
 
 #Log Book Event Labels#
 
-shift-start-label: "[&aClocked In]"               #Text to log when the staff member starts their shift
-shift-end-label-afk: "[&4AFK]"                    #Text to log when the staff member goes AFK
-shift-end-label-disconnected: "[&4Disconnected]"  #Text to log when the staff member disconnects from the server
-shift-end-label-clockout: "[&4Clocked Out]"       #Text to log when the staff member clocks out
-shift-end-plugin-disabled: "[&4Plugin Disabled]"  #Text to log when the plugin is disabled
+shift-start-label: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
+shift-end-label-afk: "[&4AFK&r]"                    #Text to log when the staff member goes AFK
+shift-end-label-disconnected: "[&4Disconnected&r]"  #Text to log when the staff member disconnects from the server
+shift-end-label-clockout: "[&4Clocked Out&r]"       #Text to log when the staff member clocks out
+shift-end-plugin-disabled: "[&4Plugin Disabled&r]"  #Text to log when the plugin is disabled
 
 
 
