@@ -51,7 +51,17 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = true, permission = "staff.shift", subcommands = "menu")
 	public void openMenu(CommandSender sender, String[] args)
 	{
-		staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, (Player)sender, "timesheet-home");
+		Player player = (Player)sender;
+		StaffMember staffMember = configManager.getStaffMember(player);
+		
+		if(staffMember.isSuperAdmin())
+		{
+			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin");
+		}
+		else
+		{
+			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home");
+		}
 	}
 	
 	@CommandHandler(description = "Starts the shift for the staff member", 

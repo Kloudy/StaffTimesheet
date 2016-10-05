@@ -68,7 +68,7 @@ timesheet-home:
       label-distance: 14
       label-zoom-distance: 3
       always-show-label: true
-      onclick: ""
+      onclick: "$openGUIPage('$player', 'timesheet-log')"
       onclick-sound: "UI_BUTTON_CLICK"
       rotation:
         x: 0

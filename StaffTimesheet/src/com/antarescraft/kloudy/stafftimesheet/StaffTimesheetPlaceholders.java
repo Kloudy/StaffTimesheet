@@ -25,41 +25,63 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 	public String onPlaceholderRequest(Player player, String identifier) 
 	{
 		if(player == null) return "";
-		
-		StaffMember staffMember = configManager.getStaffMember(player);
-		if(staffMember != null)
+
+		if(identifier.equals("staff-member-name"))
 		{
-			if(identifier.equals("staff-member-name"))
+			StaffMember staffMember = configManager.getStaffMember(player);
+			if(staffMember != null) return staffMember.getPlayerName();
+		}
+		//These placeholders can have player name optionally appended: <placeholder>_player-name
+		else if(identifier.matches("current-logged-time(_.+)?"))
+		{
+			String playerName = getSecondaryPlaceholderParameter(identifier);
+			if(playerName != null)
 			{
-				return staffMember.getPlayerName();
+				StaffMember staffMember = configManager.getStaffMember(playerName);
+				if(staffMember != null) return staffMember.getLoggedTimeString();
 			}
-			else if(identifier.equals("current-logged-time"))
+			else
 			{
-				return staffMember.getLoggedTimeString();
+				StaffMember staffMember = configManager.getStaffMember(player);
+				if(staffMember != null) return staffMember.getLoggedTimeString();
 			}
-			else if(identifier.equals("time-goal"))
+		}
+		else if(identifier.matches("time-goal(_.+)?"))
+		{
+			return staffMember.getTimeGoal();
+		}
+		else if(identifier.matches("percent-time-logged(_.+)?"))
+		{
+			return Double.toString(staffMember.getPercentageTimeCompleted());
+		}
+		else if(identifier.matches("clocked-in(_.+)?"))
+		{
+			if(ShiftManager.getInstance().onTheClock(staffMember))
 			{
-				return staffMember.getTimeGoal();
+				return "Yes";
 			}
-			else if(identifier.equals("percent-time-logged"))
-			{
-				return Double.toString(staffMember.getPercentageTimeCompleted());
-			}
-			else if(identifier.equals("clocked-in"))
-			{
-				if(ShiftManager.getInstance().onTheClock(staffMember))
-				{
-					return "Yes";
-				}
-				return "No";
-			}
-			else if(identifier.equals("default-date"))
-			{
-				Calendar now = Calendar.getInstance();
-				return TimeFormat.getDateFormat(now);
-			}
+			return "No";
+		}
+		//end placeholders that take optional playername parameter
+		else if(identifier.equals("default-date"))
+		{
+			Calendar now = Calendar.getInstance();
+			return TimeFormat.getDateFormat(now);
 		}
 		
 		return "";
+	}
+	
+	private String getSecondaryPlaceholderParameter(String placeholder)
+	{
+		String[] placeholderTokens = placeholder.split("_");
+		if(placeholderTokens.length == 2)
+		{
+			return placeholderTokens[1];
+		}
+		else
+		{
+			return null;
+		}
 	}
 }
