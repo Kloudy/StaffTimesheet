@@ -9,6 +9,7 @@ import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;
+import net.md_5.bungee.api.ChatColor;
 
 public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 {
@@ -24,27 +25,31 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 	@Override
 	public String onPlaceholderRequest(Player player, String identifier) 
 	{
-		if(player == null) return "";
-
+		String errorMessage = ChatColor.RED + "" + ChatColor.BOLD + "Staff member not found";
+		if(player == null) return errorMessage;
+		
+		//Some placeholders can have parameters optionally appended: <placeholder>_<secondary_param>
+		String playerName = getSecondaryPlaceholderParameter(identifier);//playerName passed as secondary placeholder parameter
+		StaffMember staffMember = null;
+		
+		if(playerName != null)
+		{
+			staffMember = configManager.getStaffMember(playerName);
+		}
+		else
+		{
+			staffMember = configManager.getStaffMember(player);
+		}
+		
+		if(staffMember == null) return errorMessage;
+		
 		if(identifier.equals("staff-member-name"))
 		{
-			StaffMember staffMember = configManager.getStaffMember(player);
-			if(staffMember != null) return staffMember.getPlayerName();
+			return staffMember.getPlayerName();
 		}
-		//These placeholders can have player name optionally appended: <placeholder>_player-name
 		else if(identifier.matches("current-logged-time(_.+)?"))
 		{
-			String playerName = getSecondaryPlaceholderParameter(identifier);
-			if(playerName != null)
-			{
-				StaffMember staffMember = configManager.getStaffMember(playerName);
-				if(staffMember != null) return staffMember.getLoggedTimeString();
-			}
-			else
-			{
-				StaffMember staffMember = configManager.getStaffMember(player);
-				if(staffMember != null) return staffMember.getLoggedTimeString();
-			}
+			return staffMember.getLoggedTimeString();
 		}
 		else if(identifier.matches("time-goal(_.+)?"))
 		{
@@ -52,7 +57,7 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 		}
 		else if(identifier.matches("percent-time-logged(_.+)?"))
 		{
-			return Double.toString(staffMember.getPercentageTimeCompleted());
+			return Double.toString(staffMember.getPercentageTimeCompleted()) + "%";
 		}
 		else if(identifier.matches("clocked-in(_.+)?"))
 		{
@@ -69,7 +74,7 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 			return TimeFormat.getDateFormat(now);
 		}
 		
-		return "";
+		return errorMessage;
 	}
 	
 	private String getSecondaryPlaceholderParameter(String placeholder)

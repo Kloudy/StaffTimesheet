@@ -9,7 +9,7 @@ timesheet-home-admin:
       height: 25
       position:
         x: 0
-        y: 0.8
+        y: 0.9
 
     close-btn:
       type: "button"
@@ -30,23 +30,34 @@ timesheet-home-admin:
         - "%scroll%      &b&lStaff Timesheet      "
       position:
         x: 0
-        y: 0.85
+        y: 1
+
+    player-name-text-box:
+      type: "text-box"
+      default-text: "%player_name%"
+      label: "&lSearch Staff Member Name: &c&l%player-name-text-box_value%"
+      onclick-sound: "UI_BUTTON_CLICK"
+      always-show-label: true
+      evaluate-placeholders: true
+      position:
+        x: 0
+        y: 0.2
 
     staff-member-label:
       type: "label"
       text:
-        - "&n&lStaff Member&r: &c&l%stafftimesheet_staff-member-name%"
+        - "&n&lStaff Member&r: &c&l%player-name-text-box_value%"
         - ""
-        - "&n&lTime Goal&r: &a&o&l%stafftimesheet_time-goal%"
+        - "&n&lTime Goal&r: &a&o&l%stafftimesheet_time-goal_%player-name-text-box_value%%"
         - ""
-        - "&n&lTime Logged&r: &a&o&l%stafftimesheet_current-logged-time%"
+        - "&n&lTime Logged&r: &a&o&l%stafftimesheet_current-logged-time_%player-name-text-box_value%%"
         - ""
-        - "&n&lProgress&r: &6&o&l%stafftimesheet_percent-time-logged%%"
+        - "&n&lProgress&r: &6&o&l%stafftimesheet_percent-time-logged_%player-name-text-box_value%%"
         - ""
-        - "&n&lClocked In&r: &6&o&l%stafftimesheet_clocked-in%"
+        - "&n&lClocked In&r: &6&o&l%stafftimesheet_clocked-in_%player-name-text-box_value%%"
       position:
         x: 0
-        y: 0.18
+        y: 0.04
 
     clock-in-btn:
       type: "button"
@@ -59,7 +70,7 @@ timesheet-home-admin:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: -0.4
-        y: -0.2
+        y: -0.35
 
     logbook-btn:
       type: "item"
@@ -76,7 +87,7 @@ timesheet-home-admin:
         z: 0
       position:
         x: 0
-        y: -0.32
+        y: -0.48
 
     clock-out-btn:
       type: "button"
@@ -89,4 +100,4 @@ timesheet-home-admin:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.4
-        y: -0.2
+        y: -0.35
