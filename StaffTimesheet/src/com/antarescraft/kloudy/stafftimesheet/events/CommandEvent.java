@@ -18,6 +18,7 @@ import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.StaffMemberAdmin;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
@@ -54,7 +55,7 @@ public class CommandEvent implements CommandExecutor
 		Player player = (Player)sender;
 		StaffMember staffMember = configManager.getStaffMember(player);
 		
-		if(staffMember.isSuperAdmin())
+		if(staffMember instanceof StaffMemberAdmin)
 		{
 			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin");
 		}

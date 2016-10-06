@@ -21,6 +21,8 @@ public class PlayerCommandPreprocessEventListener implements Listener
 	@EventHandler
 	public void playerCommandPreprocessEvent(PlayerCommandPreprocessEvent event)
 	{
+		if(!event.getMessage().equals("")) return;
+		
 		Player player = event.getPlayer();
 		
 		StaffMember staffMember = configManager.getStaffMember(player);

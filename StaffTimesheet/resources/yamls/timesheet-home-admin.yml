@@ -79,7 +79,7 @@ timesheet-home-admin:
       label-distance: 14
       label-zoom-distance: 3
       always-show-label: true
-      onclick: "$openGUIPage('$player', 'timesheet-log')"
+      onclick: "$openGUIPage('$player', 'admin-timesheet-log')"
       onclick-sound: "UI_BUTTON_CLICK"
       rotation:
         x: 0

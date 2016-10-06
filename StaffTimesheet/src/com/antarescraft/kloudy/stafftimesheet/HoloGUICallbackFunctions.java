@@ -50,9 +50,13 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 			Calendar date = TimeFormat.parseDateFormat(dateFormat);
 			ArrayList<String> logLines = IOManager.getLogFile(staffMember, date);
 			if(logLines == null) return;
-						
-			String[] lines = new String[logLines.size()];
-			logLines.toArray(lines);
+			
+			String[] lines = new String[logLines.size()*2];
+			for(int i = 0; i < logLines.size(); i++)
+			{
+				lines[(i*2)] = logLines.get(i);
+				lines[(i*2)+1] = "";
+			}
 						
 			labelComponent.setLines(lines);
 		}

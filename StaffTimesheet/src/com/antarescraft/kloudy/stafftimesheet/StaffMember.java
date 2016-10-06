@@ -21,19 +21,17 @@ public class StaffMember
 	private Player player;
 	private String playerName;
 	private UUID playerUUID;
-	private boolean superAdmin;
 	private String clockInPermission;
 	private String rankTitle;
 	private Duration timeGoal;
 	private Duration loggedTime;
 	private boolean startShiftOnLogin;
 	
-	public StaffMember(String playerName, String playerUUID, boolean superAdmin, String clockInPermission, Duration timeGoal, 
+	public StaffMember(String playerName, String playerUUID, String clockInPermission, Duration timeGoal, 
 			String rankTitle, Duration loggedTime, boolean startShiftOnLogin)
 	{
 		this.playerName = playerName;
 		this.playerUUID = UUID.fromString(playerUUID);
-		this.superAdmin = superAdmin;
 		this.clockInPermission = clockInPermission;
 		this.rankTitle = rankTitle;
 		this.startShiftOnLogin = startShiftOnLogin;
@@ -141,11 +139,6 @@ public class StaffMember
 	public UUID getUUID()
 	{
 		return playerUUID;
-	}
-	
-	public boolean isSuperAdmin()
-	{
-		return superAdmin;
 	}
 	
 	public String getClockInPermission()
