@@ -60,7 +60,7 @@ public class StaffMember
 		
 		if(diffDuration.compareTo(TimeFormat.getMinDuration()) < 0)
 		{
-			
+			throw new DurationUnderflowException();
 		}
 		
 		loggedTime = loggedTime.minus(diffDuration);
@@ -123,12 +123,12 @@ public class StaffMember
 		double loggedTimeSeconds = (double)loggedTime.getSeconds();
 		double timeGoalSeconds = (double)timeGoal.getSeconds();
 
-		DecimalFormat df = new DecimalFormat("#.###");
+		DecimalFormat df = new DecimalFormat("#.#");
 		df.setRoundingMode(RoundingMode.HALF_UP);
-		double percent = Double.parseDouble(df.format(loggedTimeSeconds / timeGoalSeconds));
-		if(percent > 1) percent = 1;
+		double percent = Double.parseDouble(df.format((loggedTimeSeconds / timeGoalSeconds)*100));
+		if(percent > 100) percent = 100;
 		
-		return percent * 100;
+		return percent;
 	}
 	
 	public String getPlayerName()
