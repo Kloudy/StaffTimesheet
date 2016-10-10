@@ -28,8 +28,9 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		});
 	}
 	
-	public String testABitch(String literal, Player player, String playerName)
+	public String testingABitch(String literal, Player player, String playerName)
 	{
+		System.out.println("made it to test a bitch");
 		return "say something I'm giving up on you";
 	}
 }

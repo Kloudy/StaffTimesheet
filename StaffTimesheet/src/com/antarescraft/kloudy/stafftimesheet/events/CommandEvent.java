@@ -59,7 +59,6 @@ public class CommandEvent implements CommandExecutor
 		
 		if(staffMember instanceof StaffMemberAdmin)
 		{
-
 			AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
 			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
 		}
