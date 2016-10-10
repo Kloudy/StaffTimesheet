@@ -21,6 +21,8 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberAdmin;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
+import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class CommandEvent implements CommandExecutor
@@ -57,11 +59,14 @@ public class CommandEvent implements CommandExecutor
 		
 		if(staffMember instanceof StaffMemberAdmin)
 		{
-			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin");
+
+			AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
+			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
 		}
 		else
 		{
-			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home");
+			TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
+			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home", model);
 		}
 	}
 	

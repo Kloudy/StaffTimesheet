@@ -58,7 +58,7 @@ public class HoloGUICallbackFunctions implements CallbackTrigger
 				lines[(i*2)+1] = "";
 			}
 						
-			labelComponent.setLines(lines);
+			//labelComponent.setLines(lines);
 		}
 		catch (InvalidDateFormatException e){}
 	}
