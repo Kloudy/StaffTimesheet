@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
-import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
@@ -23,13 +22,14 @@ public class TimesheetHomePageModel extends PlayerGUIPageModel
 		staffMember = configManager.getStaffMember(player);
 		
 		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
-		logbookBtn.registerClickHandler(new ClickHandler()
+		/*logbookBtn.registerClickHandler(new ClickHandler()
 		{
 			@Override
 			public void onClick()
 			{
-				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log");
+				LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("admin-timesheet-log"), player, staffMember);
+				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
 			}
-		});
+		});*/
 	}
 }

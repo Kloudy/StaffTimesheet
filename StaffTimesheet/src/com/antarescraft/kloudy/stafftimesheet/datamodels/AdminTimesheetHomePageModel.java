@@ -28,9 +28,13 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		});
 	}
 	
-	public String testingABitch(String literal, Player player, String playerName)
+	public String testingFunction(String literal, Player player, String playerName)
 	{
-		System.out.println("made it to test a bitch");
+		System.out.println("made it to test function");
+		
+		LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("admin-timesheet-log"), player, staffMember);
+		plugin.getHoloGUI().openGUIPage(plugin, player, "admin-timesheet-log", logbookModel);
+		
 		return "say something I'm giving up on you";
 	}
 }
