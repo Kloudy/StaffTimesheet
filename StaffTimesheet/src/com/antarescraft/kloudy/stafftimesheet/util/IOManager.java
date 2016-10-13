@@ -83,15 +83,6 @@ public class IOManager
 		PrintWriter out = null;
 		try
 		{
-			/*Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFile), "UTF-8"));
-			try 
-			{
-			    out.write(text);
-			} 
-			finally
-			{
-			    out.close();
-			}*/
 			FileWriter fileWriter = new FileWriter(logFile, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			out = new PrintWriter(bufferedWriter);
@@ -118,9 +109,6 @@ public class IOManager
 	public static ArrayList<String> getLogFile(StaffMember staffMember, Calendar date)
 	{
 		File logFile = new File(String.format("plugins/%s/staff_logs/%s/%s.txt", 
-				StaffTimesheet.pluginName, staffMember.getPlayerName(), TimeFormat.getDateFormat(date).replace("/", "-")));
-		
-		System.out.println(String.format("plugins/%s/staff_logs/%s/%s.txt", 
 				StaffTimesheet.pluginName, staffMember.getPlayerName(), TimeFormat.getDateFormat(date).replace("/", "-")));
 		
 		if(logFile.exists())
