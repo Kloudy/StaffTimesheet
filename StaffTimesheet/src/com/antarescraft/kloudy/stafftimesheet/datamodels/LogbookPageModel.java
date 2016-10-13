@@ -1,11 +1,13 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologui.guicomponents.AbstractIncrementableValue;
 import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
@@ -21,8 +23,10 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 public class LogbookPageModel extends PlayerGUIPageModel
 {
 	private ValueScrollerComponent dateScroller;
+	private ButtonComponent logBtn;
 	private ButtonComponent nextBtn;
 	private ButtonComponent backBtn;
+	
 	private StaffMember staffMember;
 	private ArrayList<String> logLines;
 	
@@ -31,13 +35,14 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	 * @param player 
 	 * @param staffMember Staff member whose logs are being looked up
 	 */
-	public LogbookPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember)
+	public LogbookPageModel(HoloGUIPlugin plugin, GUIPage guiPage, final Player player, StaffMember staffMember)
 	{
 		super(plugin, guiPage, player);
 		
 		this.staffMember = staffMember;
 		
 		dateScroller = (ValueScrollerComponent) guiPage.getComponent("date-value-scroller");
+		logBtn = (ButtonComponent)guiPage.getComponent("log-btn");
 		nextBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
 		backBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
 		
@@ -48,6 +53,15 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		{
 			
 		}
+		
+		logBtn.registerClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick()
+			{
+				Calendar date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
+			}
+		});
 		
 		nextBtn.registerClickHandler(new ClickHandler()
 		{
