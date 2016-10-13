@@ -42,6 +42,7 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		backBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
 		
 		logLines = getLogStrings();
+		if(logLines == null) return;
 		
 		if(logLines.size() > 10)
 		{
