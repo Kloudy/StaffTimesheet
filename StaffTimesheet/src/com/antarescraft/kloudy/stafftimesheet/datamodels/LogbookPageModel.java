@@ -9,7 +9,10 @@ import org.bukkit.entity.Player;
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologui.guicomponents.AbstractIncrementableValue;
 import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
+import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
+import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologui.guicomponents.LabelComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
@@ -26,6 +29,7 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	private ButtonComponent logBtn;
 	private ButtonComponent nextBtn;
 	private ButtonComponent backBtn;
+	private int page;
 	
 	private StaffMember staffMember;
 	private ArrayList<String> logLines;
@@ -35,7 +39,7 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	 * @param player 
 	 * @param staffMember Staff member whose logs are being looked up
 	 */
-	public LogbookPageModel(HoloGUIPlugin plugin, GUIPage guiPage, final Player player, StaffMember staffMember)
+	public LogbookPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
 	{
 		super(plugin, guiPage, player);
 		
@@ -45,6 +49,8 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		logBtn = (ButtonComponent)guiPage.getComponent("log-btn");
 		nextBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
 		backBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
+		
+		page = 0;
 		
 		logLines = getLogStrings();
 		if(logLines == null) return;
@@ -60,6 +66,14 @@ public class LogbookPageModel extends PlayerGUIPageModel
 			public void onClick()
 			{
 				Calendar date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
+				ArrayList<String> logs = IOManager.getLogFile(staffMember, date);
+				
+				GUIComponentProperties properties = new GUIComponentProperties(plugin, "log-label-" + page, guiPage.getId(), new ComponentPosition(0, 0.04),
+						null, 10, false, false);
+				
+				String[] logLines = new String[logs.size()];
+				LabelComponent logLabel = new LabelComponent(properties, logLines);
+				guiPage.addComponent(logLabel);
 			}
 		});
 		
