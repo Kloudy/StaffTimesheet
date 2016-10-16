@@ -4,7 +4,9 @@ import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
+import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.TextBoxUpdateHandler;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
@@ -12,9 +14,22 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 {
 	private TextBoxComponent staffMemberSearchBox;
 	
-	public AdminTimesheetHomePageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, final ConfigManager configManager) 
+	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final ConfigManager configManager) 
 	{
 		super(plugin, guiPage, player, configManager);
+		
+		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
+		logbookBtn.registerClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick()
+			{
+				System.out.println("made it to click handler");
+				
+				LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
+				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
+			}
+		});
 		
 		staffMemberSearchBox = (TextBoxComponent) guiPage.getComponent("player-name-text-box");
 		staffMemberSearchBox.registerTextBoxUpdateHandler(new TextBoxUpdateHandler()
@@ -26,15 +41,5 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				System.out.println(value);
 			}
 		});
-	}
-	
-	public String testingFunction(String literal, Player player, String playerName)
-	{
-		System.out.println("made it to test function");
-		
-		LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("admin-timesheet-log"), player, staffMember);
-		plugin.getHoloGUI().openGUIPage(plugin, player, "admin-timesheet-log", logbookModel);
-		
-		return "say something I'm giving up on you";
 	}
 }
