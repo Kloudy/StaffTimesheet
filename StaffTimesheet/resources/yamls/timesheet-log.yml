@@ -36,49 +36,65 @@ timesheet-log:
 
     date-value-scroller:
       type: "value-scroller"
-      label: "&lChoose A Date: &6&o&l%date-value-scroller_value%"
+      label: "&lSelect A Date"
       always-show-label: true
       value-type: "date"
+      max-value: "%stafftimesheet_default-date%"
       default-value: "%stafftimesheet_default-date%"
       onscroll-sound: "BLOCK_LAVA_POP"
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0
-        y: 0.6
+        x: -0
+        y: 0.62
 
     log-btn:
-      type: "button"
-      mini: true
-      symmetrical: true
-      label: "&a&lFind Log"
+      type: "item"
+      item-id: "ENCHANTED_BOOK"
+      label: "&lFIND LOGS ON &6&l%date-value-scroller_value%"
+      clickable: true
+      label-distance: 14
+      label-zoom-distance: 3
       always-show-label: true
-      icon: "next-btn.png"
-      onclick: "$displayStaffMemberLog('timesheet-log', 'log-text', %player_name%, %date-value-scroller_value%)"
       onclick-sound: "UI_BUTTON_CLICK"
+      rotation:
+        x: 0
+        y: 90
+        z: 0
       position:
         x: 0
-        y: 0.4
+        y: 0.25
 
-    log-text:
+    next-page-btn:
+      type: "button"
+      icon: "next-btn.png"
+      hidden: true
+      onclick-sound: UI_BUTTON_CLICK
+      always-show-label: true
+      symmetrical: true
+      mini: true
+      label: "&a&lNEXT PAGE"
+      position:
+        x: 0.3
+        y: -0.4
+
+    page-label:
       type: "label"
       text:
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
+        - "&l$model.getCurrentPage(); / $model.getTotalPages();"
       position:
         x: 0
-        y: 0
+        y: -0.4
+
+    prev-page-btn:
+      type: "button"
+      hidden: true
+      icon: "back.png"
+      onclick-sound: UI_BUTTON_CLICK
+      always-show-label: true
+      symmetrical: true
+      mini: true
+      label: "&a&lPREV PAGE"
+      position:
+        x: -0.3
+        y: -0.4
