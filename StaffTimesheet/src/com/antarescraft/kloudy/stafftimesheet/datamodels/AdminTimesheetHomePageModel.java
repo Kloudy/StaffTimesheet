@@ -8,6 +8,7 @@ import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.TextBoxUpdateHandler;
+import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
@@ -24,10 +25,15 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			@Override
 			public void onClick()
 			{
-				System.out.println("made it to click handler");
-				
-				LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
-				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
+				if(staffMember != null)
+				{
+					LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
+					plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
+				}
+				else
+				{
+					MessageManager.error(player, "Sorry, please select a staff member first");
+				}
 			}
 		});
 		
@@ -38,7 +44,6 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			public void onUpdate(String value) 
 			{
 				staffMember = configManager.getStaffMember(value);//value may be null if the name searched isn't a staff member
-				System.out.println(value);
 			}
 		});
 	}

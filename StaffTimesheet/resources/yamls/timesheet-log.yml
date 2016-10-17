@@ -6,9 +6,10 @@ timesheet-log:
       type: "label"
       text:
         - "%scroll%      &b&lTimesheet Logbook      "
+      label-distance: 6
       position:
         x: 0
-        y: 0.8
+        y: 0.9
 
     close-btn:
       type: "button"
@@ -34,6 +35,15 @@ timesheet-log:
         x: -0.8
         y: 0.8
 
+    staff-member-label:
+      type: "label"
+      label-distance: 8
+      text:
+        - "&lStaff Member: &c&l$model.getStaffMemberName();"
+      position:
+        x: 0
+        y: 0.8
+
     date-value-scroller:
       type: "value-scroller"
       label: "&lSelect A Date"
@@ -45,16 +55,16 @@ timesheet-log:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0
-        y: 0.62
+        x: -0.28
+        y: 0.52
 
     log-btn:
       type: "item"
       item-id: "ENCHANTED_BOOK"
-      label: "&lFIND LOGS ON &6&l%date-value-scroller_value%"
+      label: "&lFIND LOGS ON: &6&l%date-value-scroller_value%"
       clickable: true
-      label-distance: 14
-      label-zoom-distance: 3
+      label-distance: 10
+      label-zoom-distance: 2
       always-show-label: true
       onclick-sound: "UI_BUTTON_CLICK"
       rotation:
@@ -62,8 +72,8 @@ timesheet-log:
         y: 90
         z: 0
       position:
-        x: 0
-        y: 0.25
+        x: 0.28
+        y: 0.42
 
     next-page-btn:
       type: "button"
@@ -76,15 +86,7 @@ timesheet-log:
       label: "&a&lNEXT PAGE"
       position:
         x: 0.3
-        y: -0.4
-
-    page-label:
-      type: "label"
-      text:
-        - "&l$model.getCurrentPage(); / $model.getTotalPages();"
-      position:
-        x: 0
-        y: -0.4
+        y: -0.35
 
     prev-page-btn:
       type: "button"
@@ -97,4 +99,4 @@ timesheet-log:
       label: "&a&lPREV PAGE"
       position:
         x: -0.3
-        y: -0.4
+        y: -0.35

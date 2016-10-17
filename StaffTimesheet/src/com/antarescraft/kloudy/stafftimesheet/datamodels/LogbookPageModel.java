@@ -38,6 +38,7 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	private int totalPages;
 	private Calendar date;
 	private ArrayList<String> logLines;
+	private StaffMember staffMember;
 	
 	/**
 	 * 
@@ -48,7 +49,9 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	public LogbookPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
 	{
 		super(plugin, guiPage, player);
-						
+		
+		this.staffMember = staffMember;
+		
 		dateScroller = (ValueScrollerComponent) guiPage.getComponent("date-value-scroller");
 		logBtn = (ItemButtonComponent)guiPage.getComponent("log-btn");
 		nextBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
@@ -73,15 +76,30 @@ public class LogbookPageModel extends PlayerGUIPageModel
 					public void onClick()
 					{				
 						playerGUIPage.removeComponent("log-label");
+						playerGUIPage.removeComponent("page-label");
+						playerGUIPage.removeComponent("next-page-btn");
+						playerGUIPage.removeComponent("prev-page-btn");
 						
 						date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
 						logLines = IOManager.getLogFile(staffMember, date);
 						
-						totalPages = logLines.size() / 10;
-						
+						page = 0;
 						if(logLines != null && logLines.size() > 10)
 						{
+							totalPages = logLines.size() / 10;
+							
 							playerGUIPage.renderComponent(nextBtn);
+							
+							if(logLines.size() > 0)
+							{
+								renderPageLabel();
+							}
+						}
+						
+						if(logLines == null)
+						{
+							logLines = new ArrayList<String>();
+							logLines.add("&c&lSorry, no logs were found for " + staffMember.getPlayerName() + " on this date.");
 						}
 										
 						renderLogPageLabel();
@@ -139,21 +157,26 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		});
 	}
 	
-	public String getCurrentPage()
+	public int getCurrentPage()
 	{
-		return Integer.toString(page);
+		return page+1;
 	}
 	
-	public String getTotalPages()
+	public int getTotalPages()
 	{
-		return Integer.toString(totalPages);
+		return totalPages+1;
+	}
+	
+	public String getStaffMemberName()
+	{
+		return staffMember.getPlayerName();
 	}
 	
 	private void renderLogPageLabel()
 	{		
 		if(logLines == null) return;
 		
-		GUIComponentProperties properties = new GUIComponentProperties(plugin, "log-label", guiPage.getId(), new ComponentPosition(0, 0.04),
+		GUIComponentProperties properties = new GUIComponentProperties(plugin, "log-label", guiPage.getId(), new ComponentPosition(0, 0.3),
 				null, 10, false, false);
 		
 		String[] logPage = new String[20];
@@ -168,5 +191,14 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		
 		LabelComponent logLabel = new LabelComponent(properties, logPage);
 		playerGUIPage.renderComponent(logLabel);
+	}
+	
+	private void renderPageLabel()
+	{
+		GUIComponentProperties properties = new GUIComponentProperties(plugin, "page-label", guiPage.getId(), new ComponentPosition(0, -0.5),
+				null, 10, false, false);
+		
+		LabelComponent pageLabel = new LabelComponent(properties, new String[]{"&lPage: $model.getCurrentPage();/$model.getTotalPages();"});
+		playerGUIPage.renderComponent(pageLabel);
 	}
 }
