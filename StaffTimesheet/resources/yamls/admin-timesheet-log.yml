@@ -48,7 +48,8 @@ admin-timesheet-log:
         y: 0.6
 
     log-btn:
-      type: "button"
+      type: "item"
+      clickable: true
       mini: true
       symmetrical: true
       label: "&a&lFind Log For Staff Member: &c&l%stafftimesheet_admin-searched-staff-member-name%"
@@ -59,26 +60,3 @@ admin-timesheet-log:
       position:
         x: 0
         y: 0.4
-
-    log-text:
-      type: "label"
-      text:
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-        - ""
-      position:
-        x: 0
-        y: 0

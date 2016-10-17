@@ -14,6 +14,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 {
 	private TextBoxComponent staffMemberSearchBox;
+	private ItemButtonComponent manageStaffMemberBtn;
 	
 	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final ConfigManager configManager) 
 	{
@@ -46,5 +47,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				staffMember = configManager.getStaffMember(value);//value may be null if the name searched isn't a staff member
 			}
 		});
+		
+		manageStaffMemberBtn = (ItemButtonComponent)guiPage.getComponent("manage-staff-member-btn");
 	}
 }
