@@ -7,14 +7,15 @@ import java.util.Calendar;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.PlayerData;
 import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.LabelComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
+import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
@@ -29,11 +30,12 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	private PlayerGUIPage playerGUIPage;
 	
 	private ValueScrollerComponent dateScroller;
-	private ButtonComponent logBtn;
+	private ItemButtonComponent logBtn;
 	private ButtonComponent nextBtn;
 	private ButtonComponent backBtn;
 	
 	private int page;
+	private int totalPages;
 	private Calendar date;
 	private ArrayList<String> logLines;
 	
@@ -46,92 +48,105 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	public LogbookPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
 	{
 		super(plugin, guiPage, player);
-		
-		System.out.println("made it to logbook page model constructor");
-		
-		playerGUIPage = PlayerData.getPlayerData(player).getPlayerGUIPage();
-				
+						
 		dateScroller = (ValueScrollerComponent) guiPage.getComponent("date-value-scroller");
-		logBtn = (ButtonComponent)guiPage.getComponent("log-btn");
+		logBtn = (ItemButtonComponent)guiPage.getComponent("log-btn");
 		nextBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
 		backBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
 		
 		page = 0;
+		totalPages = 0;
+		
 		date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
 		
-		logLines = IOManager.getLogFile(staffMember, date);
-		if(logLines != null && logLines.size() > 10)
-		{
-			playerGUIPage.renderComponent(nextBtn);
-		}
-		
-		//find logs click handler
-		logBtn.registerClickHandler(new ClickHandler()
+		guiPage.registerPageLoadHandler(new GUIPageLoadHandler()
 		{
 			@Override
-			public void onClick()
-			{				
-				playerGUIPage.removeComponent("log-label");
-				
-				date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
-				logLines = IOManager.getLogFile(staffMember, date);
-								
-				renderLogPageLabel();
-			}
-		});
-		
-		//next log page click handler
-		nextBtn.registerClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick()
+			public void onPageLoad(PlayerGUIPage loadedPlayerGUIPage)
 			{
-				playerGUIPage.removeComponent("log-label");
+				playerGUIPage = loadedPlayerGUIPage;
 				
-				page++;
-				
-				if(backBtn.isHidden())
+				//find logs click handler
+				logBtn.registerClickHandler(new ClickHandler()
 				{
-					playerGUIPage.renderComponent(backBtn);
-				}
+					@Override
+					public void onClick()
+					{				
+						playerGUIPage.removeComponent("log-label");
+						
+						date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
+						logLines = IOManager.getLogFile(staffMember, date);
+						
+						totalPages = logLines.size() / 10;
+						
+						if(logLines != null && logLines.size() > 10)
+						{
+							playerGUIPage.renderComponent(nextBtn);
+						}
+										
+						renderLogPageLabel();
+					}
+				});
 				
-				if(page == logLines.size() / 10)
+				//next log page click handler
+				nextBtn.registerClickHandler(new ClickHandler()
 				{
-					playerGUIPage.removeComponent("next-page-btn");
-				}
+					@Override
+					public void onClick()
+					{
+						playerGUIPage.removeComponent("log-label");
+						
+						page++;
+						
+						if(backBtn.isHidden())
+						{
+							playerGUIPage.renderComponent(backBtn);
+						}
+						
+						if(page == logLines.size() / 10)
+						{
+							playerGUIPage.removeComponent("next-page-btn");
+						}
+						
+						renderLogPageLabel();
+					}
+				});
 				
-				renderLogPageLabel();
-			}
-		});
-		
-		//previous log page click handler
-		backBtn.registerClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick()
-			{
-				playerGUIPage.removeComponent("log-label");
-				
-				page--;
-				
-				if(page == 0)
+				//previous log page click handler
+				backBtn.registerClickHandler(new ClickHandler()
 				{
-					playerGUIPage.removeComponent("prev-page-btn");
-				}
-				
-				if(nextBtn.isHidden())
-				{
-					playerGUIPage.renderComponent(nextBtn);
-				}
-				
-				renderLogPageLabel();
+					@Override
+					public void onClick()
+					{
+						playerGUIPage.removeComponent("log-label");
+						
+						page--;
+						
+						if(page == 0)
+						{
+							playerGUIPage.removeComponent("prev-page-btn");
+						}
+						
+						if(nextBtn.isHidden())
+						{
+							playerGUIPage.renderComponent(nextBtn);
+						}
+						
+						renderLogPageLabel();
+					}
+				});
 			}
 		});
 	}
 	
-	public int getCurrentPage()
+	public String getCurrentPage()
 	{
-		return page;
+		return Integer.toString(page);
+	}
+	
+	public String getTotalPages()
+	{
+		return Integer.toString(totalPages);
 	}
 	
 	private void renderLogPageLabel()
