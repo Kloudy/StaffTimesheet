@@ -3,6 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet.datamodels;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
@@ -14,7 +15,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 {
 	private TextBoxComponent staffMemberSearchBox;
-	private ItemButtonComponent manageStaffMemberBtn;
+	private ButtonComponent manageStaffMemberBtn;
 	
 	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final ConfigManager configManager) 
 	{
@@ -48,6 +49,22 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			}
 		});
 		
-		manageStaffMemberBtn = (ItemButtonComponent)guiPage.getComponent("manage-staff-member-btn");
+		manageStaffMemberBtn = (ButtonComponent)guiPage.getComponent("manage-staff-member-btn");
+		manageStaffMemberBtn.registerClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick()
+			{
+				if(staffMember != null)
+				{
+					ManageTimePageModel manageTimeModel = new ManageTimePageModel(plugin, plugin.getGUIPages().get("admin-manage-staff"), player, staffMember);
+					plugin.getHoloGUI().openGUIPage(plugin, player, "admin-manage-staff", manageTimeModel);
+				}
+				else
+				{
+					MessageManager.error(player, "Sorry, please select a staff member first");
+				}
+			}
+		});
 	}
 }
