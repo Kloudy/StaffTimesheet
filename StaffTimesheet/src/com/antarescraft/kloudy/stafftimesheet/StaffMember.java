@@ -151,9 +151,14 @@ public class StaffMember
 		return rankTitle;
 	}
 	
-	public String getTimeGoal()
+	public String getTimeGoalString()
 	{
 		return TimeFormat.getDurationFormatString(timeGoal);
+	}
+	
+	public Duration getTimeGoal()
+	{
+		return timeGoal;
 	}
 	
 	public Duration getLoggedTime()

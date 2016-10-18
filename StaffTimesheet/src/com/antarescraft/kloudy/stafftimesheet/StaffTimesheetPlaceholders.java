@@ -58,7 +58,7 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 		}
 		else if(identifier.matches("time-goal(_.+)?"))
 		{
-			return staffMember.getTimeGoal();
+			return staffMember.getTimeGoalString();
 		}
 		else if(identifier.matches("percent-time-logged(_.+)?"))
 		{

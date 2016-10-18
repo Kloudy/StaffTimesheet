@@ -131,7 +131,7 @@ public class StaffMemberLogbook
 		strBuilder.append("Staff Member:" + "\n");
 		strBuilder.append(ChatColor.RED + "" + ChatColor.BOLD + playerName + ChatColor.RESET + "\n\n");
 		strBuilder.append("Logged Time: " + ChatColor.ITALIC + staffMember.getLoggedTimeString() + "\n\n");
-		strBuilder.append(ChatColor.RESET + "Time Goal: " + ChatColor.ITALIC + staffMember.getTimeGoal() + "\n\n");
+		strBuilder.append(ChatColor.RESET + "Time Goal: " + ChatColor.ITALIC + staffMember.getTimeGoalString() + "\n\n");
 		strBuilder.append(ChatColor.RESET + "Progress: " + ChatColor.ITALIC + staffMember.getPercentageTimeCompleted() + "%");
 		
 		return strBuilder.toString();
