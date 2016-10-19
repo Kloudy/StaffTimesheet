@@ -12,6 +12,7 @@ import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
 import com.antarescraft.kloudy.hologui.guicomponents.DurationComponentValue;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ToggleSwitchComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
@@ -30,6 +31,7 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 	private ValueScrollerComponent loggedTimeScroller;
 	private ValueScrollerComponent timeGoalScroller;
 	private ToggleSwitchComponent superAdminToggle;
+	private TextBoxComponent clockInPermissionTextBox;
 	
 	private StaffMember staffMember;
 
@@ -46,36 +48,20 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 			{
 				playerGUIPage = loadedPage;
 				
-				//render staff member logged time scroller
-				GUIComponentProperties properties = new GUIComponentProperties(plugin, "logged-time-scroller", "admin-manage-staff", 
-						new ComponentPosition(0, 0.5), "&lLogged Time", 10, true, false);
+				loggedTimeScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-scroller");
+				loggedTimeScroller.setValue(player, new DurationComponentValue(staffMember.getLoggedTime(), 
+						TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal()));
 				
-				ClickableGUIComponentProperties clickableProperties = new ClickableGUIComponentProperties(null, false, parseSound("UI_BUTTON_CLICK"), 0.5f, 2, null, null);
+				timeGoalScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-scroller");
+				timeGoalScroller.setValue(player, new DurationComponentValue(staffMember.getLoggedTime(), 
+						TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration()));
 				
-				DurationComponentValue durationValue = new DurationComponentValue(staffMember.getLoggedTime(), TimeFormat.getMinDuration().plusHours(1), 
-						TimeFormat.getMinDuration(), staffMember.getTimeGoal());
-				
-				loggedTimeScroller = new ValueScrollerComponent(properties, clickableProperties, 
-						parseSound("BLOCK_LAVA_POP"), 0.1f, durationValue);
-				
-				playerGUIPage.renderComponent(loggedTimeScroller);
-				
-				//render staff member time goal scroller
-				properties = new GUIComponentProperties(plugin, "time-goal-scroller", "admin-manage-staff", 
-						new ComponentPosition(0, 0.25), "&lTime Goal", 10, true, false);
-				
-				clickableProperties = new ClickableGUIComponentProperties(null, false, parseSound("UI_BUTTON_CLICK"), 0.5f, 2, null, null);
-				
-				durationValue = new DurationComponentValue(staffMember.getTimeGoal(), TimeFormat.getMinDuration().plusHours(1), 
-						TimeFormat.getMinDuration(), TimeFormat.getMaxDuration());
-				
-				timeGoalScroller = new ValueScrollerComponent(properties, clickableProperties, 
-						parseSound("BLOCK_LAVA_POP"), 0.1f, durationValue);
-				
-				playerGUIPage.renderComponent(timeGoalScroller);
 				
 				superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
 				superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());
+				
+				clockInPermissionTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-permission");
+				clockInPermissionTextBox.setPlayerTextBoxValue(player, staffMember.getClockInPermission());
 			}
 		});
 	}
@@ -91,12 +77,13 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 	}
 	
 	/*
-	 * Save changes made on staff member page
+	 * Save changes made on staff member settings page
 	 */
 	public void save()
 	{
 		staffMember.setLoggedTime((Duration)loggedTimeScroller.getPlayerScrollValue(player).getValue());
 		staffMember.setTimeGoal((Duration)timeGoalScroller.getPlayerScrollValue(player).getValue());
+		staffMember.setSuperAdmin(superAdminToggle.getPlayerToggleSwitchState(player));
 		
 		MessageManager.info(player, ChatColor.GREEN + "Saved staff member settings!");
 	}

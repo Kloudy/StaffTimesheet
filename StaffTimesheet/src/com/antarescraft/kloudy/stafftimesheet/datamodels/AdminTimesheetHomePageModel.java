@@ -10,7 +10,6 @@ import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.TextBoxUpdateHandler;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
-import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
@@ -67,27 +66,5 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				}
 			}
 		});
-	}
-	
-	public String staffMemberTimeGoal()
-	{
-		return staffMember.getTimeGoalString();
-	}
-	
-	public String staffMemberLoggedTime()
-	{
-		return staffMember.getLoggedTimeString();
-	}
-	
-	public double staffMemberPercentTimeLogged()
-	{
-		return staffMember.getPercentageTimeCompleted();
-	}
-	
-	public String staffMemberClockedIn()
-	{
-		if(ShiftManager.getInstance().onTheClock(staffMember)) return "Yes";
-
-		return "No";
 	}
 }

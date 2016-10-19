@@ -45,7 +45,7 @@ admin-manage-staff:
       onclick: "$model.save();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.55
+        x: 0.8
         y: 0.48
 
     staff-member-label:
@@ -66,13 +66,46 @@ admin-manage-staff:
         x: 0
         y: 0.7
 
+    logged-time-scroller:
+      type: "value-scroller"
+      label: "&lLogged Time"
+      always-show-label: true
+      value-type: "duration"
+      onscroll-sound: "BLOCK_LAVA_POP"
+      onscroll-sound-volume: 0.1
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.4
+        y: 0.52
+
+    time-goal-scroller:
+      type: "value-scroller"
+      label: "&Time Goal"
+      always-show-label: true
+      value-type: "duration"
+      onscroll-sound: "BLOCK_LAVA_POP"
+      onscroll-sound-volume: 0.1
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.4
+        y: 0.52
+
     super-admin-toggle:
       type: "toggle-switch"
-      label: "&4&lSuper Admin"
+      label: "&lSuper Admin: %super-admin-toggle_value%"
       always-show-label: true
       on-value: "&a&lYES"
       off-value: "&4&lNO"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: 0.1
+        y: 0
+
+    clock-in-permission:
+      type: "text-box"
+      label: "&lClock-in Permission"
+      always-show-label: true
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0
+        y: -0.3
