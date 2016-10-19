@@ -7,6 +7,7 @@ import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
@@ -32,5 +33,27 @@ public class TimesheetHomePageModel extends PlayerGUIPageModel
 				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
 			}
 		});
+	}
+	
+	public String staffMemberTimeGoal()
+	{
+		return staffMember.getTimeGoalString();
+	}
+	
+	public String staffMemberLoggedTime()
+	{
+		return staffMember.getLoggedTimeString();
+	}
+	
+	public double staffMemberPercentTimeLogged()
+	{
+		return staffMember.getPercentageTimeCompleted();
+	}
+	
+	public String staffMemberClockedIn()
+	{
+		if(ShiftManager.getInstance().onTheClock(staffMember)) return "Yes";
+
+		return "No";
 	}
 }

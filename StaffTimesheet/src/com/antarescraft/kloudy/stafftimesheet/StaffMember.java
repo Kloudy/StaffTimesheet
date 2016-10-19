@@ -26,9 +26,10 @@ public class StaffMember
 	private Duration timeGoal;
 	private Duration loggedTime;
 	private boolean startShiftOnLogin;
+	private boolean superAdmin;
 	
 	public StaffMember(String playerName, String playerUUID, String clockInPermission, Duration timeGoal, 
-			String rankTitle, Duration loggedTime, boolean startShiftOnLogin)
+			String rankTitle, Duration loggedTime, boolean startShiftOnLogin, boolean superAdmin)
 	{
 		this.playerName = playerName;
 		this.playerUUID = UUID.fromString(playerUUID);
@@ -37,6 +38,7 @@ public class StaffMember
 		this.startShiftOnLogin = startShiftOnLogin;
 		this.timeGoal = timeGoal;
 		this.loggedTime = loggedTime;
+		this.superAdmin = superAdmin;
 	}
 	
 	public void addLoggedTime(Duration time) throws DurationOverflowException
@@ -89,6 +91,13 @@ public class StaffMember
 		this.timeGoal = timeGoal;
 		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
 		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".time-goal", durationFormat);
+	}
+	
+	public void setSuperAdmin(boolean superAdmin)
+	{
+		this.superAdmin = superAdmin;
+		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".super-admin", durationFormat);
 	}
 	
 	public void logEntry(String text)
@@ -181,5 +190,10 @@ public class StaffMember
 	public boolean startShiftOnLogin()
 	{
 		return startShiftOnLogin;
+	}
+	
+	public boolean isSuperAdmin()
+	{
+		return superAdmin;
 	}
 }

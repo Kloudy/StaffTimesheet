@@ -12,6 +12,7 @@ import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
 import com.antarescraft.kloudy.hologui.guicomponents.DurationComponentValue;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologui.guicomponents.ToggleSwitchComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
@@ -28,10 +29,11 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 	
 	private ValueScrollerComponent loggedTimeScroller;
 	private ValueScrollerComponent timeGoalScroller;
+	private ToggleSwitchComponent superAdminToggle;
 	
 	private StaffMember staffMember;
 
-	public ManageTimePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, Player player, final StaffMember staffMember) 
+	public ManageTimePageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember) 
 	{
 		super(plugin, guiPage, player);
 		
@@ -60,7 +62,7 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 				
 				//render staff member time goal scroller
 				properties = new GUIComponentProperties(plugin, "time-goal-scroller", "admin-manage-staff", 
-						new ComponentPosition(0, 0.2), "&lTime Goal", 10, true, false);
+						new ComponentPosition(0, 0.25), "&lTime Goal", 10, true, false);
 				
 				clickableProperties = new ClickableGUIComponentProperties(null, false, parseSound("UI_BUTTON_CLICK"), 0.5f, 2, null, null);
 				
@@ -71,6 +73,9 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 						parseSound("BLOCK_LAVA_POP"), 0.1f, durationValue);
 				
 				playerGUIPage.renderComponent(timeGoalScroller);
+				
+				superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
+				superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());
 			}
 		});
 	}

@@ -47,11 +47,11 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 		{
 			return staffMember.getPlayerName();
 		}
-		else if(identifier.equals("admin-searched-staff-member-name") && staffMember instanceof StaffMemberAdmin)
-		{
-			StaffMemberAdmin admin = (StaffMemberAdmin)staffMember;
-			return admin.getSearchedStaffMember();
-		}
+		//else if(identifier.equals("admin-searched-staff-member-name") && staffMember instanceof StaffMemberAdmin)
+		//{
+			//StaffMemberAdmin admin = (StaffMemberAdmin)staffMember;
+			//return admin.getSearchedStaffMember();
+		//}
 		else if(identifier.matches("current-logged-time(_.+)?"))
 		{
 			return staffMember.getLoggedTimeString();

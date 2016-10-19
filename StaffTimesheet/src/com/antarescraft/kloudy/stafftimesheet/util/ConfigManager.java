@@ -17,7 +17,6 @@ import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatExcept
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.StaffMemberAdmin;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -170,17 +169,10 @@ public class ConfigManager
 					} catch (InvalidDurationFormatException e1) {}
 				}
 				
-				StaffMember staffMember = null;
-				if(superAdmin)
-				{
-					staffMember = new StaffMemberAdmin(playerName, playerUUID, clockInPermission,
-							timeGoalDuration, rankTitle, loggedTimeDuration, startShiftOnLogin);
-				}
-				else
-				{
-					staffMember = new StaffMember(playerName, playerUUID, clockInPermission,
-							timeGoalDuration, rankTitle, loggedTimeDuration, startShiftOnLogin);
-				}
+				
+				StaffMember staffMember = new StaffMember(playerName, playerUUID, clockInPermission,
+						timeGoalDuration, rankTitle, loggedTimeDuration, startShiftOnLogin , superAdmin);
+				
 				
 				staffMembers.put(UUID.fromString(playerUUID), staffMember);
 			}

@@ -1,12 +1,11 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
-import java.time.Duration;
 
 /**
  * Represents a super admin staff member
  * This is a staff member that has the ability to manage and look up log information on other staff members
  */
-public class StaffMemberAdmin extends StaffMember
+/*public class StaffMemberAdmin extends StaffMember
 {
 	private String searchedStaffMember;//used to hold the name of the staff member when searching in the textbox on the admin page
 	
@@ -27,4 +26,4 @@ public class StaffMemberAdmin extends StaffMember
 	{
 		return searchedStaffMember;
 	}
-}
+}*/
