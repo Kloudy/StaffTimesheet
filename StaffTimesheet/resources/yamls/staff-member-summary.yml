@@ -1,0 +1,12 @@
+staff-member-summary:
+
+  components:
+
+    timesheet-log-label:
+      type: "label"
+      text:
+        - "%scroll%      &b&lSTAFF MEMBER SUMMARY      "
+      label-distance: 6
+      position:
+        x: 0
+        y: 0.9

@@ -49,7 +49,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			}
 		});
 		
-		manageStaffMemberBtn = (ButtonComponent)guiPage.getComponent("manage-staff-member-btn");
+		manageStaffMemberBtn = (ButtonComponent)guiPage.getComponent("staff-member-settings-btn");
 		manageStaffMemberBtn.registerClickHandler(new ClickHandler()
 		{
 			@Override

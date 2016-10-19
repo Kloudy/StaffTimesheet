@@ -1,0 +1,78 @@
+admin-manage-staff:
+
+  components:
+
+    manage-staff-label:
+      type: "label"
+      text:
+        - "%scroll%      &b&lStaff Member Settings      "
+      label-distance: 6
+      position:
+        x: 0
+        y: 0.9
+
+    close-btn:
+      type: "button"
+      label: "Close Menu"
+      symmetrical: true
+      mini: true
+      icon: "x-red.gif"
+      onclick: "hg close"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.8
+        y: 0.8
+
+    back-btn:
+      type: "button"
+      label: "Back"
+      symmetrical: true
+      mini: true
+      icon: "back.png"
+      onclick: "hg back"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.8
+        y: 0.8
+
+    save-btn:
+      type: "button"
+      label: "&a&lSAVE"
+      always-show-label: true
+      symmetrical: true
+      mini: true
+      icon: "next-btn.png"
+      onclick: "$model.save();"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.55
+        y: 0.48
+
+    staff-member-label:
+      type: "label"
+      label-distance: 8
+      text:
+        - "&lStaff Member: &c&l$model.getStaffMemberName();"
+      position:
+        x: 0
+        y: 0.8
+
+    staff-member-uuid:
+      type: "label"
+      label-distance: 8
+      text:
+        - "&lUUID: &c&l$model.getStaffMemberUUID();"
+      position:
+        x: 0
+        y: 0.7
+
+    super-admin-toggle:
+      type: "toggle-switch"
+      label: "&4&lSuper Admin"
+      always-show-label: true
+      on-value: "&a&lYES"
+      off-value: "&4&lNO"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0
+        y: 0.1

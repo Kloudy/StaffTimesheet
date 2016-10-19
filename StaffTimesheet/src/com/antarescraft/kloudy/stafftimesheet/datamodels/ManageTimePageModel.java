@@ -1,12 +1,12 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import java.time.Duration;
+import java.util.UUID;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.AbstractIncrementableValue;
 import com.antarescraft.kloudy.hologui.guicomponents.ClickableGUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
 import com.antarescraft.kloudy.hologui.guicomponents.DurationComponentValue;
@@ -26,7 +26,8 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 {
 	private PlayerGUIPage playerGUIPage;
 	
-	private ValueScrollerComponent timeScroller;
+	private ValueScrollerComponent loggedTimeScroller;
+	private ValueScrollerComponent timeGoalScroller;
 	
 	private StaffMember staffMember;
 
@@ -43,21 +44,56 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 			{
 				playerGUIPage = loadedPage;
 				
-				//render staff member time scroller
-				GUIComponentProperties properties = new GUIComponentProperties(plugin, "time-scroller", "admin-manage-staff", 
-						new ComponentPosition(0.28, -0.52), "&lEdit Staff Member Logged Time", 10, true, false);
+				//render staff member logged time scroller
+				GUIComponentProperties properties = new GUIComponentProperties(plugin, "logged-time-scroller", "admin-manage-staff", 
+						new ComponentPosition(0, 0.5), "&lLogged Time", 10, true, false);
 				
 				ClickableGUIComponentProperties clickableProperties = new ClickableGUIComponentProperties(null, false, parseSound("UI_BUTTON_CLICK"), 0.5f, 2, null, null);
 				
 				DurationComponentValue durationValue = new DurationComponentValue(staffMember.getLoggedTime(), TimeFormat.getMinDuration().plusHours(1), 
 						TimeFormat.getMinDuration(), staffMember.getTimeGoal());
 				
-				timeScroller = new ValueScrollerComponent(properties, clickableProperties, 
+				loggedTimeScroller = new ValueScrollerComponent(properties, clickableProperties, 
 						parseSound("BLOCK_LAVA_POP"), 0.1f, durationValue);
 				
-				playerGUIPage.renderComponent(timeScroller);
+				playerGUIPage.renderComponent(loggedTimeScroller);
+				
+				//render staff member time goal scroller
+				properties = new GUIComponentProperties(plugin, "time-goal-scroller", "admin-manage-staff", 
+						new ComponentPosition(0, 0.2), "&lTime Goal", 10, true, false);
+				
+				clickableProperties = new ClickableGUIComponentProperties(null, false, parseSound("UI_BUTTON_CLICK"), 0.5f, 2, null, null);
+				
+				durationValue = new DurationComponentValue(staffMember.getTimeGoal(), TimeFormat.getMinDuration().plusHours(1), 
+						TimeFormat.getMinDuration(), TimeFormat.getMaxDuration());
+				
+				timeGoalScroller = new ValueScrollerComponent(properties, clickableProperties, 
+						parseSound("BLOCK_LAVA_POP"), 0.1f, durationValue);
+				
+				playerGUIPage.renderComponent(timeGoalScroller);
 			}
 		});
+	}
+	
+	public String getStaffMemberName()
+	{
+		return staffMember.getPlayerName();
+	}
+	
+	public UUID getStaffMemberUUID()
+	{
+		return staffMember.getUUID();
+	}
+	
+	/*
+	 * Save changes made on staff member page
+	 */
+	public void save()
+	{
+		staffMember.setLoggedTime((Duration)loggedTimeScroller.getPlayerScrollValue(player).getValue());
+		staffMember.setTimeGoal((Duration)timeGoalScroller.getPlayerScrollValue(player).getValue());
+		
+		MessageManager.info(player, ChatColor.GREEN + "Saved staff member settings!");
 	}
 	
 	private Sound parseSound(String soundStr)
@@ -70,10 +106,5 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 		catch(Exception e){}
 		
 		return sound;
-	}
-	
-	public void save()
-	{
-		staffMember.setLoggedTime((Duration)timeScroller.getPlayerScrollValue(player).getValue());
 	}
 }

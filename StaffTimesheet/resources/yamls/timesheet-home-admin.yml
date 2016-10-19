@@ -27,7 +27,7 @@ timesheet-home-admin:
       type: "label"
       label-distance: 8
       text:
-        - "%scroll%      &b&lStaff Timesheet      "
+        - "%scroll%      &b&lStaff Timesheet - &c&lAdmin Portal      "
       position:
         x: 0
         y: 1
@@ -70,16 +70,16 @@ timesheet-home-admin:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: -0.4
-        y: -0.35
+        y: -0.02
 
     logbook-btn:
       type: "item"
       item-id: "ENCHANTED_BOOK"
       label: "&lLOGBOOK"
+      clickable: true
       label-distance: 14
       label-zoom-distance: 3
       always-show-label: true
-      onclick: "$model.testingABitch('lol fuck you', $player, '%player_name%')"
       onclick-sound: "UI_BUTTON_CLICK"
       rotation:
         x: 0
@@ -88,6 +88,30 @@ timesheet-home-admin:
       position:
         x: 0
         y: -0.48
+
+    staff-member-settings-btn:
+      type: "button"
+      mini: true
+      always-show-label: true
+      label: "&lSTAFF MEMBER SETTINGS"
+      symmetrical: true
+      icon: "next-btn.png"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.4
+        y: -0.35
+
+    staff-member-summary-btn:
+      type: "button"
+      mini: true
+      always-show-label: true
+      label: "&lSTAFF MEMBER TIME SUMMARIES"
+      symmetrical: true
+      icon: "next-btn.png"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.4
+        y: -0.35
 
     clock-out-btn:
       type: "button"
@@ -100,4 +124,4 @@ timesheet-home-admin:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.4
-        y: -0.35
+        y: -0.02

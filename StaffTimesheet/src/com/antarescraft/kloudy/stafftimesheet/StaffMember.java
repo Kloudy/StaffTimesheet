@@ -84,6 +84,13 @@ public class StaffMember
 		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);
 	}
 	
+	public void setTimeGoal(Duration timeGoal)
+	{
+		this.timeGoal = timeGoal;
+		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".time-goal", durationFormat);
+	}
+	
 	public void logEntry(String text)
 	{
 		String timestamp = TimeFormat.generateTimestamp("[hh:mm:ss]: ");

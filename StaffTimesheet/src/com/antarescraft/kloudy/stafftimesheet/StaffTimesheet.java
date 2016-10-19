@@ -51,5 +51,6 @@ public class StaffTimesheet extends HoloGUIPlugin
 	public void onDisable()
 	{
 		ShiftManager.getInstance().clockOutAll(ShiftEndReason.PLUGIN_DISABLED);
+
 	}
 }
