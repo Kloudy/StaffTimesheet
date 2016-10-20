@@ -79,29 +79,10 @@ public class StaffMember
 		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);
 	}
 	
-	public void setLoggedTime(Duration loggedTime)
-	{
-		this.loggedTime = loggedTime;
-		String durationFormat = TimeFormat.getDurationFormatString(this.loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);
-	}
-	
-	public void setTimeGoal(Duration timeGoal)
-	{
-		this.timeGoal = timeGoal;
-		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".time-goal", durationFormat);
-	}
-	
-	public void setSuperAdmin(boolean superAdmin)
-	{
-		this.superAdmin = superAdmin;
-		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".super-admin", durationFormat);
-	}
-	
 	public void logEntry(String text)
 	{
+		if(text == null || (text != null && text.equals(""))) return;
+		
 		String timestamp = TimeFormat.generateTimestamp("[hh:mm:ss]: ");
 		String logEntryLine = timestamp + text;
 			
@@ -195,5 +176,53 @@ public class StaffMember
 	public boolean isSuperAdmin()
 	{
 		return superAdmin;
+	}
+	
+	/*
+	 * Setter Functions - These functions also update the staff member's config values in staff-members.yml
+	 */
+	
+	public void setLoggedTime(Duration loggedTime)
+	{
+		this.loggedTime = loggedTime;
+		
+		String durationFormat = TimeFormat.getDurationFormatString(this.loggedTime);
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);		
+	}
+	
+	public void setTimeGoal(Duration timeGoal)
+	{
+		this.timeGoal = timeGoal;
+		
+		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".time-goal", durationFormat);
+	}
+	
+	public void setSuperAdmin(boolean superAdmin)
+	{
+		this.superAdmin = superAdmin;
+		
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".super-admin", this.superAdmin);
+	}
+	
+	public void setClockInPermission(String clockInPermission)
+	{
+		this.clockInPermission = clockInPermission;
+		
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".clock-in-permission", this.clockInPermission);
+	}
+	
+	public void setRankTitle(String rankTitle)
+	{
+		this.rankTitle = rankTitle;
+		
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".rank-title", this.rankTitle);
+	}
+	
+	public void setStartShiftOnLogin(boolean startShiftOnLogin)
+	{
+		this.startShiftOnLogin = startShiftOnLogin;
+		
+		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".start-shift-on-login", this.startShiftOnLogin);
 	}
 }

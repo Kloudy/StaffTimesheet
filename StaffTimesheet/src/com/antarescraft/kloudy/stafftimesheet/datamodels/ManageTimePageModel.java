@@ -7,10 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.ClickableGUIComponentProperties;
-import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
-import com.antarescraft.kloudy.hologui.guicomponents.DurationComponentValue;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ToggleSwitchComponent;
@@ -18,6 +14,7 @@ import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
+import com.antarescraft.kloudy.hologui.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
@@ -49,13 +46,12 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 				playerGUIPage = loadedPage;
 				
 				loggedTimeScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-scroller");
-				loggedTimeScroller.setValue(player, new DurationComponentValue(staffMember.getLoggedTime(), 
+				loggedTimeScroller.setValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
 						TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal()));
 				
 				timeGoalScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-scroller");
-				timeGoalScroller.setValue(player, new DurationComponentValue(staffMember.getLoggedTime(), 
+				timeGoalScroller.setValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
 						TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration()));
-				
 				
 				superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
 				superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());
