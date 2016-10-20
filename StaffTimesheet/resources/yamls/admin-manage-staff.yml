@@ -45,7 +45,7 @@ admin-manage-staff:
       onclick: "$model.save();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.8
+        x: 1.5
         y: 0.48
 
     staff-member-label:
@@ -71,24 +71,56 @@ admin-manage-staff:
       label: "&lLogged Time"
       always-show-label: true
       value-type: "duration"
+      default-value: "00:00:00"
       onscroll-sound: "BLOCK_LAVA_POP"
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.4
-        y: 0.52
+        x: -0.6
+        y: 0.45
+
+    logged-time-hms-scroller:
+      type: "value-scroller"
+      always-show-label: true
+      value-type: "list"
+      default-value:
+        - "Hours"
+        - "Minutes"
+        - "Seconds"
+      onscroll-sound: "BLOCK_LAVA_POP"
+      onscroll-sound-volume: 0.1
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.6
+        y: 0.31
 
     time-goal-scroller:
       type: "value-scroller"
-      label: "&Time Goal"
+      label: "&lTime Goal"
       always-show-label: true
       value-type: "duration"
+      default-value: "00:00:00"
       onscroll-sound: "BLOCK_LAVA_POP"
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.4
-        y: 0.52
+        x: 0.6
+        y: 0.45
+
+    time-goal-hms-scroller:
+      type: "value-scroller"
+      always-show-label: true
+      value-type: "list"
+      default-value:
+        - "Hours"
+        - "Minutes"
+        - "Seconds"
+      onscroll-sound: "BLOCK_LAVA_POP"
+      onscroll-sound-volume: 0.1
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.6
+        y: 0.31
 
     super-admin-toggle:
       type: "toggle-switch"
@@ -99,7 +131,7 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: 0
+        y: 0.5
 
     clock-in-permission:
       type: "text-box"
@@ -108,4 +140,4 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: -0.3
+        y: 0
