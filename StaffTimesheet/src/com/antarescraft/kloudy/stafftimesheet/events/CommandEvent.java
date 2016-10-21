@@ -45,6 +45,8 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = false, permission = "staff.admin", subcommands = "reloadconfig")
 	public void reloadConfig(CommandSender sender, String[] args)
 	{
+		staffTimesheet.destroyPlayerGUIPages();
+		
 		staffTimesheet.loadGUIContainersFromYaml(sender);
 		configManager.loadConfigValues();
 	}

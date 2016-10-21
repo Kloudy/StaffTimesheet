@@ -27,7 +27,7 @@ timesheet-home-admin:
       type: "label"
       label-distance: 8
       text:
-        - "%scroll%      &b&lStaff Timesheet - &c&lAdmin Portal      "
+        - "%scroll%      &b&lStaff Timesheet - &4&lAdmin Portal      "
       position:
         x: 0
         y: 1
@@ -48,13 +48,15 @@ timesheet-home-admin:
       text:
         - "&n&lStaff Member&r: &c&l%player-name-text-box_value%"
         - ""
-        - "&n&lTime Goal&r: &a&o&l%stafftimesheet_time-goal_%player-name-text-box_value%%"
+        - "&n&lRank&r: &6&l$model.staffMemberRank();"
         - ""
-        - "&n&lTime Logged&r: &a&o&l%stafftimesheet_current-logged-time_%player-name-text-box_value%%"
+        - "&n&lTime Goal&r: &a&o&l$model.staffMemberTimeGoal();"
         - ""
-        - "&n&lProgress&r: &6&o&l%stafftimesheet_percent-time-logged_%player-name-text-box_value%%"
+        - "&n&lTime Logged&r: &a&o&l$model.staffMemberLoggedTime();"
         - ""
-        - "&n&lClocked In&r: &6&o&l%stafftimesheet_clocked-in_%player-name-text-box_value%%"
+        - "&n&lProgress&r: &6&o&l$model.staffMemberPercentTimeLogged();"
+        - ""
+        - "&n&lClocked In&r: &6&o&l$model.staffMemberClockedIn();"
       position:
         x: 0
         y: 0.04

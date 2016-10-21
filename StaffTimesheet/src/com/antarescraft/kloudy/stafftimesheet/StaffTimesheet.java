@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologui.PlayerData;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
@@ -52,5 +53,14 @@ public class StaffTimesheet extends HoloGUIPlugin
 	{
 		ShiftManager.getInstance().clockOutAll(ShiftEndReason.PLUGIN_DISABLED);
 
+		destroyPlayerGUIPages();
+	}
+	
+	public void destroyPlayerGUIPages()
+	{
+		for(PlayerData playerData : PlayerData.getAllPlayerData())
+		{
+			if(playerData.getPlayerGUIPage() != null) playerData.getPlayerGUIPage().destroy();
+		}
 	}
 }

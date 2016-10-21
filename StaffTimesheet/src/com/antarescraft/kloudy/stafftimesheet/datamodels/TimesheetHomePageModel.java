@@ -35,6 +35,11 @@ public class TimesheetHomePageModel extends PlayerGUIPageModel
 		});
 	}
 	
+	public String staffMemberRank()
+	{
+		return staffMember.getRankTitle();
+	}
+	
 	public String staffMemberTimeGoal()
 	{
 		return staffMember.getTimeGoalString();

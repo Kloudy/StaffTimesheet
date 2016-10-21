@@ -28,6 +28,7 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 	private ValueScrollerComponent timeGoalHMSScroller;
 	private ToggleSwitchComponent superAdminToggle;
 	private TextBoxComponent clockInPermissionTextBox;
+	private TextBoxComponent rankTitleTextBox;
 	
 	private StaffMember staffMember;
 
@@ -42,7 +43,7 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal()));
 		
 		timeGoalScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-scroller");
-		timeGoalScroller.setValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
+		timeGoalScroller.setValue(player, new DurationScrollValue(staffMember.getTimeGoal(), 
 				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration()));
 		
 		superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
@@ -50,6 +51,9 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 		
 		clockInPermissionTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-permission");
 		clockInPermissionTextBox.setPlayerTextBoxValue(player, staffMember.getClockInPermission());
+		
+		rankTitleTextBox = (TextBoxComponent)guiPage.getComponent("rank-title");
+		rankTitleTextBox.setPlayerTextBoxValue(player, staffMember.getRankTitle());
 		
 		//register hours:minutes:second scroll handlers
 		loggedTimeHMSScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-hms-scroller");
