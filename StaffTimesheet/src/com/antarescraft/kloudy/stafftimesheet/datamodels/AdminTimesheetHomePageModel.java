@@ -12,10 +12,14 @@ import com.antarescraft.kloudy.hologui.handlers.TextBoxUpdateHandler;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
+/**
+ * Represents a data model for the superadmin timesheet home page
+ */
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 {
 	private TextBoxComponent staffMemberSearchBox;
 	private ButtonComponent manageStaffMemberBtn;
+	private ButtonComponent billingPeriodHistoryBtn;
 	
 	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final ConfigManager configManager) 
 	{
@@ -34,7 +38,25 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				}
 				else
 				{
-					MessageManager.error(player, "Sorry, please select a staff member first");
+					MessageManager.error(player, "Sorry, please select an existing staff member first");
+				}
+			}
+		});
+		
+		billingPeriodHistoryBtn = (ButtonComponent)guiPage.getComponent("billing-period-history-btn");
+		billingPeriodHistoryBtn.registerClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick()
+			{
+				if(staffMember != null)
+				{
+					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember);
+					plugin.getHoloGUI().openGUIPage(plugin, player, "billing-period-history", billingPeriodHistoryModel);
+				}
+				else
+				{
+					MessageManager.error(player, "Sorry, please select an existing staff member first");
 				}
 			}
 		});
@@ -57,7 +79,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			{
 				if(staffMember != null)
 				{
-					ManageTimePageModel manageTimeModel = new ManageTimePageModel(plugin, plugin.getGUIPages().get("admin-manage-staff"), player, staffMember);
+					StaffMemberSettingsPageModel manageTimeModel = new StaffMemberSettingsPageModel(plugin, plugin.getGUIPages().get("admin-manage-staff"), player, staffMember);
 					plugin.getHoloGUI().openGUIPage(plugin, player, "admin-manage-staff", manageTimeModel);
 				}
 				else

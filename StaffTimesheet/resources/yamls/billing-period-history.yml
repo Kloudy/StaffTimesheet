@@ -1,0 +1,59 @@
+billing-period-history:
+
+  components:
+
+    timesheet-log-label:
+      type: "label"
+      text:
+        - "%scroll%      &b&lBILLING PERIOD HISTORY      "
+      label-distance: 6
+      position:
+        x: 0
+        y: 0.6
+
+    close-btn:
+      type: "button"
+      label: "Close Menu"
+      symmetrical: true
+      mini: true
+      icon: "x-red.gif"
+      onclick: "hg close"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.8
+        y: 0.8
+
+    back-btn:
+      type: "button"
+      label: "Back"
+      symmetrical: true
+      mini: true
+      icon: "back.png"
+      onclick: "hg back"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: -0.8
+        y: 0.8
+
+    billing-period-label:
+      type: "label"
+      label-distance: 7
+      text:
+        - "&lBilling Period: &a&l$model.startDate(); - $model.endDate();"
+      position:
+        x: 0
+        y: 0.4
+
+    summary-label:
+      type: "label"
+      text:
+        - "&lStaff Member: &c&l$model.staffMemberName();"
+        - ""
+        - "&lTime Goal: &6&l$model.staffMemberTimeGoal();"
+        - ""
+        - "&lTime Completed: &6&l$model.staffMemberPercentTimeLogged();%"
+        - ""
+        - "&lTime Logged: &6&l$model.staffMemberLoggedTime();"
+      position:
+        x: 0
+        y: 0.2

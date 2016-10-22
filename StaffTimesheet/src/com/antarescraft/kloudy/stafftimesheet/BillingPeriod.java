@@ -9,7 +9,7 @@ import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 /**
- * Represents a billing period - Contains data about activities of each staff member during the billing period
+ * Represents a billing period - Contains a summary of each staff member's logged time during the billing period
  */
 public class BillingPeriod 
 {
@@ -26,7 +26,7 @@ public class BillingPeriod
 		
 		endDate = Calendar.getInstance();
 		endDate.setTimeInMillis((startDate.getTimeInMillis() + billingPeriodDuration.toMillis()));
-		
+				
 		staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
 	}
 	
@@ -38,25 +38,51 @@ public class BillingPeriod
 		this.staffMemberSummaries = staffMemberSummaries;
 	}
 	
+	/*
+	 * Write data to billing-period-history.yml
+	 */
 	public void saveToConfigFile()
 	{
 		ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-				"start-date", TimeFormat.getDateFormat(startDate));
+				".start-date", TimeFormat.getDateFormat(startDate));
 		ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-				"end-date", TimeFormat.getDateFormat(endDate));
+				".end-date", TimeFormat.getDateFormat(endDate));
 		
-		//write staff member summaries
 		for(StaffMemberSummary summary : staffMemberSummaries.values())
 		{
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					"staff-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID());
+					".staff-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID().toString());
 			
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					"staff-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeLogged());
+					".staff-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeCompleted());
 			
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					"staff-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getTimeLogged());
+					".staff-summaries." + summary.getStaffMemberName() + ".time-goal", summary.getTimeGoal());
+			
+			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+					".staff-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getLoggedTime());
 		}
+	}
+	
+	/*
+	 * Updates the staff member's summary for this billing period
+	 */
+	public void updateStaffMemberSummary(StaffMember staffMember)
+	{
+		if(staffMember == null) return;
+		
+		StaffMemberSummary staffMemberSummary = staffMemberSummaries.get(staffMember.getUUID());
+		if(staffMemberSummary == null)
+		{	
+			staffMemberSummary = new StaffMemberSummary(staffMember);
+			staffMemberSummaries.put(staffMember.getUUID(), staffMemberSummary);
+		}
+		
+		staffMemberSummary.setPercentTimeCompleted(staffMember.getPercentageTimeCompleted());
+		staffMemberSummary.setTimeGoal(staffMember.getTimeGoal());
+		staffMemberSummary.setLoggedTime(staffMember.getLoggedTime());
+		
+		saveToConfigFile();
 	}
 
 	/*

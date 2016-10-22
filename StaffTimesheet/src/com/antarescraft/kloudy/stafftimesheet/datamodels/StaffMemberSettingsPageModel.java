@@ -11,7 +11,6 @@ import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ToggleSwitchComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.ScrollHandler;
-import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.hologui.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologui.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
@@ -20,7 +19,10 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class ManageTimePageModel extends PlayerGUIPageModel
+/**
+ * Represents a data model for the staff member settings page
+ */
+public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 {
 	private ValueScrollerComponent loggedTimeScroller;
 	private ValueScrollerComponent loggedTimeHMSScroller;
@@ -32,9 +34,9 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 	
 	private StaffMember staffMember;
 
-	public ManageTimePageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember) 
+	public StaffMemberSettingsPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember) 
 	{
-		super(plugin, guiPage, player);
+		super(plugin, guiPage, player, staffMember);
 		
 		this.staffMember = staffMember;
 		

@@ -27,7 +27,7 @@ timesheet-home-admin:
       type: "label"
       label-distance: 8
       text:
-        - "%scroll%      &b&lStaff Timesheet - &4&lAdmin Portal      "
+        - "%scroll%      &b&lStaff Timesheet - &4&lSuper Admin Portal      "
       position:
         x: 0
         y: 1
@@ -54,7 +54,7 @@ timesheet-home-admin:
         - ""
         - "&n&lTime Logged&r: &a&o&l$model.staffMemberLoggedTime();"
         - ""
-        - "&n&lProgress&r: &6&o&l$model.staffMemberPercentTimeLogged();"
+        - "&n&lProgress&r: &6&o&l$model.staffMemberPercentTimeLogged();%"
         - ""
         - "&n&lClocked In&r: &6&o&l$model.staffMemberClockedIn();"
       position:
@@ -103,7 +103,7 @@ timesheet-home-admin:
         x: -0.4
         y: -0.35
 
-    staff-member-summary-btn:
+    billing-period-history-btn:
       type: "button"
       mini: true
       always-show-label: true

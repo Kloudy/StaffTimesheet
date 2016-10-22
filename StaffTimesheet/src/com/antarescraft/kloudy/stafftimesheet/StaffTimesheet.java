@@ -39,7 +39,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 		
 		configManager = new ConfigManager(this);
 		configManager.loadConfigValues();
-		
+	
+		//task that runs every hour to see if we've rolled over into a new billing cycle
 		BillingPeriodUpdateTask billingPeriodUpdateTask = new BillingPeriodUpdateTask(configManager);
 		billingPeriodUpdateTask.start(this);
 		

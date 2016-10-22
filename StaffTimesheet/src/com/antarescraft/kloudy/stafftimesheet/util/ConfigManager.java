@@ -33,7 +33,7 @@ public class ConfigManager
 	private int billingPeriodDuration;
 	private String currentBillPeriodStartDate;
 	
-	private ArrayList<BillingPeriod> billingPeriodHistory;
+	private static ArrayList<BillingPeriod> billingPeriodHistory;
 	
 	private Duration updateStaffLogsPeriod;
 	
@@ -250,11 +250,22 @@ public class ConfigManager
 		return new BillingPeriod(getCurrentBillPeriodStartDate(), getBillingPeriodDuration());
 	}
 	
-	public ArrayList<BillingPeriod> getAllBillingPeriods()
+	public void resetAllStaffMemberTime()
+	{
+		for(StaffMember staffMember : staffMembers.values())
+		{
+			staffMember.resetLoggedTime();
+		}
+	}
+	
+	/*
+	 * Reads staff-member-billing-period-history.yml and returns all billing period history
+	 */
+	public static ArrayList<BillingPeriod> getAllBillingPeriods()
 	{
 		billingPeriodHistory = new ArrayList<BillingPeriod>();
 		
-		File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName()));
+		File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/billing-period-historyl.yml", staffTimesheetPlugin.getName()));
 		if(!billingPeriodHistoryYmlFile.exists())
 		{
 			IOManager.initFileStructure(staffTimesheetPlugin);
@@ -285,9 +296,10 @@ public class ConfigManager
 							
 							UUID uuid = UUID.fromString(summarySection.getString("uuid"));
 							double percentTimeLogged = summarySection.getDouble("percent-time-logged");
+							Duration timeGoal = TimeFormat.parseDurationFormat(summarySection.getString("time-goal"));
 							Duration timeLogged = TimeFormat.parseDurationFormat(summarySection.getString("time-logged"));
 							
-							staffMemberSummaries.put(uuid, new StaffMemberSummary(staffMemberName, uuid, percentTimeLogged, timeLogged));
+							staffMemberSummaries.put(uuid, new StaffMemberSummary(staffMemberName, uuid, percentTimeLogged, timeGoal, timeLogged));
 						}
 						
 						billingPeriodHistory.add(new BillingPeriod(startDate, endDate, staffMemberSummaries));
@@ -301,12 +313,12 @@ public class ConfigManager
 		return billingPeriodHistory;
 	}
 	
-	private int getBillingPeriodDuration()
+	public int getBillingPeriodDuration()
 	{
 		return billingPeriodDuration;
 	}
 	
-	private Calendar getCurrentBillPeriodStartDate()
+	public Calendar getCurrentBillPeriodStartDate()
 	{
 		Calendar date = null;
 		try 

@@ -17,7 +17,6 @@ import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
-import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.hologui.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.hologui.scrollvalues.DateScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
@@ -27,7 +26,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
  * Represents a data model for the logbook gui page
  */
 
-public class LogbookPageModel extends PlayerGUIPageModel
+public class LogbookPageModel extends BaseStaffTimesheetPageModel
 {
 	private PlayerGUIPage playerGUIPage;
 	
@@ -40,7 +39,6 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	private int totalPages;
 	private Calendar date;
 	private ArrayList<String> logLines;
-	private StaffMember staffMember;
 	
 	/**
 	 * 
@@ -50,10 +48,8 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	 */
 	public LogbookPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
 	{
-		super(plugin, guiPage, player);
-		
-		this.staffMember = staffMember;
-		
+		super(plugin, guiPage, player, staffMember);
+				
 		dateScroller = (ValueScrollerComponent) guiPage.getComponent("date-value-scroller");
 		logBtn = (ItemButtonComponent)guiPage.getComponent("log-btn");
 		nextBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
@@ -170,11 +166,6 @@ public class LogbookPageModel extends PlayerGUIPageModel
 	public int getTotalPages()
 	{
 		return totalPages+1;
-	}
-	
-	public String getStaffMemberName()
-	{
-		return staffMember.getPlayerName();
 	}
 	
 	private void renderLogPageLabel()

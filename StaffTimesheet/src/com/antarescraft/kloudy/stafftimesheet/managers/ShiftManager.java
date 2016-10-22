@@ -22,10 +22,10 @@ public class ShiftManager
 {
 	private static ShiftManager instance;
 	
+	private BillingPeriod billingPeriod;
+	
 	private HashMap<UUID, TimeCard> timeCards;//collection containing active staff time cards
-	
-	private BillingPeriod currentBillingPeriod;
-	
+		
 	public static ShiftManager getInstance()
 	{
 		if(instance == null)
@@ -39,6 +39,16 @@ public class ShiftManager
 	private ShiftManager()
 	{
 		timeCards = new HashMap<UUID, TimeCard>();
+	}
+	
+	public void setCurrentBillingPeriod(BillingPeriod billingPeriod)
+	{
+		this.billingPeriod = billingPeriod;
+	}
+	
+	public BillingPeriod getCurrentBillingPeriod()
+	{
+		return billingPeriod;
 	}
 	
 	public boolean onTheClock(StaffMember staffMember)
@@ -78,6 +88,8 @@ public class ShiftManager
 				try
 				{
 					staffMember.addLoggedTime(shiftTime);
+					
+					billingPeriod.updateStaffMemberSummary(staffMember);
 				}
 				catch(DurationOverflowException e)//overflowed duration, set staff member logged time to the maximum duration allowed
 				{

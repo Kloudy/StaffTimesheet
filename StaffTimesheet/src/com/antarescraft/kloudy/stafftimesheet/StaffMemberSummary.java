@@ -6,28 +6,34 @@ import java.util.UUID;
 import com.antarescraft.kloudy.hologui.plugincore.time.TimeFormat;
 
 /**
- * Represents a staff member's activity (time logged) during a particular billing period
+ * Represents a staff member's activity (logged time & percentage of time goal logged) during a particular billing period
  */
 
 public class StaffMemberSummary
 {
 	private String staffMemberName;
 	private UUID staffMemberUUID;
-	private double percentTimeLogged;
-	private Duration timeLogged;
+	private double percentTimeCompleted;
+	private Duration timeGoal;
+	private Duration loggedTime;
 	
 	public StaffMemberSummary(StaffMember staffMember)
 	{
 		staffMemberName = staffMember.getPlayerName();
 		staffMemberUUID = staffMember.getUUID();
+		percentTimeCompleted = staffMember.getPercentageTimeCompleted();
+		timeGoal = staffMember.getTimeGoal();
+		loggedTime = staffMember.getLoggedTime();
 	}
 	
-	public StaffMemberSummary(String staffMemberName, UUID staffMemberUUID, double percentTimeLogged, Duration timeLogged)
+	public StaffMemberSummary(String staffMemberName, UUID staffMemberUUID, double percentTimeLogged, 
+			Duration timeGoal, Duration timeLogged)
 	{
 		this.staffMemberName = staffMemberName;
 		this.staffMemberUUID = staffMemberUUID;
-		this.percentTimeLogged = percentTimeLogged;
-		this.timeLogged = timeLogged;
+		this.percentTimeCompleted = percentTimeLogged;
+		this.timeGoal = timeGoal;
+		this.loggedTime = timeLogged;
 	}
 	
 	/*
@@ -44,27 +50,37 @@ public class StaffMemberSummary
 		return staffMemberUUID;
 	}
 	
-	public double getPercentTimeLogged()
+	public double getPercentTimeCompleted()
 	{
-		return percentTimeLogged;
+		return percentTimeCompleted;
 	}
 	
-	public String getTimeLogged()
+	public String getTimeGoal()
 	{
-		return TimeFormat.getDurationFormatString(timeLogged);
+		return TimeFormat.getDurationFormatString(timeGoal);
+	}
+	
+	public String getLoggedTime()
+	{
+		return TimeFormat.getDurationFormatString(loggedTime);
 	}
 	
 	/*
 	 * Setter Functions
 	 */
 	
-	public void setPercentTimeLogged(double percentTimeLogged)
+	public void setPercentTimeCompleted(double percentTimeLogged)
 	{
-		this.percentTimeLogged = percentTimeLogged;
+		this.percentTimeCompleted = percentTimeLogged;
 	}
 	
-	public void setTimeLogged(Duration timeLogged)
+	public void setTimeGoal(Duration timeGoal)
 	{
-		this.timeLogged = timeLogged;
+		this.timeGoal = timeGoal;
+	}
+	
+	public void setLoggedTime(Duration timeLogged)
+	{
+		this.loggedTime = timeLogged;
 	}
 }
