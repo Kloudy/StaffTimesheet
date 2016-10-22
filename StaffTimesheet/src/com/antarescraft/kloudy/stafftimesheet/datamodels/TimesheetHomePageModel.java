@@ -7,8 +7,8 @@ import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
-import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class TimesheetHomePageModel extends PlayerGUIPageModel

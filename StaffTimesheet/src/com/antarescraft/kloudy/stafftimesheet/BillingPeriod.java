@@ -1,8 +1,11 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.UUID;
 
+import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 /**
@@ -13,31 +16,61 @@ public class BillingPeriod
 	private Calendar startDate;
 	private Calendar endDate;
 	
-	private ArrayList<StaffMemberSummary> staffMemberSummaries;
+	private HashMap<UUID, StaffMemberSummary> staffMemberSummaries;
 	
-	private BillingPeriod(Calendar startDate, Calendar endDate)
+	public BillingPeriod(Calendar startDate, int weeksInPeriod)
+	{
+		this.startDate = startDate;
+
+		Duration billingPeriodDuration = TimeFormat.getMinDuration().plusDays(weeksInPeriod * 7);
+		
+		endDate = Calendar.getInstance();
+		endDate.setTimeInMillis((startDate.getTimeInMillis() + billingPeriodDuration.toMillis()));
+		
+		staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
+	}
+	
+	public BillingPeriod(Calendar startDate, Calendar endDate, HashMap<UUID, StaffMemberSummary> staffMemberSummaries)
 	{
 		this.startDate = startDate;
 		this.endDate = endDate;
 		
-		staffMemberSummaries = new ArrayList<StaffMemberSummary>();
+		this.staffMemberSummaries = staffMemberSummaries;
 	}
 	
-	public static BillingPeriod generateBillPeriodHistory(ConfigManager configManager)
+	public void saveToConfigFile()
 	{
-		return null;
+		ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+				"start-date", TimeFormat.getDateFormat(startDate));
+		ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+				"end-date", TimeFormat.getDateFormat(endDate));
+		
+		//write staff member summaries
+		for(StaffMemberSummary summary : staffMemberSummaries.values())
+		{
+			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+					"staff-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID());
+			
+			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+					"staff-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeLogged());
+			
+			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
+					"staff-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getTimeLogged());
+		}
 	}
-	
+
 	/*
 	 * Getter Functions
 	 */
 	
+	public String getId()
+	{
+		return TimeFormat.getDateFormat(startDate) + "-" + TimeFormat.getDateFormat(endDate);
+	}
+	
 	public StaffMemberSummary getStaffMemberSummary(StaffMember staffMember)
 	{
-		for(StaffMemberSummary staffMemberSummary : staffMemberSummaries)
-		{
-			
-		}
+		return staffMemberSummaries.get(staffMember.getUUID());
 	}
 	
 	public Calendar getStartDate()

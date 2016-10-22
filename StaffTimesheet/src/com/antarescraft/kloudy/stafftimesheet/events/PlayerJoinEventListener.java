@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class PlayerJoinEventListener implements Listener

@@ -16,12 +16,12 @@ import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
-import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
+import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class CommandEvent implements CommandExecutor

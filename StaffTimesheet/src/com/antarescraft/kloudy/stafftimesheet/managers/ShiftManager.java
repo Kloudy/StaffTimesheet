@@ -1,4 +1,4 @@
-package com.antarescraft.kloudy.stafftimesheet;
+package com.antarescraft.kloudy.stafftimesheet.managers;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -8,18 +8,23 @@ import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
+import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
+import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.TimeCard;
 
 /**
- * Shift Manager
- *
  * Handles the clocking in and clocking out of staff members.
- * 
  */
+
 public class ShiftManager
 {
 	private static ShiftManager instance;
 	
 	private HashMap<UUID, TimeCard> timeCards;//collection containing active staff time cards
+	
+	private BillingPeriod currentBillingPeriod;
 	
 	public static ShiftManager getInstance()
 	{

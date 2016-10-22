@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
-import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class PlayerQuitEventListener implements Listener

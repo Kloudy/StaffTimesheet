@@ -18,7 +18,9 @@ import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.StaffMemberSummary;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -30,6 +32,8 @@ public class ConfigManager
 
 	private int billingPeriodDuration;
 	private String currentBillPeriodStartDate;
+	
+	private ArrayList<BillingPeriod> billingPeriodHistory;
 	
 	private Duration updateStaffLogsPeriod;
 	
@@ -206,11 +210,11 @@ public class ConfigManager
 				property, defaultValue));
 	}
 	
-	public static void writePropertyToConfigFile(String path, Object value)
+	public static void writePropertyToConfigFile(String yamlRelativeFilePath, String path, Object value)
 	{
 		try
 		{	
-			File configFile = new File("plugins/" + staffTimesheetPlugin.getName() + "/staff-members.yml");
+			File configFile = new File("plugins/" + staffTimesheetPlugin.getName() + "/" + yamlRelativeFilePath);
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(configFile);
 			yaml.set(path, value);
 			yaml.save(configFile);
@@ -241,12 +245,68 @@ public class ConfigManager
 		return null;
 	}
 	
-	public int getBillingPeriodDuration()
+	public BillingPeriod getCurrentBillingPeriod()
+	{
+		return new BillingPeriod(getCurrentBillPeriodStartDate(), getBillingPeriodDuration());
+	}
+	
+	public ArrayList<BillingPeriod> getAllBillingPeriods()
+	{
+		billingPeriodHistory = new ArrayList<BillingPeriod>();
+		
+		File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheetPlugin.getName()));
+		if(!billingPeriodHistoryYmlFile.exists())
+		{
+			IOManager.initFileStructure(staffTimesheetPlugin);
+		}
+		
+		//parse billing-period-history.yml
+		YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYmlFile);
+		ConfigurationSection billingPeriodHistorySection = billingPeriodHistoryYaml.getConfigurationSection("billing-period-history");
+		if(billingPeriodHistorySection != null)
+		{
+			for(String key : billingPeriodHistorySection.getKeys(false))
+			{
+				ConfigurationSection billingPeriodSection = billingPeriodHistorySection.getConfigurationSection(key);
+				
+				try
+				{
+					Calendar startDate = TimeFormat.parseDateFormat(billingPeriodSection.getString("start-date"));
+					Calendar endDate = TimeFormat.parseDateFormat(billingPeriodSection.getString("end-date"));
+					
+					ConfigurationSection staffMemberSummariesSection = billingPeriodSection.getConfigurationSection("staff-member-summaries");
+					if(staffMemberSummariesSection != null)
+					{
+						HashMap<UUID, StaffMemberSummary> staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
+						
+						for(String staffMemberName : staffMemberSummariesSection.getKeys(false))
+						{
+							ConfigurationSection summarySection = staffMemberSummariesSection.getConfigurationSection(staffMemberName);
+							
+							UUID uuid = UUID.fromString(summarySection.getString("uuid"));
+							double percentTimeLogged = summarySection.getDouble("percent-time-logged");
+							Duration timeLogged = TimeFormat.parseDurationFormat(summarySection.getString("time-logged"));
+							
+							staffMemberSummaries.put(uuid, new StaffMemberSummary(staffMemberName, uuid, percentTimeLogged, timeLogged));
+						}
+						
+						billingPeriodHistory.add(new BillingPeriod(startDate, endDate, staffMemberSummaries));
+					}
+				}
+				catch(InvalidDateFormatException e){}
+				catch(InvalidDurationFormatException e){}
+			}
+		}
+		
+		return billingPeriodHistory;
+	}
+	
+	private int getBillingPeriodDuration()
 	{
 		return billingPeriodDuration;
 	}
 	
-	public Calendar getCurrentBillPeriodStartDate()
+	private Calendar getCurrentBillPeriodStartDate()
 	{
 		Calendar date = null;
 		try 

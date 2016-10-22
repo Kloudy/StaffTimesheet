@@ -53,7 +53,7 @@ public class StaffMember
 		loggedTime = sumDuration;
 		
 		String timeFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", timeFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", timeFormat);
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
@@ -68,7 +68,7 @@ public class StaffMember
 		loggedTime = loggedTime.minus(diffDuration);
 		
 		String durationFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);
 	}
 	
 	public void resetLoggedTime()
@@ -76,7 +76,7 @@ public class StaffMember
 		loggedTime = Duration.ZERO;
 		
 		String durationFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);
 	}
 	
 	public void logEntry(String text)
@@ -187,7 +187,7 @@ public class StaffMember
 		this.loggedTime = loggedTime;
 		
 		String durationFormat = TimeFormat.getDurationFormatString(this.loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".logged-time", durationFormat);		
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);		
 	}
 	
 	public void setTimeGoal(Duration timeGoal)
@@ -195,35 +195,35 @@ public class StaffMember
 		this.timeGoal = timeGoal;
 		
 		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".time-goal", durationFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".time-goal", durationFormat);
 	}
 	
 	public void setSuperAdmin(boolean superAdmin)
 	{
 		this.superAdmin = superAdmin;
 		
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".super-admin", this.superAdmin);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".super-admin", this.superAdmin);
 	}
 	
 	public void setClockInPermission(String clockInPermission)
 	{
 		this.clockInPermission = clockInPermission;
 		
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".clock-in-permission", this.clockInPermission);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".clock-in-permission", this.clockInPermission);
 	}
 	
 	public void setRankTitle(String rankTitle)
 	{
 		this.rankTitle = rankTitle;
 		
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".rank-title", this.rankTitle);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".rank-title", this.rankTitle);
 	}
 	
 	public void setStartShiftOnLogin(boolean startShiftOnLogin)
 	{
 		this.startShiftOnLogin = startShiftOnLogin;
 		
-		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".start-shift-on-login", this.startShiftOnLogin);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".start-shift-on-login", this.startShiftOnLogin);
 	}
 	
 	@Override

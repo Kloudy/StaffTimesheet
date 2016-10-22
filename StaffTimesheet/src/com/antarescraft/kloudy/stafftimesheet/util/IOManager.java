@@ -43,6 +43,17 @@ public class IOManager
 				output.close();
 			}
 			
+			inputStream = staffTimesheet.getResource("billing-period-history.yml");
+			File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/billing-period-history.yml", staffTimesheet.getName()));
+			if(!billingPeriodHistoryYmlFile.exists())
+			{
+				FileOutputStream output = new FileOutputStream(billingPeriodHistoryYmlFile);
+				output.write(IOUtils.toByteArray(inputStream));
+				
+				inputStream.close();
+				output.close();
+			}
+			
 			folder = new File("plugins/" + StaffTimesheet.pluginName + "/staff_logs");
 			if(!folder.exists())//staff logs
 			{

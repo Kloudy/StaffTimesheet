@@ -11,6 +11,7 @@ import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerJoinEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerQuitEventListener;
+import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
@@ -38,6 +39,9 @@ public class StaffTimesheet extends HoloGUIPlugin
 		
 		configManager = new ConfigManager(this);
 		configManager.loadConfigValues();
+		
+		BillingPeriodUpdateTask billingPeriodUpdateTask = new BillingPeriodUpdateTask(configManager);
+		billingPeriodUpdateTask.start(this);
 		
 		new StaffTimesheetPlaceholders(this, "stafftimesheet", configManager).hook();
 		
