@@ -3,6 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
@@ -25,8 +27,10 @@ import net.md_5.bungee.api.ChatColor;
 public class ConfigManager
 {	
 	private static StaffTimesheet staffTimesheetPlugin;
+
+	private int billingPeriodDuration;
+	private String currentBillPeriodStartDate;
 	
-	private int logCycleDuration;
 	private Duration updateStaffLogsPeriod;
 	
 	private String shiftEndAFKMessage;
@@ -77,7 +81,8 @@ public class ConfigManager
 		
 		StaffTimesheet.debugMode = root.getBoolean("debug-mode", false);
 		
-		logCycleDuration = root.getInt("log-cycle-duration", 4);
+		billingPeriodDuration = root.getInt("billing-period-duration", 4);
+		currentBillPeriodStartDate = root.getString("current-bill-period-start-date");
 		
 		try
 		{
@@ -236,9 +241,25 @@ public class ConfigManager
 		return null;
 	}
 	
-	public int getLogCycleDuration()
+	public int getBillingPeriodDuration()
 	{
-		return logCycleDuration;
+		return billingPeriodDuration;
+	}
+	
+	public Calendar getCurrentBillPeriodStartDate()
+	{
+		Calendar date = null;
+		try 
+		{
+			date = TimeFormat.parseDateFormat(currentBillPeriodStartDate);
+		} catch (InvalidDateFormatException e) {}
+		
+		if(date == null)
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), "Invlaid Config Value: current-bill-period-start-date");
+		}
+		
+		return date;
 	}
 	
 	public Duration getUpdateStaffLogsPeriod()

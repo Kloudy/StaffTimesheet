@@ -39,11 +39,11 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 		this.staffMember = staffMember;
 		
 		loggedTimeScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-scroller");
-		loggedTimeScroller.setValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
+		loggedTimeScroller.setPlayerScrollValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
 				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal()));
 		
 		timeGoalScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-scroller");
-		timeGoalScroller.setValue(player, new DurationScrollValue(staffMember.getTimeGoal(), 
+		timeGoalScroller.setPlayerScrollValue(player, new DurationScrollValue(staffMember.getTimeGoal(), 
 				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration()));
 		
 		superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
@@ -121,6 +121,8 @@ public class ManageTimePageModel extends PlayerGUIPageModel
 		staffMember.setLoggedTime((Duration)loggedTimeScroller.getPlayerScrollValue(player).getValue());
 		staffMember.setTimeGoal((Duration)timeGoalScroller.getPlayerScrollValue(player).getValue());
 		staffMember.setSuperAdmin(superAdminToggle.getPlayerToggleSwitchState(player));
+		staffMember.setClockInPermission(clockInPermissionTextBox.getPlayerTextBoxValue(player));
+		staffMember.setRankTitle(rankTitleTextBox.getPlayerTextBoxValue(player));
 		
 		MessageManager.info(player, ChatColor.GREEN + "Saved staff member settings!");
 	}

@@ -225,4 +225,19 @@ public class StaffMember
 		
 		ConfigManager.writePropertyToConfigFile("staff-members." + playerName + ".start-shift-on-login", this.startShiftOnLogin);
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof StaffMember)
+		{
+			StaffMember staffMemberObj = (StaffMember)obj;
+			if(staffMemberObj.getUUID().equals(this.playerUUID))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

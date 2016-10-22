@@ -18,6 +18,8 @@ import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
+import com.antarescraft.kloudy.hologui.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.hologui.scrollvalues.DateScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
@@ -59,6 +61,9 @@ public class LogbookPageModel extends PlayerGUIPageModel
 		
 		page = 0;
 		totalPages = 0;
+		
+		System.out.println(dateScroller.getId());
+		dateScroller.setPlayerScrollValue(player, new DateScrollValue(Calendar.getInstance(), TimeFormat.getMinDuration().plusDays(1), null, Calendar.getInstance()));
 		
 		date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
 		

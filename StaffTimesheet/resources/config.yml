@@ -3,6 +3,8 @@ debug-mode: false       #Print debug information in the console
 billing-period: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
                         #Log cycle reports are generated at the end of the log cycle
 
+current-bill-period-start-date: "2016/10/01"   #Start date for the current bill cycle (format: yyyy/mm/dd)
+
 update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin writes staff member logs to file
 
 #             Messages to display to staff members when their shift starts or ends             #
