@@ -50,6 +50,8 @@ timesheet-home-admin:
         - ""
         - "&n&lRank&r: &6&l$model.staffMemberRank();"
         - ""
+        - "&n&lStart Shift On Login: &6&l$model.staffMemberStartShiftOnLogin();"
+        - ""
         - "&n&lTime Goal&r: &a&o&l$model.staffMemberTimeGoal();"
         - ""
         - "&n&lTime Logged&r: &a&o&l$model.staffMemberLoggedTime();"

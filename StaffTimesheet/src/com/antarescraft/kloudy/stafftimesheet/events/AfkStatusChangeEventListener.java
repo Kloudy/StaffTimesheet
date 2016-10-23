@@ -4,9 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.earth2me.essentials.UserData;
 
@@ -34,8 +33,7 @@ public class AfkStatusChangeEventListener implements Listener
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			if(staffMember != null && shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, ShiftEndReason.AFK);
-				staffMember.logEntry(configManager.getShiftEndLabelAFK());
+				shiftManager.clockOut(staffMember, configManager.getShiftEndLabelAFK());
 			}
 		}
 	}

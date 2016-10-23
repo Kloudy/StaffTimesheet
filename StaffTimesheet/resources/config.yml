@@ -3,7 +3,7 @@ debug-mode: false       #Print debug information in the console
 billing-period: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
                         #Log cycle reports are generated at the end of the log cycle
 
-current-bill-period-start-date: "2016/10/01"   #Start date for the current bill cycle (format: yyyy/mm/dd)
+first-bill-period-start-date: "2016/10/01"   #Start date for the first bill cycle (format: yyyy/mm/dd)
 
 update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin writes staff member logs to file
 
@@ -58,7 +58,7 @@ logbook-lore-text:                                                     #A collec
   - "Staff Logbook: %stafftimesheet_staff-member-name%"
   - "Time Goal: %stafftimesheet_time-goal%"
   - "Time Logged: %stafftimesheet_current-logged-time%"
-  - "Progress: %staffmember_percent_time_logged%% logged"
+  - "Progress: %staffmember_percent_time_logged% logged"
 
 #Log Book Event Labels#
 

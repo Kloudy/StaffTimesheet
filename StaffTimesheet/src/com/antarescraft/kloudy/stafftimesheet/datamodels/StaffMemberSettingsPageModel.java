@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import java.time.Duration;
-import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
@@ -15,6 +14,7 @@ import com.antarescraft.kloudy.hologui.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologui.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 
 import net.md_5.bungee.api.ChatColor;
@@ -29,6 +29,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 	private ValueScrollerComponent timeGoalScroller;
 	private ValueScrollerComponent timeGoalHMSScroller;
 	private ToggleSwitchComponent superAdminToggle;
+	private ToggleSwitchComponent startShiftOnLoginToggle;
 	private TextBoxComponent clockInPermissionTextBox;
 	private TextBoxComponent rankTitleTextBox;
 	
@@ -50,6 +51,9 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		
 		superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
 		superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());
+		
+		startShiftOnLoginToggle = (ToggleSwitchComponent)guiPage.getComponent("start-shift-on-login-toggle");
+		startShiftOnLoginToggle.setPlayerToggleSwitchState(player, staffMember.startShiftOnLogin());
 		
 		clockInPermissionTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-permission");
 		clockInPermissionTextBox.setPlayerTextBoxValue(player, staffMember.getClockInPermission());
@@ -104,17 +108,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 			}
 		});
 	}
-	
-	public String getStaffMemberName()
-	{
-		return staffMember.getPlayerName();
-	}
-	
-	public UUID getStaffMemberUUID()
-	{
-		return staffMember.getUUID();
-	}
-	
+
 	/*
 	 * Save changes made on staff member settings page
 	 */
@@ -125,6 +119,11 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		staffMember.setSuperAdmin(superAdminToggle.getPlayerToggleSwitchState(player));
 		staffMember.setClockInPermission(clockInPermissionTextBox.getPlayerTextBoxValue(player));
 		staffMember.setRankTitle(rankTitleTextBox.getPlayerTextBoxValue(player));
+		staffMember.setStartShiftOnLogin(startShiftOnLoginToggle.getPlayerToggleSwitchState(player));
+		
+		//update the current billing period summary with the changes
+		ShiftManager shiftManager = ShiftManager.getInstance();
+		shiftManager.getCurrentBillingPeriod().updateStaffMemberSummary(staffMember);
 		
 		MessageManager.info(player, ChatColor.GREEN + "Saved staff member settings!");
 	}

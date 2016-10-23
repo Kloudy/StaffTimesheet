@@ -1,12 +1,14 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPageModel;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 
 /**
  * Base Page Model that all StaffTimesheet page models inherit from. Contains staff member methods needed by all child models
@@ -26,6 +28,11 @@ public abstract class BaseStaffTimesheetPageModel extends PlayerGUIPageModel
 	public String staffMemberName()
 	{
 		return staffMember.getPlayerName();
+	}
+	
+	public UUID staffMemberUUID()
+	{
+		return staffMember.getUUID();
 	}
 	
 	public String staffMemberRank()
@@ -52,6 +59,13 @@ public abstract class BaseStaffTimesheetPageModel extends PlayerGUIPageModel
 	{
 		if(ShiftManager.getInstance().onTheClock(staffMember)) return "Yes";
 
+		return "No";
+	}
+	
+	public String staffMemberStartShiftOnLogin()
+	{
+		if(staffMember.startShiftOnLogin()) return "Yes";
+		
 		return "No";
 	}
 }

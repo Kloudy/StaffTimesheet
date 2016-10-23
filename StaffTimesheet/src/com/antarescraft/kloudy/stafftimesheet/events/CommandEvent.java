@@ -15,13 +15,12 @@ import com.antarescraft.kloudy.plugincore.exceptions.DurationUnderflowException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
-import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class CommandEvent implements CommandExecutor
@@ -65,7 +64,7 @@ public class CommandEvent implements CommandExecutor
 		}
 		else
 		{
-			TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
+			TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, configManager);
 			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home", model);
 		}
 	}
@@ -83,9 +82,7 @@ public class CommandEvent implements CommandExecutor
 			
 			if(!shiftManager.onTheClock(staffMember))
 			{
-				staffMember.logEntry(configManager.getShiftStartLabel());
-
-				shiftManager.clockIn(staffMember);
+				shiftManager.clockIn(staffMember, configManager.getShiftStartLabel());
 				
 				player.sendMessage(configManager.getShiftStartMessage(staffMember));
 			}
@@ -113,10 +110,8 @@ public class CommandEvent implements CommandExecutor
 
 			if(shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, ShiftEndReason.CLOCKED_OUT);
-				sender.sendMessage(configManager.getShiftEndClockoutMessage(staffMember));
-				
-				staffMember.logEntry(configManager.getShiftLabelClockedOut());
+				shiftManager.clockOut(staffMember, configManager.getShiftEndLabelClockOut());
+				sender.sendMessage(configManager.getShiftEndClockoutMessage(staffMember));				
 			}
 			else
 			{

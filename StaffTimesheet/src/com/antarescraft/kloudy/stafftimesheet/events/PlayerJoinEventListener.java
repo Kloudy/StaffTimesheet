@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class PlayerJoinEventListener implements Listener
@@ -26,7 +26,7 @@ public class PlayerJoinEventListener implements Listener
 		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember != null && staffMember.startShiftOnLogin())
 		{
-			ShiftManager.getInstance().clockIn(staffMember);
+			ShiftManager.getInstance().clockIn(staffMember, configManager.getShiftStartLabel());
 			
 			staffMember.getPlayer().sendMessage(configManager.getShiftStartMessage(staffMember));
 		}

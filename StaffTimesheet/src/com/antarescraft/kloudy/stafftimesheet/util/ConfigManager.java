@@ -31,7 +31,7 @@ public class ConfigManager
 	private static StaffTimesheet staffTimesheetPlugin;
 
 	private int billingPeriodDuration;
-	private String currentBillPeriodStartDate;
+	private String firstBillPeriodStartDate;
 	
 	private static ArrayList<BillingPeriod> billingPeriodHistory;
 	
@@ -54,6 +54,7 @@ public class ConfigManager
 	private String shiftEndLabelAFK;
 	private String shiftEndLabelDisconnected;
 	private String shiftEndLabelClockedOut;
+	private String shiftEndLabelPluginDisabled;
 	
 	private String errorMessageDurationUnderflow;
 	private String errorMessageDurationOverflow;
@@ -86,7 +87,8 @@ public class ConfigManager
 		StaffTimesheet.debugMode = root.getBoolean("debug-mode", false);
 		
 		billingPeriodDuration = root.getInt("billing-period-duration", 4);
-		currentBillPeriodStartDate = root.getString("current-bill-period-start-date");
+		
+		firstBillPeriodStartDate = root.getString("first-bill-period-start-date");
 		
 		try
 		{
@@ -115,7 +117,8 @@ public class ConfigManager
 		shiftStartLabel = setFormattingCodes(root.getString("shift-start-label", ""));
 		shiftEndLabelAFK = setFormattingCodes(root.getString("shift-end-label-afk"));
 		shiftEndLabelDisconnected = setFormattingCodes(root.getString("shift-end-label-disconnected", ""));
-		shiftEndLabelClockedOut = setFormattingCodes(root.getString("shift-end-label-clocked-out", ""));
+		shiftEndLabelClockedOut = setFormattingCodes(root.getString("shift-end-label-clockout", ""));
+		shiftEndLabelPluginDisabled =  setFormattingCodes(root.getString("shift-end-label-plugin-disabled", ""));
 		
 		for(String loreTextLine : logbookLoreText)
 		{
@@ -143,7 +146,7 @@ public class ConfigManager
 				String timeGoal = staffMembersSection.getString(playerName + ".time-goal", "15:00:00");
 				String rankTitle = staffMembersSection.getString(playerName + ".rank-title");
 				String loggedTime = staffMembersSection.getString(playerName + ".logged-time", "00:00:00");
-				boolean startShiftOnLogin = staffMembersSection.getBoolean("start-shift-on-login", false);
+				boolean startShiftOnLogin = staffMembersSection.getBoolean(playerName + ".start-shift-on-login", false);
 				
 				Duration timeGoalDuration = null;
 				Duration loggedTimeDuration = null;
@@ -245,9 +248,20 @@ public class ConfigManager
 		return null;
 	}
 	
+	private BillingPeriod generateFirstBillingPeriod()
+	{
+		return new BillingPeriod(getFirstBillPeriodStartDate(), getBillingPeriodDuration());
+	}
+	
 	public BillingPeriod getCurrentBillingPeriod()
 	{
-		return new BillingPeriod(getCurrentBillPeriodStartDate(), getBillingPeriodDuration());
+		ArrayList<BillingPeriod> billingPeriods = getAllBillingPeriods();
+		if(billingPeriods.size() == 0)
+		{
+			billingPeriods.add(generateFirstBillingPeriod());
+		}
+		
+		return billingPeriods.get(billingPeriods.size()-1);//the last billing period in the list will be the current billing period
 	}
 	
 	public void resetAllStaffMemberTime()
@@ -265,7 +279,7 @@ public class ConfigManager
 	{
 		billingPeriodHistory = new ArrayList<BillingPeriod>();
 		
-		File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/billing-period-historyl.yml", staffTimesheetPlugin.getName()));
+		File billingPeriodHistoryYmlFile = new File(String.format("plugins/%s/billing-period-history.yml", staffTimesheetPlugin.getName()));
 		if(!billingPeriodHistoryYmlFile.exists())
 		{
 			IOManager.initFileStructure(staffTimesheetPlugin);
@@ -279,17 +293,15 @@ public class ConfigManager
 			for(String key : billingPeriodHistorySection.getKeys(false))
 			{
 				ConfigurationSection billingPeriodSection = billingPeriodHistorySection.getConfigurationSection(key);
-				
 				try
 				{
 					Calendar startDate = TimeFormat.parseDateFormat(billingPeriodSection.getString("start-date"));
 					Calendar endDate = TimeFormat.parseDateFormat(billingPeriodSection.getString("end-date"));
 					
 					ConfigurationSection staffMemberSummariesSection = billingPeriodSection.getConfigurationSection("staff-member-summaries");
+					HashMap<UUID, StaffMemberSummary> staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
 					if(staffMemberSummariesSection != null)
 					{
-						HashMap<UUID, StaffMemberSummary> staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
-						
 						for(String staffMemberName : staffMemberSummariesSection.getKeys(false))
 						{
 							ConfigurationSection summarySection = staffMemberSummariesSection.getConfigurationSection(staffMemberName);
@@ -297,13 +309,13 @@ public class ConfigManager
 							UUID uuid = UUID.fromString(summarySection.getString("uuid"));
 							double percentTimeLogged = summarySection.getDouble("percent-time-logged");
 							Duration timeGoal = TimeFormat.parseDurationFormat(summarySection.getString("time-goal"));
-							Duration timeLogged = TimeFormat.parseDurationFormat(summarySection.getString("time-logged"));
+							Duration timeLogged = TimeFormat.parseDurationFormat(summarySection.getString("logged-time"));
 							
 							staffMemberSummaries.put(uuid, new StaffMemberSummary(staffMemberName, uuid, percentTimeLogged, timeGoal, timeLogged));
 						}
-						
-						billingPeriodHistory.add(new BillingPeriod(startDate, endDate, staffMemberSummaries));
 					}
+					
+					billingPeriodHistory.add(new BillingPeriod(startDate, endDate, staffMemberSummaries));
 				}
 				catch(InvalidDateFormatException e){}
 				catch(InvalidDurationFormatException e){}
@@ -318,17 +330,17 @@ public class ConfigManager
 		return billingPeriodDuration;
 	}
 	
-	public Calendar getCurrentBillPeriodStartDate()
-	{
+	public Calendar getFirstBillPeriodStartDate()
+	{	
 		Calendar date = null;
 		try 
 		{
-			date = TimeFormat.parseDateFormat(currentBillPeriodStartDate);
+			date = TimeFormat.parseDateFormat(firstBillPeriodStartDate);
 		} catch (InvalidDateFormatException e) {}
 		
 		if(date == null)
 		{
-			MessageManager.error(Bukkit.getConsoleSender(), "Invlaid Config Value: current-bill-period-start-date");
+			MessageManager.error(Bukkit.getConsoleSender(), "Invalid Config Value: current-bill-period-start-date");
 		}
 		
 		return date;
@@ -417,9 +429,14 @@ public class ConfigManager
 		return shiftEndLabelDisconnected;
 	}
 	
-	public String getShiftLabelClockedOut()
+	public String getShiftEndLabelClockOut()
 	{
 		return shiftEndLabelClockedOut;
+	}
+	
+	public String getShiftEndLabelPluginDisabled()
+	{
+		return shiftEndLabelPluginDisabled;
 	}
 	
 	public String getErrorMessageDurationUnderflow()

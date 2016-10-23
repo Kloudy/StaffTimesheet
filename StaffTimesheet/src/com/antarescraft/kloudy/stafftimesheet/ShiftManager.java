@@ -1,4 +1,4 @@
-package com.antarescraft.kloudy.stafftimesheet.managers;
+package com.antarescraft.kloudy.stafftimesheet;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -8,11 +8,6 @@ import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
-import com.antarescraft.kloudy.stafftimesheet.ShiftEndReason;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
-import com.antarescraft.kloudy.stafftimesheet.TimeCard;
 
 /**
  * Handles the clocking in and clocking out of staff members.
@@ -61,7 +56,7 @@ public class ShiftManager
 		return timeCards.get(staffMember.getUUID());
 	}
 	
-	public void clockIn(StaffMember staffMember)
+	public void clockIn(StaffMember staffMember, String clockInLabel)
 	{
 		if(!timeCards.containsKey(staffMember.getUUID()))
 		{
@@ -70,10 +65,12 @@ public class ShiftManager
 			
 			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s add %s", 
 					staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
+			
+			staffMember.logEntry(clockInLabel);
 		}
 	}
 	
-	public void clockOut(StaffMember staffMember, ShiftEndReason shiftEndedReason)
+	public void clockOut(StaffMember staffMember, String shiftEndReasonLabel)
 	{
 		if(staffMember != null)
 		{
@@ -105,16 +102,18 @@ public class ShiftManager
 						staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
 												
 				timeCards.remove(staffMember.getUUID());
+				
+				staffMember.logEntry(shiftEndReasonLabel);
 			}
 		}
 	}
 	
-	public void clockOutAll(ShiftEndReason shiftEndedReason)
+	public void clockOutAll(String shiftEndReasonLabel)
 	{
 		HashMap<UUID, TimeCard> tempTimeCards = new HashMap<UUID, TimeCard>(timeCards);
 		for(TimeCard timeCard : tempTimeCards.values())
 		{
-			clockOut(timeCard.getStaffMember(), shiftEndedReason);
+			clockOut(timeCard.getStaffMember(), shiftEndReasonLabel);
 		}
 		
 		timeCards.clear();

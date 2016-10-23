@@ -51,16 +51,16 @@ public class BillingPeriod
 		for(StaffMemberSummary summary : staffMemberSummaries.values())
 		{
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID().toString());
+					".staff-member-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID().toString());
 			
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeCompleted());
+					".staff-member-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeCompleted());
 			
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-summaries." + summary.getStaffMemberName() + ".time-goal", summary.getTimeGoal());
+					".staff-member-summaries." + summary.getStaffMemberName() + ".time-goal", summary.getTimeGoal());
 			
 			ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getLoggedTime());
+					".staff-member-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getLoggedTime());
 		}
 	}
 	

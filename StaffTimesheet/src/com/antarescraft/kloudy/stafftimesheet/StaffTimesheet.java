@@ -11,7 +11,6 @@ import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerJoinEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerQuitEventListener;
-import com.antarescraft.kloudy.stafftimesheet.managers.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
@@ -56,7 +55,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void onDisable()
 	{
-		ShiftManager.getInstance().clockOutAll(ShiftEndReason.PLUGIN_DISABLED);
+		ShiftManager.getInstance().clockOutAll(configManager.getShiftEndLabelPluginDisabled());
 
 		destroyPlayerGUIPages();
 	}
