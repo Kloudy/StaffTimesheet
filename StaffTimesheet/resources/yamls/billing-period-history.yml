@@ -9,7 +9,7 @@ billing-period-history:
       label-distance: 6
       position:
         x: 0
-        y: 0.6
+        y: 0.9
 
     close-btn:
       type: "button"
@@ -35,6 +35,15 @@ billing-period-history:
         x: -0.8
         y: 0.8
 
+    staff-member-label:
+      type: "label"
+      label-distance: 7
+      text: 
+        - "&lStaff Member&r: &c&l$model.staffMemberName();"
+      position:
+        x: 0
+        y: 0.7
+
     billing-period-label:
       type: "label"
       label-distance: 7
@@ -42,18 +51,53 @@ billing-period-history:
         - "&lBilling Period: &a&l$model.startDate(); - $model.endDate();"
       position:
         x: 0
-        y: 0.4
+        y: 0.6
 
     summary-label:
       type: "label"
+      label-distance: 6
       text:
-        - "&lStaff Member: &c&l$model.staffMemberName();"
+        - "&lTime Goal: &6&l$model.billingPeriodTimeGoal();"
         - ""
-        - "&lTime Goal: &6&l$model.staffMemberTimeGoal();"
         - ""
-        - "&lTime Completed: &6&l$model.staffMemberPercentTimeLogged();%"
+        - "&lTime Logged: &6&l$model.billingPeriodLoggedTime();"
         - ""
-        - "&lTime Logged: &6&l$model.staffMemberLoggedTime();"
+        - ""
+        - "&lTime Completed: &6&l$model.billingPeriodPercentTimeLogged();"
       position:
         x: 0
         y: 0.2
+
+    next-page-btn:
+      type: "button"
+      icon: "next-btn.png"
+      hidden: true
+      onclick-sound: UI_BUTTON_CLICK
+      always-show-label: true
+      symmetrical: true
+      mini: true
+      label: "&a&lNEXT PAGE"
+      position:
+        x: 0.3
+        y: -0.35
+
+    prev-page-btn:
+      type: "button"
+      hidden: true
+      icon: "back.png"
+      onclick-sound: UI_BUTTON_CLICK
+      always-show-label: true
+      symmetrical: true
+      mini: true
+      label: "&a&lPREV PAGE"
+      position:
+        x: -0.3
+        y: -0.35
+
+    page-label:
+      type: "label"
+      text:
+        - "&lPage: $model.currentPage();/$model.totalPages();"
+      position:
+        x: 0
+        y: -0.5

@@ -3,13 +3,13 @@ timesheet-home:
 
     logo:
       type: "image"
-      image-src: "logo.png"
+      image-src: "clock.gif"
       symmetrical: true
-      width: 25
-      height: 25
+      width: 36
+      height: 36
       position:
         x: 0
-        y: 0.8
+        y: 1.2
 
     close-btn:
       type: "button"
@@ -30,23 +30,25 @@ timesheet-home:
         - "%scroll%      &b&lStaff Timesheet      "
       position:
         x: 0
-        y: 0.85
+        y: 1.3
 
     staff-member-label:
       type: "label"
       text:
-        - "&n&lStaff Member&r: &c&l%stafftimesheet_staff-member-name%"
+        - "&n&lStaff Member&r: &c&l$model.staffMemberName();"
         - ""
-        - "&n&lTime Goal&r: &a&o&l%stafftimesheet_time-goal%"
+        - "&n&lRank&r: &6&l$model.staffMemberRank();"
         - ""
-        - "&n&lTime Logged&r: &a&o&l%stafftimesheet_current-logged-time%"
+        - "&n&lTime Goal&r: &a&o&l$model.staffMemberTimeGoal();"
         - ""
-        - "&n&lProgress&r: &6&o&l%stafftimesheet_percent-time-logged%%"
+        - "&n&lTime Logged&r: &a&o&l$model.staffMemberLoggedTime();"
         - ""
-        - "&n&lClocked In&r: &6&o&l%stafftimesheet_clocked-in%"
+        - "&n&lProgress&r: &6&o&l$model.staffMemberPercentTimeLogged();%"
+        - ""
+        - "&n&lClocked In&r: &6&o&l$model.staffMemberClockedIn();"
       position:
         x: 0
-        y: 0.18
+        y: 0.3
 
     clock-in-btn:
       type: "button"
@@ -65,10 +67,10 @@ timesheet-home:
       type: "item"
       item-id: "ENCHANTED_BOOK"
       label: "&lLOGBOOK"
+      clickable: true
       label-distance: 14
       label-zoom-distance: 3
       always-show-label: true
-      onclick: "$openGUIPage('$player', 'timesheet-log')"
       onclick-sound: "UI_BUTTON_CLICK"
       rotation:
         x: 0

@@ -41,18 +41,18 @@ admin-manage-staff:
       always-show-label: true
       symmetrical: true
       mini: true
-      icon: "next-btn.png"
+      icon: "save-icon.png"
       onclick: "$model.save();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: -0.38
+        y: -0.36
 
     staff-member-label:
       type: "label"
       label-distance: 8
       text:
-        - "&lStaff Member: &c&l$model.getStaffMemberName();"
+        - "&lStaff Member: &c&l$model.staffMemberName();"
       position:
         x: 0
         y: 0.75
@@ -61,7 +61,7 @@ admin-manage-staff:
       type: "label"
       label-distance: 8
       text:
-        - "&lUUID: &c&l$model.getStaffMemberUUID();"
+        - "&lUUID: &c&l$model.staffMemberUUID();"
       position:
         x: 0
         y: 0.65
@@ -76,7 +76,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.6
+        x: -0.7
         y: 0.35
 
     logged-time-hms-scroller:
@@ -91,7 +91,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.6
+        x: -0.7
         y: 0.18
 
     time-goal-scroller:
@@ -104,7 +104,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.6
+        x: 0.7
         y: 0.35
 
     time-goal-hms-scroller:
@@ -119,7 +119,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.6
+        x: 0.7
         y: 0.18
 
     super-admin-toggle:
@@ -130,7 +130,18 @@ admin-manage-staff:
       off-value: "&4&lNO"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0
+        x: -0.2
+        y: 0.4
+
+    start-shift-on-login-toggle:
+      type: "toggle-switch"
+      label: "&lStart Shift On Login: %start-shift-on-login-toggle_value%"
+      always-show-label: true
+      on-value: "&a&lYes"
+      off-value: "&4&lNo"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0.2
         y: 0.4
 
     clock-in-permission:
@@ -140,7 +151,7 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: 0.032
+        y: 0.034
 
     rank-title:
       type: "text-box"
@@ -149,4 +160,4 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: -0.21
+        y: -0.19
