@@ -1,15 +1,21 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
+import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
-import com.antarescraft.kloudy.hologui.handlers.TextBoxUpdateHandler;
+import com.antarescraft.kloudy.hologui.handlers.ScrollHandler;
+import com.antarescraft.kloudy.hologui.scrollvalues.AbstractScrollValue;
+import com.antarescraft.kloudy.hologui.scrollvalues.ListScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 /**
@@ -17,7 +23,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
  */
 public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 {
-	private TextBoxComponent staffMemberSearchBox;
+	private ValueScrollerComponent staffMemberSelector;
 	private ButtonComponent manageStaffMemberBtn;
 	private ButtonComponent billingPeriodHistoryBtn;
 	
@@ -61,13 +67,42 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			}
 		});
 		
-		staffMemberSearchBox = (TextBoxComponent) guiPage.getComponent("player-name-text-box");
-		staffMemberSearchBox.registerTextBoxUpdateHandler(new TextBoxUpdateHandler()
+		staffMemberSelector = (ValueScrollerComponent) guiPage.getComponent("staff-member-selector");
+		
+		Collection<StaffMember> staffMembers = (Collection<StaffMember>)configManager.getAllStaffMembers();
+		String[] staffMemberNames = new String[staffMembers.size()];
+		int viewerIndex = 0;
+		int i = 0;
+		for(StaffMember staffMember : staffMembers)
+		{
+			if(staffMember.getUUID().equals(player.getUniqueId()))//find the view of this page in the staff members list and display them in the scroller first
+			{
+				viewerIndex = i;
+			}
+			
+			staffMemberNames[i] = staffMember.getPlayerName();
+			
+			i++;
+		}
+		
+		String temp = staffMemberNames[0];
+		staffMemberNames[0] = staffMemberNames[viewerIndex];
+		staffMemberNames[viewerIndex] = temp;
+		
+		ArrayList<String> names = new ArrayList<String>();
+		for(int j = 0; j < staffMemberNames.length; j++)
+		{
+			names.add(staffMemberNames[j]);
+		}
+		
+		staffMemberSelector.setPlayerScrollValue(player, new ListScrollValue(names, 1, null, null));
+		staffMemberSelector.registerScrollHandler(new ScrollHandler()
 		{
 			@Override
-			public void onUpdate(String value) 
+			public void onScroll(AbstractScrollValue<?, ?> value) 
 			{
-				staffMember = configManager.getStaffMember(value);//value may be null if the name searched isn't a staff member
+				ListScrollValue listValue = (ListScrollValue)value;
+				staffMember = configManager.getStaffMember(listValue.toString());
 			}
 		});
 		

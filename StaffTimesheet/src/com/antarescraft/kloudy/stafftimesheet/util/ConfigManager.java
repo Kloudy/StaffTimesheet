@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -246,6 +247,11 @@ public class ConfigManager
 		}
 		
 		return null;
+	}
+	
+	public Collection<StaffMember> getAllStaffMembers()
+	{
+		return staffMembers.values();
 	}
 	
 	private BillingPeriod generateFirstBillingPeriod()

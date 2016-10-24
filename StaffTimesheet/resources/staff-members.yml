@@ -16,3 +16,11 @@ staff-members:  #List of staff member configurations
     rank-title: "Junior Mod"                      #(Default: none) Name of staff member's rank
     logged-time: "00:00:00"                       #(Default: "00:00:00") Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
     start-shift-on-login: false                   #(Default: false) (true or false) if the plugin should start logging staff member's time as soon as they log in
+  VersaillesBank:
+    uuid: b1bb041e-b998-452e-b664-7ef08162f0ca
+    super-admin: false
+    clock-in-permission: mystaff.permission
+    time-goal: '15:00:00'
+    rank-title: Junior Mod
+    logged-time: 00:00:12
+    start-shift-on-login: true
