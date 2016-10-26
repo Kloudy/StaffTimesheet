@@ -43,11 +43,11 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		
 		loggedTimeScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-scroller");
 		loggedTimeScroller.setPlayerScrollValue(player, new DurationScrollValue(staffMember.getLoggedTime(), 
-				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal()));
+				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), staffMember.getTimeGoal(), false));
 		
 		timeGoalScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-scroller");
 		timeGoalScroller.setPlayerScrollValue(player, new DurationScrollValue(staffMember.getTimeGoal(), 
-				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration()));
+				TimeFormat.getMinDuration().plusHours(1), TimeFormat.getMinDuration(), TimeFormat.getMaxDuration(), false));
 		
 		superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
 		superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());

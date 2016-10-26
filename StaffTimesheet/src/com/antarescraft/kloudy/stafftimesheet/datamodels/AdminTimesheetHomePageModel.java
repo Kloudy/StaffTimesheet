@@ -95,7 +95,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			names.add(staffMemberNames[j]);
 		}
 		
-		staffMemberSelector.setPlayerScrollValue(player, new ListScrollValue(names, 1, null, null));
+		staffMemberSelector.setPlayerScrollValue(player, new ListScrollValue(names));
 		staffMemberSelector.registerScrollHandler(new ScrollHandler()
 		{
 			@Override

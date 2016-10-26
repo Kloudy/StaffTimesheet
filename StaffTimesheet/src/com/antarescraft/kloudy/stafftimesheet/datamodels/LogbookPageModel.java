@@ -59,7 +59,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		totalPages = 0;
 		
 		System.out.println(dateScroller.getId());
-		dateScroller.setPlayerScrollValue(player, new DateScrollValue(Calendar.getInstance(), TimeFormat.getMinDuration().plusDays(1), null, Calendar.getInstance()));
+		dateScroller.setPlayerScrollValue(player, new DateScrollValue(Calendar.getInstance(), TimeFormat.getMinDuration().plusDays(1), null, Calendar.getInstance(), false));
 		
 		date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
 		
