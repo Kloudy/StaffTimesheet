@@ -21,7 +21,7 @@ public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 		super(plugin, guiPage, player, configManager.getStaffMember(player));
 				
 		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
-		logbookBtn.registerClickHandler(new ClickHandler()
+		logbookBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()

@@ -38,7 +38,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 		nextPageBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
 		prevPageBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
 		
-		nextPageBtn.registerClickHandler(new ClickHandler()
+		nextPageBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()
@@ -55,7 +55,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 		});
 		
 		
-		prevPageBtn.registerClickHandler(new ClickHandler()
+		prevPageBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()

@@ -58,7 +58,6 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		page = 0;
 		totalPages = 0;
 		
-		System.out.println(dateScroller.getId());
 		dateScroller.setPlayerScrollValue(player, new DateScrollValue(Calendar.getInstance(), TimeFormat.getMinDuration().plusDays(1), null, Calendar.getInstance(), false));
 		
 		date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
@@ -71,7 +70,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 				playerGUIPage = loadedPlayerGUIPage;
 				
 				//find logs click handler
-				logBtn.registerClickHandler(new ClickHandler()
+				logBtn.registerClickHandler(player, new ClickHandler()
 				{
 					@Override
 					public void onClick()
@@ -108,7 +107,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 				});
 				
 				//next log page click handler
-				nextBtn.registerClickHandler(new ClickHandler()
+				nextBtn.registerClickHandler(player, new ClickHandler()
 				{
 					@Override
 					public void onClick()
@@ -132,7 +131,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 				});
 				
 				//previous log page click handler
-				backBtn.registerClickHandler(new ClickHandler()
+				backBtn.registerClickHandler(player, new ClickHandler()
 				{
 					@Override
 					public void onClick()

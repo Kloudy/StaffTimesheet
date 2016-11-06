@@ -63,7 +63,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		
 		//register hours:minutes:second scroll handlers
 		loggedTimeHMSScroller = (ValueScrollerComponent)guiPage.getComponent("logged-time-hms-scroller");
-		loggedTimeHMSScroller.registerScrollHandler(new ScrollHandler()
+		loggedTimeHMSScroller.registerScrollHandler(player, new ScrollHandler()
 		{
 			@Override
 			public void onScroll(AbstractScrollValue<?, ?> value)
@@ -86,7 +86,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		});
 		
 		timeGoalHMSScroller = (ValueScrollerComponent)guiPage.getComponent("time-goal-hms-scroller");
-		timeGoalHMSScroller.registerScrollHandler(new ScrollHandler()
+		timeGoalHMSScroller.registerScrollHandler(player, new ScrollHandler()
 		{
 			@Override
 			public void onScroll(AbstractScrollValue<?, ?> value)

@@ -32,7 +32,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		super(plugin, guiPage, player, configManager);
 		
 		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
-		logbookBtn.registerClickHandler(new ClickHandler()
+		logbookBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()
@@ -50,7 +50,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		});
 		
 		billingPeriodHistoryBtn = (ButtonComponent)guiPage.getComponent("billing-period-history-btn");
-		billingPeriodHistoryBtn.registerClickHandler(new ClickHandler()
+		billingPeriodHistoryBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()
@@ -96,7 +96,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		}
 		
 		staffMemberSelector.setPlayerScrollValue(player, new ListScrollValue(names));
-		staffMemberSelector.registerScrollHandler(new ScrollHandler()
+		staffMemberSelector.registerScrollHandler(player, new ScrollHandler()
 		{
 			@Override
 			public void onScroll(AbstractScrollValue<?, ?> value) 
@@ -107,7 +107,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		});
 		
 		manageStaffMemberBtn = (ButtonComponent)guiPage.getComponent("staff-member-settings-btn");
-		manageStaffMemberBtn.registerClickHandler(new ClickHandler()
+		manageStaffMemberBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
 			public void onClick()
