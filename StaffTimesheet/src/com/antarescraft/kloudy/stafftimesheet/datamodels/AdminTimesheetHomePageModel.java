@@ -102,6 +102,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			public void onScroll(AbstractScrollValue<?, ?> value) 
 			{
 				ListScrollValue listValue = (ListScrollValue)value;
+				System.out.println(listValue.toString());
 				staffMember = configManager.getStaffMember(listValue.toString());
 			}
 		});
