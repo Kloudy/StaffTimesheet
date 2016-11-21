@@ -10,7 +10,6 @@ import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
-import com.antarescraft.kloudy.hologui.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
@@ -19,8 +18,6 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 {
-	private ConfigManager configManager;
-	
 	private PlayerGUIPage playerGUIPage;
 	
 	private ArrayList<BillingPeriod> billingPeriodHistory;
@@ -35,8 +32,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 	{
 		super(plugin, guiPage, player, staffMember);
 				
-		this.configManager = configManager;
-		
 		billingPeriodHistory = ConfigManager.getAllBillingPeriods();//read all billing history data from 'staff-member-billing-period-history.yml'
 			
 		page = billingPeriodHistory.size()-1;
