@@ -57,7 +57,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			{
 				if(staffMember != null)
 				{
-					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember);
+					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember, configManager);
 					plugin.getHoloGUI().openGUIPage(plugin, player, "billing-period-history", billingPeriodHistoryModel);
 				}
 				else

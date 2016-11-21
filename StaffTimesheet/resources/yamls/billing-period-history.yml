@@ -51,7 +51,19 @@ billing-period-history:
         - "&lBilling Period: &a&l$model.startDate(); - $model.endDate();"
       position:
         x: 0
-        y: 0.6
+        y: 0.5
+
+    delete-btn:
+      type: "button"
+      hidden: true
+      mini: true
+      icon: "trash.png"
+      label: "&c&lDelete Billing Period"
+      onclick: "$model.deleteBillingHistory();"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0
+        y: 0.7
 
     summary-label:
       type: "label"

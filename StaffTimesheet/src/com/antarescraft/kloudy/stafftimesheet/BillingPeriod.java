@@ -65,6 +65,14 @@ public class BillingPeriod
 	}
 	
 	/*
+	 * Removes this BillingPeriod from billing-period-history.yml
+	 */
+	public void removeFromConfigFile()
+	{
+		ConfigManager.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId(), null);
+	}
+	
+	/*
 	 * Updates the staff member's summary for this billing period
 	 */
 	public void updateStaffMemberSummary(StaffMember staffMember)
@@ -107,5 +115,18 @@ public class BillingPeriod
 	public Calendar getEndDate()
 	{
 		return endDate;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof BillingPeriod)
+		{
+			BillingPeriod billingPeriod = (BillingPeriod)obj;
+			
+			return billingPeriod.getId().equals(this.getId());
+		}
+		
+		return false;
 	}
 }
