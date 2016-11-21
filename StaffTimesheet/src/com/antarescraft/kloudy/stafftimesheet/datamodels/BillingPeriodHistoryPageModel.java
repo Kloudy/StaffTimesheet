@@ -189,13 +189,13 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 		billingPeriodHistory.remove(page);
 		
 		playerGUIPage.removeComponent("next-page-btn");
-		playerGUIPage.removeComponent("back-page-btn");
+		playerGUIPage.removeComponent("prev-page-btn");
 		
 		page = 0;
 		
 		if(billingPeriodHistory.size() > 0)
 		{
-			playerGUIPage.renderComponent(deleteBillingPeriodBtn);
+			playerGUIPage.renderComponent(prevPageBtn);
 		}
 	}
 }
