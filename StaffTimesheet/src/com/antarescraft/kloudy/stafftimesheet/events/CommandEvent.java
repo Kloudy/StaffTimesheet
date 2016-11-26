@@ -57,12 +57,12 @@ public class CommandEvent implements CommandExecutor
 		if(staffMember.isSuperAdmin())
 		{
 			AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
-			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
+			staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
 		}
 		else
 		{
 			TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, configManager);
-			staffTimesheet.getHoloGUI().openGUIPage(staffTimesheet, player, "timesheet-home", model);
+			staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home", model);
 		}
 	}
 	

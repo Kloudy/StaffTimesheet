@@ -4,14 +4,14 @@ import java.time.Duration;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
-import com.antarescraft.kloudy.hologui.guicomponents.TextBoxComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.ToggleSwitchComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
-import com.antarescraft.kloudy.hologui.handlers.ScrollHandler;
-import com.antarescraft.kloudy.hologui.scrollvalues.AbstractScrollValue;
-import com.antarescraft.kloudy.hologui.scrollvalues.DurationScrollValue;
+import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.TextBoxComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ToggleSwitchComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ValueScrollerComponent;
+import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
+import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
+import com.antarescraft.kloudy.hologuiapi.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;

@@ -6,19 +6,19 @@ import java.util.Calendar;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.ComponentPosition;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIComponentProperties;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
-import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.LabelComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
-import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
-import com.antarescraft.kloudy.hologui.handlers.GUIPageLoadHandler;
-import com.antarescraft.kloudy.hologui.playerguicomponents.PlayerGUIPage;
-import com.antarescraft.kloudy.hologui.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.hologui.scrollvalues.DateScrollValue;
+import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ComponentPosition;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIComponentProperties;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.LabelComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ValueScrollerComponent;
+import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
+import com.antarescraft.kloudy.hologuiapi.handlers.GUIPageLoadHandler;
+import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPage;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.hologuiapi.scrollvalues.DateScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 

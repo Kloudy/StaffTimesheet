@@ -56,6 +56,7 @@ billing-period-history:
     delete-btn:
       type: "button"
       hidden: true
+      symmetrical: true
       mini: true
       icon: "trash.png"
       label: "&c&lDelete Billing Period"
@@ -63,7 +64,7 @@ billing-period-history:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0
-        y: 0.7
+        y: 0.35
 
     summary-label:
       type: "label"
@@ -78,7 +79,7 @@ billing-period-history:
         - "&lTime Completed: &6&l$model.billingPeriodPercentTimeLogged();"
       position:
         x: 0
-        y: 0.2
+        y: -0.1
 
     next-page-btn:
       type: "button"

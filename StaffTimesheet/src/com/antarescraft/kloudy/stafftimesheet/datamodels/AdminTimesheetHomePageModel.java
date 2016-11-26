@@ -5,15 +5,15 @@ import java.util.Collection;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.ButtonComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
-import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
-import com.antarescraft.kloudy.hologui.guicomponents.ValueScrollerComponent;
-import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
-import com.antarescraft.kloudy.hologui.handlers.ScrollHandler;
-import com.antarescraft.kloudy.hologui.scrollvalues.AbstractScrollValue;
-import com.antarescraft.kloudy.hologui.scrollvalues.ListScrollValue;
+import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ValueScrollerComponent;
+import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
+import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
+import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
+import com.antarescraft.kloudy.hologuiapi.scrollvalues.ListScrollValue;
 import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
@@ -40,7 +40,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				if(staffMember != null)
 				{
 					LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
-					plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
+					plugin.getHoloGUIApi().openGUIPage(plugin, player, "timesheet-log", logbookModel);
 				}
 				else
 				{
@@ -58,7 +58,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				if(staffMember != null)
 				{
 					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember, configManager);
-					plugin.getHoloGUI().openGUIPage(plugin, player, "billing-period-history", billingPeriodHistoryModel);
+					plugin.getHoloGUIApi().openGUIPage(plugin, player, "billing-period-history", billingPeriodHistoryModel);
 				}
 				else
 				{
@@ -116,7 +116,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 				if(staffMember != null)
 				{
 					StaffMemberSettingsPageModel manageTimeModel = new StaffMemberSettingsPageModel(plugin, plugin.getGUIPages().get("admin-manage-staff"), player, staffMember);
-					plugin.getHoloGUI().openGUIPage(plugin, player, "admin-manage-staff", manageTimeModel);
+					plugin.getHoloGUIApi().openGUIPage(plugin, player, "admin-manage-staff", manageTimeModel);
 				}
 				else
 				{

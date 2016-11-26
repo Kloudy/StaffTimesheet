@@ -4,7 +4,7 @@ version: 1.0
 author: Kloudy
 website: www.antarescraft.com
 
-depend: [Essentials, PermissionsEx, HoloGUI]
+depend: [Essentials, PermissionsEx, HoloGUIApi]
 
 commands:
   staff:

@@ -2,10 +2,10 @@ package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologui.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologui.guicomponents.GUIPage;
-import com.antarescraft.kloudy.hologui.guicomponents.ItemButtonComponent;
-import com.antarescraft.kloudy.hologui.handlers.ClickHandler;
+import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
+import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 /**
@@ -28,7 +28,7 @@ public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 			{
 				System.out.println("made it");
 				LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
-				plugin.getHoloGUI().openGUIPage(plugin, player, "timesheet-log", logbookModel);
+				plugin.getHoloGUIApi().openGUIPage(plugin, player, "timesheet-log", logbookModel);
 			}
 		});
 	}
