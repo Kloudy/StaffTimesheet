@@ -5,8 +5,6 @@ billing-period: 4       #(Default: 4 weeks) The number of weeks that are in the 
 
 first-bill-period-start-date: "2016/10/01"   #Start date for the first bill cycle (format: yyyy/mm/dd)
 
-update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How often the plugin writes staff member logs to file
-
 #             Messages to display to staff members when their shift starts or ends             #
 #                                                                                              #
 #                   These messages will evaluate the following placeholders:                   #
@@ -15,7 +13,7 @@ update-staff-logs-period: "00:01:00"    #(Default: "00:01:00" = 1 minute) How of
 ################################################################################################
 
 shift-end-afk-message: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
-shift-end-clockout-message: "&aShift ended. Your time has been logged! \nHours This Month: %stafftimesheet_current-logged-time%. \nYour Monthly Goal: %stafftimesheet_time-goal%. \nProgress: %stafftimesheet_percent-time-logged%%"
+shift-end-clockout-message: "&aShift ended. Your time has been logged! \nHours This Month: %stafftimesheet_current-logged-time%. \nYour Monthly Goal: %stafftimesheet_time-goal%. \nProgress: %stafftimesheet_percent-time-logged%"
 shift-start-message: "&aYour shift has started. Your time is being logged!"
 
 
@@ -28,9 +26,7 @@ shift-start-message: "&aYour shift has started. Your time is being logged!"
 
 reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
 add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
-subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed 
-loading-staff-member-logbook-message: "&6Fetching staff member logbook..."                         #Message displayed after command /staff logbook <player_name> <start_date> [end_date] when the plugin starts querying the log files
-loaded-staff-member-logbook-message: "&aSuccessfully loaded logbook!"                              #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
+subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
 
 
 
@@ -38,27 +34,12 @@ loaded-staff-member-logbook-message: "&aSuccessfully loaded logbook!"           
 #                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-max-log-range: 365        #(Default: 365) The maximum number of logs that can be returned when querying logs within a date range. 
+max-log-range: 365        #(Default: 365) The maximum number of logs that can be returned when querying logs within a date range.
                           #This is so that if a huge date range is put in it'll stop after a certain number of days are searched.
                           #Why this is important: 
                           #If an admin searches for logs for a staff member in range of year 2016 through year 5000, the plugin would loop
                           #through all the days in this range and collect all the logs. This would be very slow.
                           #This value ensures that the plugin will search at most a certain number of days regardless of the range input by the admin
-
-
-#                  Logbook Text Header will evaluate the following placeholders:               #
-#                                                                                              #
-#%stafftimesheet_staff-member-name%    => Player name of the staff member                      #
-#%stafftimesheet_current-logged-time%  => Time staff member logged in this billing period      #
-#%stafftimesheet_time-goal%            => Time goal for the staff member in this billing period#
-#%stafftimesheet_percent-time-logged%  => The percentage of the staff member's time goal logged#
-################################################################################################                                                  
-
-logbook-lore-text:                                                     #A collection of strings to display in the logbook lore
-  - "Staff Logbook: %stafftimesheet_staff-member-name%"
-  - "Time Goal: %stafftimesheet_time-goal%"
-  - "Time Logged: %stafftimesheet_current-logged-time%"
-  - "Progress: %staffmember_percent_time_logged% logged"
 
 #Log Book Event Labels#
 
@@ -84,4 +65,3 @@ error-message-no-staff-log: "&cCouldn't find any logs for that staff member!"   
 error-message-invalid-duration-format: "&cInvalid duration format. Please use format: hh:mm:ss"         #Error message displayed when an invalid duration format is entered from the user 
 error-message-invalid-date-format: "&cInvalid date format. Please use format: yyyy/mm/dd"               #Error message displayed when an invalid date format is entered from the user
 error-message-start-date-end-date-mismatch: "&cYou entered a start date that comes after the end date!" #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date
-

@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.events;
 
 import java.time.Duration;
-import java.util.Calendar;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,12 +11,10 @@ import com.antarescraft.kloudy.plugincore.command.CommandHandler;
 import com.antarescraft.kloudy.plugincore.command.CommandParser;
 import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.plugincore.exceptions.DurationUnderflowException;
-import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.StaffMemberLogbook;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
@@ -211,54 +208,6 @@ public class CommandEvent implements CommandExecutor
 		else
 		{
 			sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
-		}
-	}
-	
-	@CommandHandler(description = "Gives a book containing the specified staff member's timecard log. Dates have format: yyyy/mm/dd. If no end date is specified the end date becomes the current date", 
-			mustBePlayer = true, permission = "staff.admin", subcommands = "logbook <staff_member_player_name> <start_date> [end_date]")
-	public void staffLogbook(CommandSender sender, String[] args)
-	{
-		Player player = (Player)sender;
-		
-		Calendar startDate = null;
-		Calendar endDate = null;
-		
-		try
-		{
-			startDate = TimeFormat.parseDateFormat(args[2]);
-			
-			if(args.length == 3)//no end date specified, make the end date be today
-			{
-				endDate = Calendar.getInstance();
-			}
-			else
-			{
-				endDate = TimeFormat.parseDateFormat(args[3]);
-			}
-		}
-		catch(InvalidDateFormatException e)
-		{
-			sender.sendMessage(configManager.getErrorMessageInvalidDateFormat());
-		}
-				
-		if(startDate.compareTo(endDate) <= 0)
-		{
-			StaffMember staffMember = configManager.getStaffMember(args[1]);
-			if(staffMember != null)
-			{
-				sender.sendMessage(configManager.getLoadingStaffMemberLogbookMessage());
-				
-				StaffMemberLogbook logbook = new StaffMemberLogbook(staffMember, startDate, endDate);
-				logbook.getLogbook(staffTimesheet, player, configManager.getMaxLogRange(), configManager.getLoadedStaffMemberLogbookMessage());
-			}
-			else
-			{
-				sender.sendMessage(configManager.getErrorMessageStaffMemberDoesNotExist());
-			}
-		}
-		else
-		{
-			sender.sendMessage(configManager.getErrorMessageStartDateEndDateMismatch());
 		}
 	}
 }
