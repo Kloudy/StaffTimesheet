@@ -43,7 +43,7 @@ public class CommandEvent implements CommandExecutor
 	{
 		staffTimesheet.destroyPlayerGUIPages();
 		
-		staffTimesheet.loadGUIContainersFromYaml(sender);
+		staffTimesheet.loadGUIPages();
 		configManager.loadConfigValues();
 	}
 	

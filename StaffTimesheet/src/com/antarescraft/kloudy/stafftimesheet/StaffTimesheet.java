@@ -2,8 +2,6 @@ package com.antarescraft.kloudy.stafftimesheet;
 
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
-
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.PlayerData;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
@@ -32,7 +30,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		pluginName = getName();
 			
 		getHoloGUIApi().hookHoloGUIPlugin(this);
-		loadGUIContainersFromYaml(Bukkit.getConsoleSender());
+		loadGUIPages();
 		
 		IOManager.initFileStructure(this);
 		
