@@ -23,6 +23,7 @@
 	    <groupId>net.ess3</groupId>
 	    <artifactId>Essentials</artifactId>
 	    <version>2.13-SNAPSHOT</version>
+        <scope>provided</scope>
   </dependency>
      <dependency>
     	<groupId>com.antarescraft.kloudy.hologuiapi</groupId>
@@ -73,12 +74,7 @@
             </goals>
             <configuration>
               <finalName>StaffTimesheet</finalName>
-              <relocations>
-                <relocation>
-                  <pattern>com.antarescraft.kloudy.plugincore</pattern>
-                  <shadedPattern>com.antarescraft.kloudy.stafftimesheet.plugincore</shadedPattern>
-                </relocation>
-              </relocations>
+              <outputDirectory>D:\Tim\Spigot 1.11 Server\plugins</outputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -90,6 +86,8 @@
         <includes>
           <include>plugin.yml</include>
           <include>config.yml</include>
+          <include>billing-period-history.yml</include>
+          <include>staff-members.yml</include>
         </includes>
       </resource>
       <resource>

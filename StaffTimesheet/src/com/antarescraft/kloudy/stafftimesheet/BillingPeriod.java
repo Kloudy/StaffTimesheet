@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 /**
