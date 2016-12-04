@@ -24,8 +24,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 	
 	private ButtonComponent nextPageBtn;
 	private ButtonComponent prevPageBtn;
-	private ButtonComponent deleteBillingPeriodBtn;
-	
 	private int page;
 	
 	public BillingPeriodHistoryPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember, final ConfigManager configManager)
@@ -38,8 +36,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 		
 		nextPageBtn = (ButtonComponent)guiPage.getComponent("next-page-btn");
 		prevPageBtn = (ButtonComponent)guiPage.getComponent("prev-page-btn");
-		deleteBillingPeriodBtn = (ButtonComponent)guiPage.getComponent("delete-btn");
-		
+
 		nextPageBtn.registerClickHandler(player, new ClickHandler()
 		{
 			@Override
@@ -58,11 +55,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 				
 				BillingPeriod currentBillingPeriod = configManager.getCurrentBillingPeriod();
 				BillingPeriod billingPeriod = billingPeriodHistory.get(page);
-				
-				if(!currentBillingPeriod.equals(billingPeriod))
-				{
-					playerGUIPage.renderComponent(deleteBillingPeriodBtn);
-				}
 			}
 		});
 		
@@ -85,11 +77,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 				
 				BillingPeriod currentBillingPeriod = configManager.getCurrentBillingPeriod();
 				BillingPeriod billingPeriod = billingPeriodHistory.get(page);
-				
-				if(!currentBillingPeriod.equals(billingPeriod))
-				{
-					playerGUIPage.renderComponent(deleteBillingPeriodBtn);
-				}
 			}
 		});
 		

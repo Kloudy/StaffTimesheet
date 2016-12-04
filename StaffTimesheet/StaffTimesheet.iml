@@ -22,7 +22,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.9-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.ess3:Essentials:2.13-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.antarescraft.kloudy.hologuiapi:HoloGUIApi:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.antarescraft.kloudy.hologuiapi:HoloGUIApi:1.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.antarescraft.kloudy.plugincore:KloudyPluginCore:1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20160212" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.5.1" level="project" />
