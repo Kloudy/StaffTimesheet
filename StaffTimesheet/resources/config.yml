@@ -34,13 +34,6 @@ subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time f
 #                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-max-log-range: 365        #(Default: 365) The maximum number of logs that can be returned when querying logs within a date range.
-                          #This is so that if a huge date range is put in it'll stop after a certain number of days are searched.
-                          #Why this is important: 
-                          #If an admin searches for logs for a staff member in range of year 2016 through year 5000, the plugin would loop
-                          #through all the days in this range and collect all the logs. This would be very slow.
-                          #This value ensures that the plugin will search at most a certain number of days regardless of the range input by the admin
-
 #Log Book Event Labels#
 
 shift-start-label: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
