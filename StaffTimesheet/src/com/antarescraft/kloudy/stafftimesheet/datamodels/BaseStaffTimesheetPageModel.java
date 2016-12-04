@@ -68,4 +68,14 @@ public abstract class BaseStaffTimesheetPageModel extends PlayerGUIPageModel
 		
 		return "No";
 	}
+
+	public void back()
+	{
+		plugin.getHoloGUIApi().displayPreviousGUIPage(player);
+	}
+
+	public void close()
+	{
+		plugin.getHoloGUIApi().closeGUIPage(player);
+	}
 }

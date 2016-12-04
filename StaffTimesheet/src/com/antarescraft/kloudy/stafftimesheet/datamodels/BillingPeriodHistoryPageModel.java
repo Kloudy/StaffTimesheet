@@ -188,7 +188,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 		
 		page = 0;
 		
-		if(billingPeriodHistory.size() > 0)
+		if(billingPeriodHistory.size() > 1)
 		{
 			playerGUIPage.renderComponent(prevPageBtn);
 		}

@@ -38,8 +38,8 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Reloads the values contained in the config file",
-			mustBePlayer = false, permission = "staff.admin", subcommands = "reloadconfig")
-	public void reloadConfig(CommandSender sender, String[] args)
+			mustBePlayer = false, permission = "staff.admin", subcommands = "reload")
+	public void reload(CommandSender sender, String[] args)
 	{
 		staffTimesheet.destroyPlayerGUIPages();
 		

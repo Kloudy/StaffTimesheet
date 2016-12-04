@@ -26,7 +26,6 @@ public class PlayerCommandPreprocessEventListener implements Listener
 		StaffMember staffMember = configManager.getStaffMember(player);
 		if(staffMember != null && ShiftManager.getInstance().onTheClock(staffMember))
 		{
-			System.out.println("logging message");
 			staffMember.logEntry(event.getMessage());
 		}
 	}
