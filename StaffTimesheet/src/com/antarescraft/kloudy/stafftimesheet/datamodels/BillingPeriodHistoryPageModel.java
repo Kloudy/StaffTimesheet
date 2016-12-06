@@ -52,9 +52,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 				{
 					playerGUIPage.removeComponent("next-page-btn");
 				}
-				
-				BillingPeriod currentBillingPeriod = configManager.getCurrentBillingPeriod();
-				BillingPeriod billingPeriod = billingPeriodHistory.get(page);
 			}
 		});
 		
@@ -74,9 +71,6 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 				{
 					playerGUIPage.removeComponent("prev-page-btn");
 				}
-				
-				BillingPeriod currentBillingPeriod = configManager.getCurrentBillingPeriod();
-				BillingPeriod billingPeriod = billingPeriodHistory.get(page);
 			}
 		});
 		
