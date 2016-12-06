@@ -62,7 +62,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		
 		date = (Calendar)dateScroller.getPlayerScrollValue(player).getValue();
 		
-		guiPage.registerPageLoadHandler(new GUIPageLoadHandler()
+		guiPage.registerPageLoadHandler(player, new GUIPageLoadHandler()
 		{
 			@Override
 			public void onPageLoad(PlayerGUIPage loadedPlayerGUIPage)

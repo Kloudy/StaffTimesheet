@@ -93,7 +93,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 			}
 		});
 		
-		guiPage.registerPageLoadHandler(new GUIPageLoadHandler()
+		guiPage.registerPageLoadHandler(player, new GUIPageLoadHandler()
 		{
 			@Override
 			public void onPageLoad(PlayerGUIPage loadedPlayerGUIPage)

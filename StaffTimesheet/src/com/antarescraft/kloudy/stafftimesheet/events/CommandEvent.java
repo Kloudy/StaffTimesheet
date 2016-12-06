@@ -54,15 +54,22 @@ public class CommandEvent implements CommandExecutor
 		Player player = (Player)sender;
 		StaffMember staffMember = configManager.getStaffMember(player);
 		
-		if(staffMember.isSuperAdmin())
+		if(staffMember != null)
 		{
-			AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
-			staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
+			if(staffMember.isSuperAdmin())
+			{
+				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
+				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
+			}
+			else
+			{
+				TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, configManager);
+				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home", model);
+			}
 		}
 		else
 		{
-			TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, configManager);
-			staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home", model);
+			sender.sendMessage(configManager.getErrorMessageNotStaff());
 		}
 	}
 	
