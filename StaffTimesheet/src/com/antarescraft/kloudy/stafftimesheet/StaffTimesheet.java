@@ -33,6 +33,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		pluginName = getName();
 			
 		getHoloGUIApi().hookHoloGUIPlugin(this);
+		copyResourceConfigs(true);
 		loadGUIPages();
 		
 		IOManager.initFileStructure(this);

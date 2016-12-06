@@ -2,6 +2,8 @@ package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import java.time.Duration;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
@@ -12,8 +14,6 @@ import com.antarescraft.kloudy.hologuiapi.guicomponents.ValueScrollerComponent;
 import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.DurationScrollValue;
-import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 

@@ -17,7 +17,7 @@ timesheet-home-admin:
       symmetrical: true
       mini: true
       icon: "x-red.gif"
-      onclick: "hg close"
+      onclick: "$model.close();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.8

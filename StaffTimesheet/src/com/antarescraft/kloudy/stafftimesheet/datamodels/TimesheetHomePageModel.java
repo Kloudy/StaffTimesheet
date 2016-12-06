@@ -26,7 +26,6 @@ public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 			@Override
 			public void onClick()
 			{
-				System.out.println("made it");
 				LogbookPageModel logbookModel = new LogbookPageModel(plugin, plugin.getGUIPages().get("timesheet-log"), player, staffMember);
 				plugin.getHoloGUIApi().openGUIPage(plugin, player, "timesheet-log", logbookModel);
 			}

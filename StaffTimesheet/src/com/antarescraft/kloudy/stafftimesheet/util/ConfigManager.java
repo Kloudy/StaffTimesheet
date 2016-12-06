@@ -9,16 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDurationFormatException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.plugincore.exceptions.InvalidDateFormatException;
-import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
-import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffMemberSummary;
@@ -222,11 +222,12 @@ public class ConfigManager
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(configFile);
 			yaml.set(path, value);
 			yaml.save(configFile);
-			
-		}catch(Exception e){MessageManager.error(Bukkit.getConsoleSender(), 
+
+		}catch(Exception e){
+			MessageManager.error(Bukkit.getConsoleSender(),
 				String.format("[%s]Error saving values to the config file. Does the file still exist?", staffTimesheetPlugin.getName()));}
 	}
-	
+
 	/*
 	 * Getter Functions
 	 */
@@ -323,8 +324,8 @@ public class ConfigManager
 					
 					billingPeriodHistory.add(new BillingPeriod(startDate, endDate, staffMemberSummaries));
 				}
-				catch(InvalidDateFormatException e){}
-				catch(InvalidDurationFormatException e){}
+				catch(InvalidDateFormatException e){e.printStackTrace();}
+				catch(InvalidDurationFormatException e){e.printStackTrace();}
 			}
 		}
 		

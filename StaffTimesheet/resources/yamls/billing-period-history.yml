@@ -17,7 +17,7 @@ billing-period-history:
       symmetrical: true
       mini: true
       icon: "x-red.gif"
-      onclick: "hg close"
+      onclick: "$model.close();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.8
@@ -29,7 +29,7 @@ billing-period-history:
       symmetrical: true
       mini: true
       icon: "back.png"
-      onclick: "hg back"
+      onclick: "$model.back();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: -0.8
@@ -53,19 +53,6 @@ billing-period-history:
         x: 0
         y: 0.5
 
-    delete-btn:
-      type: "button"
-      hidden: true
-      symmetrical: true
-      mini: true
-      icon: "trash.png"
-      label: "&c&lDelete Billing Period"
-      onclick: "$model.deleteBillingHistory();"
-      onclick-sound: "UI_BUTTON_CLICK"
-      position:
-        x: 0
-        y: 0.35
-
     summary-label:
       type: "label"
       label-distance: 6
@@ -79,7 +66,7 @@ billing-period-history:
         - "&lTime Completed: &6&l$model.billingPeriodPercentTimeLogged();"
       position:
         x: 0
-        y: -0.1
+        y: 0.2
 
     next-page-btn:
       type: "button"

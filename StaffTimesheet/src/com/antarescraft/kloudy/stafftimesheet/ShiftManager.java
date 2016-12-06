@@ -4,10 +4,9 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
-
-import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 
 /**
  * Handles the clocking in and clocking out of staff members.

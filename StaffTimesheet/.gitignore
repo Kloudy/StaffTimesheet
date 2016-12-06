@@ -1,3 +1,8 @@
 bin/
 target/
+<<<<<<< HEAD
 pom.xml
+=======
+.settings/
+.project
+>>>>>>> a9ac47f43c4a4ad8f3020d44510602b244915ffd

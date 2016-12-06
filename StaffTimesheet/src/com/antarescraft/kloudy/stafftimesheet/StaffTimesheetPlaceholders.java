@@ -2,10 +2,10 @@ package com.antarescraft.kloudy.stafftimesheet;
 
 import java.util.Calendar;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;

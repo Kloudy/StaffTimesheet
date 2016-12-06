@@ -17,7 +17,7 @@ admin-manage-staff:
       symmetrical: true
       mini: true
       icon: "x-red.gif"
-      onclick: "hg close"
+      onclick: "$model.close();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.8
@@ -29,7 +29,7 @@ admin-manage-staff:
       symmetrical: true
       mini: true
       icon: "back.png"
-      onclick: "hg back"
+      onclick: "$model.back();"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: -0.8

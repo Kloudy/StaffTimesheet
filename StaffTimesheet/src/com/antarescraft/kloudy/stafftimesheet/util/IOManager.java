@@ -11,11 +11,11 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 
-import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
@@ -112,9 +112,9 @@ public class IOManager
 	}
 	
 	/**
-	 * 
-	 * @param staffTimesheet
+	 *
 	 * @param staffMember
+	 * @param date
 	 * @return an ArrayList of the lines in the log file for the specified staff member
 	 */
 	public static ArrayList<String> getLogFile(StaffMember staffMember, Calendar date)
@@ -139,7 +139,7 @@ public class IOManager
 	
 	private static void error(StaffMember staffMember)
 	{
-		MessageManager.error(Bukkit.getConsoleSender(), 
+		MessageManager.error(Bukkit.getConsoleSender(),
 				String.format("[%s] An error occured while attempting to create a log entry for staff member %s", 
 						StaffTimesheet.pluginName, staffMember.getPlayerName()));
 	}

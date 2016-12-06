@@ -7,12 +7,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.plugincore.command.CommandHandler;
-import com.antarescraft.kloudy.plugincore.command.CommandParser;
-import com.antarescraft.kloudy.plugincore.exceptions.DurationOverflowException;
-import com.antarescraft.kloudy.plugincore.exceptions.DurationUnderflowException;
-import com.antarescraft.kloudy.plugincore.exceptions.InvalidDurationFormatException;
-import com.antarescraft.kloudy.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.hologuiapi.plugincore.command.CommandHandler;
+import com.antarescraft.kloudy.hologuiapi.plugincore.command.CommandParser;
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationUnderflowException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDurationFormatException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
@@ -38,8 +38,8 @@ public class CommandEvent implements CommandExecutor
 	}
 	
 	@CommandHandler(description = "Reloads the values contained in the config file",
-			mustBePlayer = false, permission = "staff.admin", subcommands = "reloadconfig")
-	public void reloadConfig(CommandSender sender, String[] args)
+			mustBePlayer = false, permission = "staff.admin", subcommands = "reload")
+	public void reload(CommandSender sender, String[] args)
 	{
 		staffTimesheet.destroyPlayerGUIPages();
 		
