@@ -28,7 +28,7 @@
     	<groupId>com.antarescraft.kloudy.hologuiapi</groupId>
     	<artifactId>HoloGUIApi</artifactId>
     	<scope>provided</scope>
-    	<version>1.0</version>
+    	<version>1.0.2</version>
     </dependency>
     <dependency>
          <groupId>me.clip</groupId>
@@ -79,6 +79,7 @@
                   <shadedPattern>com.antarescraft.kloudy.stafftimesheet.plugincore</shadedPattern>
                 </relocation>
               </relocations>
+              <outputDirectory>C:\Users\timke\Dropbox\Spigot 1.11 Server\plugins</outputDirectory>
             </configuration>
           </execution>
         </executions>
