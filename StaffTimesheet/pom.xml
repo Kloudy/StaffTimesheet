@@ -73,8 +73,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <finalName>StaffTimesheet</finalName>
-              <outputDirectory>D:\Tim\Spigot 1.11 Server\plugins</outputDirectory>
+              <outputFile>${plugin-folder}/StaffTimesheet.jar</outputFile>
             </configuration>
           </execution>
         </executions>
