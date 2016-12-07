@@ -12,6 +12,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.command.CommandParser;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationUnderflowException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDurationFormatException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
@@ -45,6 +46,8 @@ public class CommandEvent implements CommandExecutor
 		
 		staffTimesheet.loadGUIPages();
 		configManager.loadConfigValues();
+		
+		MessageManager.info(sender, "Config values reloaded.");
 	}
 	
 	@CommandHandler(description = "Opens the Staff Timesheet HoloGUI menu",
