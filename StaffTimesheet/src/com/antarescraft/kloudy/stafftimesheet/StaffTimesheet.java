@@ -22,9 +22,11 @@ public class StaffTimesheet extends HoloGUIPlugin
 	
 	@Override
 	public void onEnable()
-	{	
+	{			
 		setMinSupportedApiVersion("1.0.2");
 		checkMinApiVersion();
+		
+		
 		
 		logger = this.getLogger();
 		
@@ -58,7 +60,6 @@ public class StaffTimesheet extends HoloGUIPlugin
 	public void onDisable()
 	{
 		ShiftManager.getInstance().clockOutAll(configManager.getShiftEndLabelPluginDisabled());
-
 		destroyPlayerGUIPages();
 	}
 	
