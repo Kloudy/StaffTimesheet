@@ -38,35 +38,10 @@ public class ConfigManager
 	
 	private Duration updateStaffLogsPeriod;
 	
-	private String shiftEndAFKMessage;
-	private String shiftEndClockoutMessage;
-	private String shiftStartMessage;
 	
-	private String resetStaffMemberLoggedTimeMessage;
-	private String addLoggedTimeForStaffMemberMessage;
-	private String subtractLoggedTimeForStaffMemberMessage;
-	private String loadingStaffMemberLogbookMessage;
-	private String loadedStaffMemberLogbookMessage;
 	private int maxLogRange;
-	private String logbookTextHeader;
-	private List<String> logbookLoreText;
 	
-	private String shiftStartLabel;
-	private String shiftEndLabelAFK;
-	private String shiftEndLabelDisconnected;
-	private String shiftEndLabelClockedOut;
-	private String shiftEndLabelPluginDisabled;
 	
-	private String errorMessageDurationUnderflow;
-	private String errorMessageDurationOverflow;
-	private String errorMessageNotStaff;
-	private String errorMessageNotClockedIn;
-	private String errorMessageAlreadyClockedIn;
-	private String errorMessageStaffMemberDoesNotExist;
-	private String errorMessageNoStaffLog;
-	private String errorMessageInvalidDurationFormat;
-	private String errorMessageInvalidDateFormat;
-	private String errorMessageStartDateEndDateMismatch;
 	
 	private HashMap<UUID, StaffMember> staffMembers;
 	

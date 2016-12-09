@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.BooleanConfigurationProperty;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.ConfigurationElementKey;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.StringConfigurationProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
@@ -18,30 +21,34 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 public class StaffMember
 {
 	private Player player;
-	private String playerName;
-	private UUID playerUUID;
-	private String clockInPermission;
-	private String rankTitle;
-	private Duration timeGoal;
-	private Duration loggedTime;
-	private boolean startShiftOnLogin;
-	private boolean superAdmin;
 	
-	public StaffMember(String playerName, String playerUUID, String clockInPermission, Duration timeGoal, 
-			String rankTitle, Duration loggedTime, boolean startShiftOnLogin, boolean superAdmin)
-	{
-		this.playerName = playerName;
-		this.playerUUID = UUID.fromString(playerUUID);
-		this.clockInPermission = clockInPermission;
-		this.rankTitle = rankTitle;
-		this.startShiftOnLogin = startShiftOnLogin;
-		this.timeGoal = timeGoal;
-		this.loggedTime = loggedTime;
-		this.superAdmin = superAdmin;
-	}
+	@ConfigurationElementKey
+	private String playerName;
+	
+	@StringConfigurationProperty(key = "uuid")
+	private String playerUUIDString;
+	
+	@StringConfigurationProperty(key = "clock-in-permission")
+	private String clockInPermission;
+	
+	@StringConfigurationProperty(key = "rank-title")
+	private String rankTitle;
+	
+	@StringConfigurationProperty(key = "time-goal", defaultValue = "00:00:00")
+	private String timeGoalString;
+	
+	@StringConfigurationProperty(key = "logged-time", defaultValue = "00:00:00")
+	private String loggedTimeString;
+	
+	@BooleanConfigurationProperty(key = "start-shift-on-login")
+	private boolean startShiftOnLogin;
+	
+	@BooleanConfigurationProperty(key = "super-admin")
+	private boolean superAdmin;
 	
 	public void addLoggedTime(Duration time) throws DurationOverflowException
 	{
+		Duration loggedTime = getLoggedTime();
 		Duration sumDuration = loggedTime.plus(time);
 
 		if(sumDuration.compareTo(TimeFormat.getMaxDuration()) > 0)//sum results in duration larger than the max duration
@@ -50,13 +57,14 @@ public class StaffMember
 		}
 		
 		loggedTime = sumDuration;
+		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		String timeFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", timeFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
 	{
+		Duration loggedTime = getLoggedTime();
 		Duration diffDuration = loggedTime.minus(time);
 		
 		if(diffDuration.compareTo(TimeFormat.getMinDuration()) < 0)
@@ -66,16 +74,16 @@ public class StaffMember
 		
 		loggedTime = loggedTime.minus(diffDuration);
 		
-		String durationFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);
+		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
+		
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
 	}
 	
 	public void resetLoggedTime()
 	{
-		loggedTime = Duration.ZERO;
+		loggedTimeString = TimeFormat.getDurationFormatString(Duration.ZERO);
 		
-		String durationFormat = TimeFormat.getDurationFormatString(loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
 	}
 	
 	public void logEntry(String text)
@@ -103,7 +111,7 @@ public class StaffMember
 		{
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
-				if(playerUUID.equals(player.getUniqueId()))
+				if(getUUID().equals(player.getUniqueId()))
 				{
 					this.player = player;
 					break;
@@ -116,6 +124,9 @@ public class StaffMember
 	
 	public double getPercentageTimeCompleted()
 	{
+		Duration loggedTime = getLoggedTime();
+		Duration timeGoal = getTimeGoal();
+		
 		double loggedTimeSeconds = (double)loggedTime.getSeconds();
 		double timeGoalSeconds = (double)timeGoal.getSeconds();
 
@@ -134,7 +145,7 @@ public class StaffMember
 	
 	public UUID getUUID()
 	{
-		return playerUUID;
+		return UUID.fromString(playerUUIDString);
 	}
 	
 	public String getClockInPermission()
@@ -149,22 +160,38 @@ public class StaffMember
 	
 	public String getTimeGoalString()
 	{
-		return TimeFormat.getDurationFormatString(timeGoal);
+		return timeGoalString;
 	}
 	
 	public Duration getTimeGoal()
 	{
+		Duration timeGoal = null;
+		
+		try
+		{
+			timeGoal = TimeFormat.parseDurationFormat(timeGoalString);
+		} 
+		catch (InvalidDurationFormatException e) {}
+		
 		return timeGoal;
 	}
 	
 	public Duration getLoggedTime()
 	{
+		Duration loggedTime = null;
+		
+		try
+		{
+			loggedTime = TimeFormat.parseDurationFormat(loggedTimeString);
+		} 
+		catch (InvalidDurationFormatException e) {}
+		
 		return loggedTime;
 	}
 	
 	public String getLoggedTimeString()
 	{
-		return TimeFormat.getDurationFormatString(loggedTime);
+		return loggedTimeString;
 	}
 	
 	public boolean startShiftOnLogin()
@@ -183,18 +210,16 @@ public class StaffMember
 	
 	public void setLoggedTime(Duration loggedTime)
 	{
-		this.loggedTime = loggedTime;
+		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		String durationFormat = TimeFormat.getDurationFormatString(this.loggedTime);
-		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", durationFormat);		
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);		
 	}
 	
 	public void setTimeGoal(Duration timeGoal)
 	{
-		this.timeGoal = timeGoal;
+		timeGoalString = TimeFormat.getDurationFormatString(timeGoal);
 		
-		String durationFormat = TimeFormat.getDurationFormatString(this.timeGoal);
-		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".time-goal", durationFormat);
+		ConfigManager.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".time-goal", timeGoalString);
 	}
 	
 	public void setSuperAdmin(boolean superAdmin)
@@ -231,7 +256,7 @@ public class StaffMember
 		if(obj instanceof StaffMember)
 		{
 			StaffMember staffMemberObj = (StaffMember)obj;
-			if(staffMemberObj.getUUID().equals(this.playerUUID))
+			if(staffMemberObj.getUUID().equals(getUUID()))
 			{
 				return true;
 			}
