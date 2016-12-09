@@ -4,12 +4,15 @@ import java.util.logging.Logger;
 
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.PlayerData;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigurationParseException;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerJoinEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerQuitEventListener;
 import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.util.ConfigErrorMessages;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
 public class StaffTimesheet extends HoloGUIPlugin
@@ -17,6 +20,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 	public static Logger logger;
 	public static boolean debugMode;
 	public static String pluginName;
+	
+	private ConfigErrorMessages errorMessages;
 	
 	private ConfigManager configManager;
 	
@@ -36,6 +41,16 @@ public class StaffTimesheet extends HoloGUIPlugin
 		copyResourceConfigs(true);
 		loadGUIPages();
 		
+		try 
+		{
+			errorMessages = ConfigParser.parse(getConfig(), ConfigErrorMessages.class);
+		} 
+		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | ClassNotFoundException
+				| ConfigurationParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		IOManager.initFileStructure(this);
 		
 		configManager = new ConfigManager(this);

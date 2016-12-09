@@ -2,10 +2,10 @@ package com.antarescraft.kloudy.stafftimesheet.util;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.StringConfigurationProperty;
 
-public class ConfigMessages 
+public class ConfigStrings 
 {
 	@StringConfigurationProperty(key = "shift-end-afk-message")
-	private String shiftEndAFKMessage;
+	public String shiftEndAFKMessage;
 	
 	@StringConfigurationProperty(key = "shift-end-clockout-message")
 	private String shiftEndClockoutMessage;
@@ -27,23 +27,19 @@ public class ConfigMessages
 	
 	@StringConfigurationProperty(key = "loaded-staff-member-logbook-message")
 	private String loadedStaffMemberLogbookMessage;
-	
-	@StringConfigurationProperty(key = "error-message-duration-underflow")
-	private String errorMessageDurationUnderflow;
-	
-	private String errorMessageDurationOverflow;
-	private String errorMessageNotStaff;
-	private String errorMessageNotClockedIn;
-	private String errorMessageAlreadyClockedIn;
-	private String errorMessageStaffMemberDoesNotExist;
-	private String errorMessageNoStaffLog;
-	private String errorMessageInvalidDurationFormat;
-	private String errorMessageInvalidDateFormat;
-	private String errorMessageStartDateEndDateMismatch;
-	
+
+	@StringConfigurationProperty(key = "shift-start-label")
 	private String shiftStartLabel;
+	
+	@StringConfigurationProperty(key = "shit-end-label-afk")
 	private String shiftEndLabelAFK;
+	
+	@StringConfigurationProperty(key = "shift-end-label-disconnectd")
 	private String shiftEndLabelDisconnected;
+	
+	@StringConfigurationProperty(key = "shift-end-label-clocked-out")
 	private String shiftEndLabelClockedOut;
+	
+	@StringConfigurationProperty(key = "shift-end-label-plugin-disabled")
 	private String shiftEndLabelPluginDisabled;
 }

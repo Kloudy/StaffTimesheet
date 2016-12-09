@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.ConfigurationElementMap;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDurationFormatException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
@@ -30,6 +32,9 @@ import net.md_5.bungee.api.ChatColor;
 public class ConfigManager
 {	
 	private static StaffTimesheet staffTimesheetPlugin;
+	
+	private ConfigErrorMessages errorMessages;
+	private ConfigStrings configStrings;
 
 	private int billingPeriodDuration;
 	private String firstBillPeriodStartDate;
@@ -38,11 +43,9 @@ public class ConfigManager
 	
 	private Duration updateStaffLogsPeriod;
 	
-	
 	private int maxLogRange;
 	
-	
-	
+	@ConfigurationElementMap(key = "staff-members")
 	private HashMap<UUID, StaffMember> staffMembers;
 	
 	public ConfigManager(StaffTimesheet staffTimesheet)
@@ -55,10 +58,18 @@ public class ConfigManager
 	
 	public void loadConfigValues()
 	{
+		staffTimesheetPlugin.reloadConfig();
+		
 		staffMembers.clear();
 		
-		staffTimesheetPlugin.reloadConfig();
 		Configuration root = staffTimesheetPlugin.getConfig().getRoot();
+		
+		try
+		{
+			errorMessages = ConfigParser.parse(root, ConfigErrorMessages.class);
+			configStrings = ConfigParser.parse(root, ConfigStrings.class);
+		}
+		catch(Exception e){}
 		
 		StaffTimesheet.debugMode = root.getBoolean("debug-mode", false);
 		
@@ -79,23 +90,8 @@ public class ConfigManager
 			} catch (InvalidDurationFormatException de) {}
 		}
 		
-		shiftEndAFKMessage = setFormattingCodes(root.getString("shift-end-afk-message", ""));
-		shiftEndClockoutMessage = setFormattingCodes(root.getString("shift-end-clockout-message", ""));
-		shiftStartMessage = setFormattingCodes(root.getString("shift-start-message", ""));
-		resetStaffMemberLoggedTimeMessage = setFormattingCodes(root.getString("reset-staff-member-logged-time-message", ""));
-		addLoggedTimeForStaffMemberMessage = setFormattingCodes(root.getString("add-logged-time-for-staff-member-message", ""));
-		subtractLoggedTimeForStaffMemberMessage = setFormattingCodes(root.getString("subtract-logged-time-for-staff-member-message", ""));
-		loadingStaffMemberLogbookMessage = setFormattingCodes(root.getString("loading-staff-member-logbook-message", ""));
-		loadedStaffMemberLogbookMessage = setFormattingCodes(root.getString("loaded-staff-member-logbook-message", ""));
 		maxLogRange = root.getInt("max-log-range", 365);
-		logbookTextHeader = setFormattingCodes(root.getString("logbook-text-header", ""));
-		logbookLoreText = root.getStringList("logbook-lore-text");
-		shiftStartLabel = setFormattingCodes(root.getString("shift-start-label", ""));
-		shiftEndLabelAFK = setFormattingCodes(root.getString("shift-end-label-afk"));
-		shiftEndLabelDisconnected = setFormattingCodes(root.getString("shift-end-label-disconnected", ""));
-		shiftEndLabelClockedOut = setFormattingCodes(root.getString("shift-end-label-clockout", ""));
-		shiftEndLabelPluginDisabled =  setFormattingCodes(root.getString("shift-end-label-plugin-disabled", ""));
-		
+
 		for(String loreTextLine : logbookLoreText)
 		{
 			loreTextLine = loreTextLine.replace("&", "§");
@@ -368,21 +364,10 @@ public class ConfigManager
 		return loadingStaffMemberLogbookMessage;
 	}
 	
-	public String getLoadedStaffMemberLogbookMessage()
-	{
-		return loadedStaffMemberLogbookMessage;
-	}
-	
 	public int getMaxLogRange()
 	{
 		return maxLogRange;
 	}
-	
-	public String getLogbookTextHeader()
-	{
-		return logbookTextHeader;
-	}
-	
 	public List<String> getLogbookLoreText(StaffMember staffMember)
 	{
 		ArrayList<String> setLogbookLoreText = new ArrayList<String>();
@@ -394,80 +379,5 @@ public class ConfigManager
 		}
 		
 		return setLogbookLoreText;
-	}
-	
-	public String getShiftStartLabel()
-	{
-		return shiftStartLabel;
-	}
-	
-	public String getShiftEndLabelAFK()
-	{
-		return shiftEndLabelAFK;
-	}
-	
-	public String getShiftEndLabelDisconnected()
-	{
-		return shiftEndLabelDisconnected;
-	}
-	
-	public String getShiftEndLabelClockOut()
-	{
-		return shiftEndLabelClockedOut;
-	}
-	
-	public String getShiftEndLabelPluginDisabled()
-	{
-		return shiftEndLabelPluginDisabled;
-	}
-	
-	public String getErrorMessageDurationUnderflow()
-	{
-		return errorMessageDurationUnderflow;
-	}
-	
-	public String getErrorMessageDurationOverflow()
-	{
-		return errorMessageDurationOverflow;
-	}
-	
-	public String getErrorMessageNotStaff()
-	{
-		return errorMessageNotStaff;
-	}
-	
-	public String getErrorMessageNotClockedIn()
-	{
-		return errorMessageNotClockedIn;
-	}
-	
-	public String getErrorMessageAlreadyClockedIn()
-	{
-		return errorMessageAlreadyClockedIn;
-	}
-	
-	public String getErrorMessageStaffMemberDoesNotExist()
-	{
-		return errorMessageStaffMemberDoesNotExist;
-	}
-	
-	public String getErrorMessageNoStaffLog()
-	{
-		return errorMessageNoStaffLog;
-	}
-	
-	public String getErrorMessageInvalidDurationFormat()
-	{
-		return errorMessageInvalidDurationFormat;
-	}
-	
-	public String getErrorMessageInvalidDateFormat()
-	{
-		return errorMessageInvalidDateFormat;
-	}
-	
-	public String getErrorMessageStartDateEndDateMismatch()
-	{
-		return errorMessageStartDateEndDateMismatch;
 	}
 }
