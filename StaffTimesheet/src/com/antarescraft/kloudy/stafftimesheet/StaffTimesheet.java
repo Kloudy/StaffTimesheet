@@ -42,7 +42,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		BillingPeriodUpdateTask billingPeriodUpdateTask = new BillingPeriodUpdateTask(config);
 		billingPeriodUpdateTask.start(this);
 		
-		new StaffTimesheetPlaceholders(this, "stafftimesheet", config).hook();
+		new StaffTimesheetPlaceholders(this, "stafftimesheet", config.getStaffMembersConfig()).hook();
 		
 		getCommand("staff").setExecutor(new CommandEvent(this, config));
 		getServer().getPluginManager().registerEvents(new AfkStatusChangeEventListener(config), this);
@@ -54,7 +54,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void onDisable()
 	{
-		ShiftManager.getInstance().clockOutAll(config.getEventLabels().getShiftEndPluginDisabled());
+		ShiftManager.getInstance().clockOutAll(config.getEventLabelConfig().getShiftEndPluginDisabled());
 		destroyPlayerGUIPages();
 	}
 	

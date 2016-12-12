@@ -47,7 +47,7 @@ public class BillingPeriodUpdateTask extends BukkitRunnable
 			
 			shiftManager.setCurrentBillingPeriod(newBillingPeriod);
 			
-			config.getStaffMemberManager().resetAllStaffMemberTime();//resets all staff member time for the new billing period
+			config.getStaffMembersConfig().resetAllStaffMemberTime();//resets all staff member time for the new billing period
 		}
 	}
 }

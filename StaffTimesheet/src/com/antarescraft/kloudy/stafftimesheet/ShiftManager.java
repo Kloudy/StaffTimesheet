@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+
 import org.bukkit.Bukkit;
 
 /**
@@ -92,7 +94,7 @@ public class ShiftManager
 					staffMember.setLoggedTime(TimeFormat.getMaxDuration());
 				}
 				
-				if(StaffTimesheet.debugMode)
+				if(StaffTimesheetConfig.debugMode)
 				{
 					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getDurationFormatString(shiftTime));
 				}

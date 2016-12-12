@@ -3,7 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.util.Calendar;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMembersConfig;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -13,13 +13,13 @@ import net.md_5.bungee.api.ChatColor;
 
 public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 {
-	private StaffTimesheetConfig configManager;
+	private StaffMembersConfig staffConfig;
 	
-	public StaffTimesheetPlaceholders(Plugin plugin, String identifier, StaffTimesheetConfig configManager)
+	public StaffTimesheetPlaceholders(Plugin plugin, String identifier, StaffMembersConfig staffConfig)
 	{
 		super(plugin, identifier);
 		
-		this.configManager = configManager;
+		this.staffConfig = staffConfig;
 	}
 
 	@Override
@@ -34,11 +34,11 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 		
 		if(playerName != null)
 		{
-			staffMember = configManager.getStaffMember(playerName);
+			staffMember = staffConfig.getStaffMember(playerName);
 		}
 		else
 		{
-			staffMember = configManager.getStaffMember(player);
+			staffMember = staffConfig.getStaffMember(player);
 		}
 		
 		if(staffMember == null) return errorMessage;
@@ -47,11 +47,6 @@ public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 		{
 			return staffMember.getPlayerName();
 		}
-		//else if(identifier.equals("admin-searched-staff-member-name") && staffMember instanceof StaffMemberAdmin)
-		//{
-			//StaffMemberAdmin admin = (StaffMemberAdmin)staffMember;
-			//return admin.getSearchedStaffMember();
-		//}
 		else if(identifier.matches("current-logged-time(_.+)?"))
 		{
 			return staffMember.getLoggedTimeString();

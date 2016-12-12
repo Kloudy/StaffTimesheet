@@ -1,5 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import java.io.File;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -9,11 +10,13 @@ import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.BooleanConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.StringConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
@@ -60,6 +63,11 @@ public class StaffMember
 	@ConfigProperty(key = "super-admin", note = "If true, the staff member will be a super admin")
 	private boolean superAdmin;
 	
+	private File getStaffMembersFile()
+	{
+		return new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+	}
+	
 	public void addLoggedTime(Duration time) throws DurationOverflowException
 	{
 		Duration loggedTime = getLoggedTime();
@@ -73,6 +81,9 @@ public class StaffMember
 		loggedTime = sumDuration;
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(getStaffMembersFile());
+		
+		ConfigParser.saveConfig(yaml, yamlFile, path, object);
 		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
 	}
 	
@@ -89,8 +100,7 @@ public class StaffMember
 		loggedTime = loggedTime.minus(diffDuration);
 		
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
-		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
+		//StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
 	}
 	
 	public void resetLoggedTime()

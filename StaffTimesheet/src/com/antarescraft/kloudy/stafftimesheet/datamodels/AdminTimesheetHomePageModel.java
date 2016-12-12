@@ -69,7 +69,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		
 		staffMemberSelector = (ValueScrollerComponent) guiPage.getComponent("staff-member-selector");
 		
-		Collection<StaffMember> staffMembers = (Collection<StaffMember>)configManager.getAllStaffMembers();
+		Collection<StaffMember> staffMembers = (Collection<StaffMember>)configManager.getStaffMembersConfig().getAllStaffMembers();
 		String[] staffMemberNames = new String[staffMembers.size()];
 		int viewerIndex = 0;
 		int i = 0;
@@ -103,7 +103,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			{
 				ListScrollValue listValue = (ListScrollValue)value;
 				System.out.println(listValue.toString());
-				staffMember = configManager.getStaffMember(listValue.toString());
+				staffMember = configManager.getStaffMembersConfig().getStaffMember(listValue.toString());
 			}
 		});
 		

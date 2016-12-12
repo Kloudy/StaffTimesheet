@@ -15,9 +15,9 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class StaffMemberManager
+public class StaffMembersConfig
 {
-	private StaffMemberManager(){}
+	private StaffMembersConfig(){}
 	
 	@ConfigElementMap()
 	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")

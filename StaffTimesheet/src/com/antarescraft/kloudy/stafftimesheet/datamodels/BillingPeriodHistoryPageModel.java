@@ -26,11 +26,11 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 	private ButtonComponent prevPageBtn;
 	private int page;
 	
-	public BillingPeriodHistoryPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember, final StaffTimesheetConfig configManager)
+	public BillingPeriodHistoryPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember, final StaffTimesheetConfig config)
 	{
 		super(plugin, guiPage, player, staffMember);
 				
-		billingPeriodHistory = StaffTimesheetConfig.getAllBillingPeriods();//read all billing history data from 'staff-member-billing-period-history.yml'
+		billingPeriodHistory = config.getBillingPeriodHistoryConfig().getAllBillingPeriodHistory();//read all billing history data from 'staff-member-billing-period-history.yml'
 			
 		page = billingPeriodHistory.size()-1;
 		
