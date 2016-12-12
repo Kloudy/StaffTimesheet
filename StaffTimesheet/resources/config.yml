@@ -1,6 +1,6 @@
 debug-mode: false       #Print debug information in the console
 
-billing-period: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
+billing-period-duration: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
                         #Log cycle reports are generated at the end of the log cycle
 
 first-bill-period-start-date: "2016/10/01"   #Start date for the first bill cycle (format: yyyy/mm/dd)
@@ -12,9 +12,10 @@ first-bill-period-start-date: "2016/10/01"   #Start date for the first bill cycl
 #     %stafftimesheet_time-goal% => Time goal for the staff member in this billing period      #
 ################################################################################################
 
-shift-end-afk-message: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
-shift-end-clockout-message: "&aShift ended. Your time has been logged! \nHours This Month: %stafftimesheet_current-logged-time%. \nYour Monthly Goal: %stafftimesheet_time-goal%. \nProgress: %stafftimesheet_percent-time-logged%"
-shift-start-message: "&aYour shift has started. Your time is being logged!"
+shift-start-stop-messages:
+  shift-end-afk: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
+  shift-end-clockout: "&aShift ended. Your time has been logged! \nHours This Month: %stafftimesheet_current-logged-time%. \nYour Monthly Goal: %stafftimesheet_time-goal%. \nProgress: %stafftimesheet_percent-time-logged%"
+  shift-start: "&aYour shift has started. Your time is being logged!"
 
 
 
@@ -24,9 +25,10 @@ shift-start-message: "&aYour shift has started. Your time is being logged!"
 #   These messages are displayed to the command invoker as a result of a command being run     #
 ################################################################################################
 
-reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
-add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
-subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
+command-result-messages:
+  reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
+  add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
+  subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
 
 
 
@@ -34,13 +36,12 @@ subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time f
 #                           Staff Member Logbook Configuration                                 #
 ################################################################################################
 
-#Log Book Event Labels#
-
-shift-start-label: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
-shift-end-label-afk: "[&4AFK&r]"                    #Text to log when the staff member goes AFK
-shift-end-label-disconnected: "[&4Disconnected&r]"  #Text to log when the staff member disconnects from the server
-shift-end-label-clockout: "[&4Clocked Out&r]"       #Text to log when the staff member clocks out
-shift-end-plugin-disabled: "[&4Plugin Disabled&r]"  #Text to log when the plugin is disabled
+event-labels:
+  shift-start-label: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
+  shift-end-afk: "[&4AFK&r]"                          #Text to log when the staff member goes AFK
+  shift-end-disconnected: "[&4Disconnected&r]"        #Text to log when the staff member disconnects from the server
+  shift-end-clockout: "[&4Clocked Out&r]"             #Text to log when the staff member clocks out
+  shift-end-plugin-disabled: "[&4Plugin Disabled&r]"  #Text to log when the plugin is disabled
 
 
 
@@ -48,13 +49,14 @@ shift-end-plugin-disabled: "[&4Plugin Disabled&r]"  #Text to log when the plugin
 #                                         Error Messages                                       #
 ################################################################################################
 
-error-message-duration-underflow: "&cYou cannot remove more time than the staff member has logged!"     #Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.
-error-message-duration-overflow: "&cYou added too much time! Max allowed time: 99:59:59"                #Error message displayed if a super admin tries to add more time to a staff member's time than the max duration value
-error-message-not-staff: "&cYou are not a staff member!"                                                #Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml
-error-message-not-clocked-in: "&cYou are not currently clocked in!"                                     #Error message displayed if a player tries to use /staff shift end but they are not currently on the clock
-error-message-already-clocked-in: "&cYou are already clocked in!"
-error-message-staff-member-does-not-exist: "&4No staff member exists with that name!"                   #Error message displayed when an a staff command is run with a player name that doesn't belong to any staff member
-error-message-no-staff-log: "&cCouldn't find any logs for that staff member!"                           #Error message displayed when the plugin is unable to load a staff member's logs
-error-message-invalid-duration-format: "&cInvalid duration format. Please use format: hh:mm:ss"         #Error message displayed when an invalid duration format is entered from the user 
-error-message-invalid-date-format: "&cInvalid date format. Please use format: yyyy/mm/dd"               #Error message displayed when an invalid date format is entered from the user
-error-message-start-date-end-date-mismatch: "&cYou entered a start date that comes after the end date!" #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date
+error-messages:
+  duration-underflow: "&cYou cannot remove more time than the staff member has logged!"     #Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.
+  duration-overflow: "&cYou added too much time! Max allowed time: 99:59:59"                #Error message displayed if a super admin tries to add more time to a staff member's time than the max duration value
+  not-staff: "&cYou are not a staff member!"                                                #Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml
+  not-clocked-in: "&cYou are not currently clocked in!"                                     #Error message displayed if a player tries to use /staff shift end but they are not currently on the clock
+  already-clocked-in: "&cYou are already clocked in!"                                       #Error message displayed if the player tries to clock in if they are already clocked in
+  staff-member-does-not-exist: "&4No staff member exists with that name!"                   #Error message displayed when an a staff command is run with a player name that doesn't belong to any staff member
+  no-staff-log: "&cCouldn't find any logs for that staff member!"                           #Error message displayed when the plugin is unable to load a staff member's logs
+  invalid-duration-format: "&cInvalid duration format. Please use format: hh:mm:ss"         #Error message displayed when an invalid duration format is entered from the user 
+  invalid-date-format: "&cInvalid date format. Please use format: yyyy/mm/dd"               #Error message displayed when an invalid date format is entered from the user
+  start-date-end-date-mismatch: "&cYou entered a start date that comes after the end date!" #Error message displayed when the user enters a range of dates in a command but the start date comes after the end date

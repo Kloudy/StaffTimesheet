@@ -6,13 +6,13 @@ import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.PlayerData;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigurationParseException;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+import com.antarescraft.kloudy.stafftimesheet.config.ErrorMessages;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.CommandEvent;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerCommandPreprocessEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerJoinEventListener;
 import com.antarescraft.kloudy.stafftimesheet.events.PlayerQuitEventListener;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigErrorMessages;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
 public class StaffTimesheet extends HoloGUIPlugin
@@ -21,9 +21,9 @@ public class StaffTimesheet extends HoloGUIPlugin
 	public static boolean debugMode;
 	public static String pluginName;
 	
-	private ConfigErrorMessages errorMessages;
+	private ErrorMessages errorMessages;
 	
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
 	@Override
 	public void onEnable()
@@ -43,7 +43,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		
 		try 
 		{
-			errorMessages = ConfigParser.parse(getConfig(), ConfigErrorMessages.class);
+			errorMessages = ConfigParser.parse(getConfig(), ErrorMessages.class);
 		} 
 		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | ClassNotFoundException
 				| ConfigurationParseException e) {
@@ -53,7 +53,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 				
 		IOManager.initFileStructure(this);
 		
-		configManager = new ConfigManager(this);
+		configManager = new StaffTimesheetConfig(this);
 		configManager.loadConfigValues();
 	
 		//task that runs every hour to see if we've rolled over into a new billing cycle

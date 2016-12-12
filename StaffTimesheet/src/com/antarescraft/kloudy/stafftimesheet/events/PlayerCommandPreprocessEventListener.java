@@ -7,13 +7,13 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class PlayerCommandPreprocessEventListener implements Listener
 {
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
-	public PlayerCommandPreprocessEventListener(ConfigManager configManager)
+	public PlayerCommandPreprocessEventListener(StaffTimesheetConfig configManager)
 	{
 		this.configManager = configManager;
 	}

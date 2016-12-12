@@ -6,7 +6,7 @@ import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 /**
  * Represents a data model for the non-superadmin timesheet home page
@@ -14,9 +14,9 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 {
 	protected ItemButtonComponent logbookBtn;
-	protected ConfigManager configManager;
+	protected StaffTimesheetConfig configManager;
 	
-	public TimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, ConfigManager configManager) 
+	public TimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, StaffTimesheetConfig configManager) 
 	{
 		super(plugin, guiPage, player, configManager.getStaffMember(player));
 				

@@ -16,7 +16,7 @@ import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.ListScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 /**
  * Represents a data model for the superadmin timesheet home page
@@ -27,7 +27,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 	private ButtonComponent manageStaffMemberBtn;
 	private ButtonComponent billingPeriodHistoryBtn;
 	
-	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final ConfigManager configManager) 
+	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final StaffTimesheetConfig configManager) 
 	{
 		super(plugin, guiPage, player, configManager);
 		

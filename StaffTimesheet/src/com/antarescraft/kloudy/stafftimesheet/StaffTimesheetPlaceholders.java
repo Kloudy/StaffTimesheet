@@ -3,19 +3,19 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.util.Calendar;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 import net.md_5.bungee.api.ChatColor;
 
 public class StaffTimesheetPlaceholders extends EZPlaceholderHook
 {
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
-	public StaffTimesheetPlaceholders(Plugin plugin, String identifier, ConfigManager configManager)
+	public StaffTimesheetPlaceholders(Plugin plugin, String identifier, StaffTimesheetConfig configManager)
 	{
 		super(plugin, identifier);
 		

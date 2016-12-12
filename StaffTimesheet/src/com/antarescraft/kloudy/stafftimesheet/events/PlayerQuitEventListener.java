@@ -7,13 +7,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class PlayerQuitEventListener implements Listener
 {
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
-	public PlayerQuitEventListener(ConfigManager configManager)
+	public PlayerQuitEventListener(StaffTimesheetConfig configManager)
 	{
 		this.configManager = configManager;
 	}

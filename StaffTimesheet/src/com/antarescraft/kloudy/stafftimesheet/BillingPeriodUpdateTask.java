@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 /**
  * Repeating task that checks to see if we've rolled over into a new billing period
@@ -12,11 +12,11 @@ import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class BillingPeriodUpdateTask extends BukkitRunnable
 {
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	private BillingPeriod currentBillingPeriod;
 	private ShiftManager shiftManager;
 	
-	public BillingPeriodUpdateTask(ConfigManager configManager)
+	public BillingPeriodUpdateTask(StaffTimesheetConfig configManager)
 	{
 		this.configManager = configManager;
 		

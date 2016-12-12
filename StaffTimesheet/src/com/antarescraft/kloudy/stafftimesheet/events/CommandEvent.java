@@ -17,16 +17,16 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
 
 public class CommandEvent implements CommandExecutor
 {
 	private StaffTimesheet staffTimesheet;
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
-	public CommandEvent(StaffTimesheet staffTimesheet, ConfigManager configManager)
+	public CommandEvent(StaffTimesheet staffTimesheet, StaffTimesheetConfig configManager)
 	{
 		this.staffTimesheet = staffTimesheet;
 		this.configManager = configManager;

@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.util.ConfigManager;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.earth2me.essentials.UserData;
 
 import net.ess3.api.events.AfkStatusChangeEvent;
@@ -14,9 +14,9 @@ import net.ess3.api.events.AfkStatusChangeEvent;
 
 public class AfkStatusChangeEventListener implements Listener
 {
-	private ConfigManager configManager;
+	private StaffTimesheetConfig configManager;
 	
-	public AfkStatusChangeEventListener(ConfigManager configManager)
+	public AfkStatusChangeEventListener(StaffTimesheetConfig configManager)
 	{
 		this.configManager = configManager;
 	}
