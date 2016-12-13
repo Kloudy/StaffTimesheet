@@ -1,12 +1,14 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
 
 /**
  * Represents a billing period - Contains a summary of each staff member's logged time during the billing period
@@ -38,30 +40,18 @@ public class BillingPeriod
 		this.staffMemberSummaries = staffMemberSummaries;
 	}
 	
-	/*
-	 * Write data to billing-period-history.yml
-	 */
-	public void saveToConfigFile()
+	private File getBillingPeriodYamlFile()
 	{
-		StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-				".start-date", TimeFormat.getDateFormat(startDate));
-		StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-				".end-date", TimeFormat.getDateFormat(endDate));
-		
-		for(StaffMemberSummary summary : staffMemberSummaries.values())
+		return new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
+	}
+	
+	public void save()
+	{
+		try 
 		{
-			StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-member-summaries." + summary.getStaffMemberName() + ".uuid", summary.getStaffMemberUUID().toString());
-			
-			StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-member-summaries." + summary.getStaffMemberName() + ".percent-time-logged", summary.getPercentTimeCompleted());
-			
-			StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-member-summaries." + summary.getStaffMemberName() + ".time-goal", summary.getTimeGoal());
-			
-			StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId() + 
-					".staff-member-summaries." + summary.getStaffMemberName() + ".logged-time", summary.getLoggedTime());
-		}
+			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), this);
+		} 
+		catch (IOException e) {}
 	}
 	
 	/*
@@ -69,7 +59,11 @@ public class BillingPeriod
 	 */
 	public void removeFromConfigFile()
 	{
-		StaffTimesheetConfig.writePropertyToConfigFile("billing-period-history.yml", "billing-period-history." + getId(), null);
+		try 
+		{
+			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), null);
+		} 
+		catch (IOException e){}
 	}
 	
 	/*
@@ -90,7 +84,7 @@ public class BillingPeriod
 		staffMemberSummary.setTimeGoal(staffMember.getTimeGoal());
 		staffMemberSummary.setLoggedTime(staffMember.getLoggedTime());
 		
-		saveToConfigFile();
+		save();
 	}
 
 	/*

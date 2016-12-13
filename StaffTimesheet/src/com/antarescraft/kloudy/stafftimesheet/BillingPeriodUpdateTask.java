@@ -21,7 +21,7 @@ public class BillingPeriodUpdateTask extends BukkitRunnable
 		this.config = config;
 		
 		currentBillingPeriod = config.getCurrentBillingPeriod();
-		currentBillingPeriod.saveToConfigFile();
+		currentBillingPeriod.save();
 		
 		shiftManager = ShiftManager.getInstance();
 		shiftManager.setCurrentBillingPeriod(currentBillingPeriod);
@@ -43,7 +43,7 @@ public class BillingPeriodUpdateTask extends BukkitRunnable
 		if(now.compareTo(endDate) >= 0)//we've rolled over into a new billing period
 		{
 			BillingPeriod newBillingPeriod = new BillingPeriod(now, config.getBillingPeriodDuration());
-			newBillingPeriod.saveToConfigFile();
+			newBillingPeriod.save();
 			
 			shiftManager.setCurrentBillingPeriod(newBillingPeriod);
 			

@@ -1,6 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -16,10 +17,8 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.StringConfigProperty
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
 /**
@@ -63,9 +62,13 @@ public class StaffMember
 	@ConfigProperty(key = "super-admin", note = "If true, the staff member will be a super admin")
 	private boolean superAdmin;
 	
-	private File getStaffMembersFile()
+	private void save()
 	{
-		return new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+		try
+		{
+			ConfigParser.saveObject(staffYaml, "staff-members." + playerName, this);
+		} catch (IOException e) {}
 	}
 	
 	public void addLoggedTime(Duration time) throws DurationOverflowException
@@ -81,10 +84,7 @@ public class StaffMember
 		loggedTime = sumDuration;
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(getStaffMembersFile());
-		
-		ConfigParser.saveConfig(yaml, yamlFile, path, object);
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
+		save();
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
@@ -100,14 +100,15 @@ public class StaffMember
 		loggedTime = loggedTime.minus(diffDuration);
 		
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
-		//StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
+
+		save();
 	}
 	
 	public void resetLoggedTime()
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(Duration.ZERO);
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);
+		save();
 	}
 	
 	public void logEntry(String text)
@@ -236,42 +237,42 @@ public class StaffMember
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".logged-time", loggedTimeString);		
+		save();
 	}
 	
 	public void setTimeGoal(Duration timeGoal)
 	{
 		timeGoalString = TimeFormat.getDurationFormatString(timeGoal);
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".time-goal", timeGoalString);
+		save();
 	}
 	
 	public void setSuperAdmin(boolean superAdmin)
 	{
 		this.superAdmin = superAdmin;
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".super-admin", this.superAdmin);
+		save();
 	}
 	
 	public void setClockInPermission(String clockInPermission)
 	{
 		this.clockInPermission = clockInPermission;
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".clock-in-permission", this.clockInPermission);
+		save();
 	}
 	
 	public void setRankTitle(String rankTitle)
 	{
 		this.rankTitle = rankTitle;
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".rank-title", this.rankTitle);
+		save();
 	}
 	
 	public void setStartShiftOnLogin(boolean startShiftOnLogin)
 	{
 		this.startShiftOnLogin = startShiftOnLogin;
 		
-		StaffTimesheetConfig.writePropertyToConfigFile("staff-members.yml", "staff-members." + playerName + ".start-shift-on-login", this.startShiftOnLogin);
+		save();
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 	
 	public TimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, StaffTimesheetConfig configManager) 
 	{
-		super(plugin, guiPage, player, configManager.getStaffMember(player));
+		super(plugin, guiPage, player, configManager.getStaffMembersConfig().getStaffMember(player));
 				
 		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
 		logbookBtn.registerClickHandler(player, new ClickHandler()

@@ -29,11 +29,11 @@ public class AfkStatusChangeEventListener implements Listener
 		if(user.isAfk())
 		{
 			Player player = user.getBase();
-			StaffMember staffMember = configManager.getStaffMember(player);
+			StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			if(staffMember != null && shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, configManager.getShiftEndLabelAFK());
+				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndAfk());
 			}
 		}
 	}
