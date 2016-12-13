@@ -84,7 +84,7 @@ public class ErrorMessages
 		return errorMessageNoStaffLog;
 	}
 
-	public String getErrorMessageInvalidDurationFormat()
+	public String getInvalidDurationFormat()
 	{
 		return errorMessageInvalidDurationFormat;
 	}

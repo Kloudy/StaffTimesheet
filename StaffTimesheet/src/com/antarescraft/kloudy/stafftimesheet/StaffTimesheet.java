@@ -32,7 +32,6 @@ public class StaffTimesheet extends HoloGUIPlugin
 
 		getHoloGUIApi().hookHoloGUIPlugin(this);
 		copyResourceConfigs(true);
-		loadGUIPages();
 		
 		IOManager.initFileStructure(this);
 		
@@ -47,7 +46,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		getCommand("staff").setExecutor(new CommandEvent(this, config));
 		getServer().getPluginManager().registerEvents(new AfkStatusChangeEventListener(config), this);
 		getServer().getPluginManager().registerEvents(new PlayerQuitEventListener(config), this);
-		getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessEventListener(config), this);
+		getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessEventListener(config.getStaffMembersConfig()), this);
 		getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(config), this);
 	}
 	
@@ -62,6 +61,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 	public void reloadConfig()
 	{
 		super.reloadConfig();
+		
+		loadGUIPages();
 		
 		try 
 		{

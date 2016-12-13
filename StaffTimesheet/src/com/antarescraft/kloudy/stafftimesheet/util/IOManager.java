@@ -18,6 +18,7 @@ import org.bukkit.Bukkit;
 
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class IOManager 
 {	
@@ -85,7 +86,7 @@ public class IOManager
 			} 
 			catch (IOException e)
 			{
-				if(StaffTimesheet.debugMode) e.printStackTrace();
+				if(StaffTimesheetConfig.debugMode) e.printStackTrace();
 				
 				error(staffMember);
 			}
@@ -105,7 +106,7 @@ public class IOManager
 		} 
 		catch (IOException e)
 		{
-			if(StaffTimesheet.debugMode) e.printStackTrace();
+			if(StaffTimesheetConfig.debugMode) e.printStackTrace();
 			
 			error(staffMember);
 		}
@@ -130,7 +131,7 @@ public class IOManager
 			} 
 			catch (IOException e)
 			{
-				if(StaffTimesheet.debugMode) e.printStackTrace();
+				if(StaffTimesheetConfig.debugMode) e.printStackTrace();
 			}
 		}
 		

@@ -2,6 +2,9 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
+import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+
+import me.clip.placeholderapi.PlaceholderAPI;
 
 /**
  * Contains all shift start/stop strings loaded from config
@@ -28,18 +31,18 @@ public class ShiftStartStopMessages
 	 * Getter Functions
 	 */
 	
-	public String getShiftEndAfk()
+	public String getShiftEndAfk(StaffMember staffMember)
 	{
-		return shiftEndAfk;
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftEndAfk);
 	}
 	
-	public String getShiftEndClockout()
+	public String getShiftEndClockout(StaffMember staffMember)
 	{
-		return shiftEndClockout;
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftEndClockout);
 	}
 	
-	public String getShiftStart()
+	public String getShiftStart(StaffMember staffMember)
 	{
-		return shiftStart;
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftStart);
 	}
 }

@@ -23,12 +23,12 @@ public class PlayerJoinEventListener implements Listener
 	{
 		Player player = event.getPlayer();
 		
-		StaffMember staffMember = configManager.getStaffMember(player);
+		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
 		if(staffMember != null && staffMember.startShiftOnLogin())
 		{
-			ShiftManager.getInstance().clockIn(staffMember, configManager.getShiftStartLabel());
+			ShiftManager.getInstance().clockIn(staffMember, configManager.getEventLabelConfig().getShiftStart());
 			
-			staffMember.getPlayer().sendMessage(configManager.getShiftStartMessage(staffMember));
+			staffMember.getPlayer().sendMessage(configManager.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
 		}
 	}
 }

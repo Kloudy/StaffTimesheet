@@ -45,7 +45,7 @@ public class StaffTimesheetConfig
 	private StaffMembersConfig staffMemberManager;
 	
 	private BillingPeriodHistory billingPeriodHistory;
-	
+		
 	@ConfigElement
 	@ConfigProperty(key = "error-messages", note = "List of error messages")
 	private ErrorMessages errorMessages;
@@ -96,6 +96,11 @@ public class StaffTimesheetConfig
 	public CommandResultMessages getCommandResultMessageConfig()
 	{
 		return commandResultMessages;
+	}
+	
+	public ShiftStartStopMessages getShiftStartStopMessagesConfig()
+	{
+		return shiftStartStopMessages;
 	}
 	
 	public BillingPeriodHistory getBillingPeriodHistoryConfig()

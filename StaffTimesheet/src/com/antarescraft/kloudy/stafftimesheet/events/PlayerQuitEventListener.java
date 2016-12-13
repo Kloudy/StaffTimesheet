@@ -26,10 +26,10 @@ public class PlayerQuitEventListener implements Listener
 		{
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			
-			StaffMember staffMember = configManager.getStaffMember(player);
+			StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
 			if(staffMember != null && shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, configManager.getShiftEndLabelDisconnected());
+				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndDisconnected());
 				
 				staffMember.logEntry("Logged out");
 			}

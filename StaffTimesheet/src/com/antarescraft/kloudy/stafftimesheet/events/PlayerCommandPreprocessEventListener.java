@@ -7,15 +7,15 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMembersConfig;
 
 public class PlayerCommandPreprocessEventListener implements Listener
 {
-	private StaffTimesheetConfig configManager;
+	private StaffMembersConfig staffConfig;
 	
-	public PlayerCommandPreprocessEventListener(StaffTimesheetConfig configManager)
+	public PlayerCommandPreprocessEventListener(StaffMembersConfig staffConfig)
 	{
-		this.configManager = configManager;
+		this.staffConfig = staffConfig;
 	}
 	
 	@EventHandler
@@ -23,7 +23,7 @@ public class PlayerCommandPreprocessEventListener implements Listener
 	{
 		Player player = event.getPlayer();
 		
-		StaffMember staffMember = configManager.getStaffMember(player);
+		StaffMember staffMember = staffConfig.getStaffMember(player);
 		if(staffMember != null && ShiftManager.getInstance().onTheClock(staffMember))
 		{
 			staffMember.logEntry(event.getMessage());
