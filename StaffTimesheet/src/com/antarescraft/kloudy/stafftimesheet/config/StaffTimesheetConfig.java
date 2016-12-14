@@ -29,7 +29,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class StaffTimesheetConfig
 {	
-	private StaffTimesheetConfig() throws ConfigurationParseException, IOException
+	public StaffTimesheetConfig() throws ConfigurationParseException, IOException
 	{
 		File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 		YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
@@ -73,6 +73,38 @@ public class StaffTimesheetConfig
 	
 	@ConfigProperty(key = "first-bill-period-start-date", note = "Start date for the first bill cycle (format: yyyy/mm/dd)")
 	private String firstBillPeriodStartDate;
+	
+	public Calendar getFirstBillPeriodStartDate()
+	{	
+		Calendar date = null;
+		try 
+		{
+			date = TimeFormat.parseDateFormat(firstBillPeriodStartDate);
+		} catch (InvalidDateFormatException e) {}
+		
+		if(date == null)
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), "Invalid Config Value: current-bill-period-start-date");
+		}
+		
+		return date;
+	}
+	
+	private BillingPeriod generateFirstBillingPeriod()
+	{
+		return new BillingPeriod(getFirstBillPeriodStartDate(), getBillingPeriodDuration());
+	}
+	
+	public BillingPeriod getCurrentBillingPeriod()
+	{
+		ArrayList<BillingPeriod> billingPeriods = billingPeriodHistory.getAllBillingPeriodHistory();
+		if(billingPeriods.size() == 0)
+		{
+			billingPeriods.add(generateFirstBillingPeriod());
+		}
+		
+		return billingPeriods.get(billingPeriods.size()-1);//the last billing period in the list will be the current billing period
+	}
 
 	/*
 	 * Getter Functions
@@ -111,37 +143,5 @@ public class StaffTimesheetConfig
 	public int getBillingPeriodDuration()
 	{
 		return billingPeriodDuration;
-	}
-	
-	public Calendar getFirstBillPeriodStartDate()
-	{	
-		Calendar date = null;
-		try 
-		{
-			date = TimeFormat.parseDateFormat(firstBillPeriodStartDate);
-		} catch (InvalidDateFormatException e) {}
-		
-		if(date == null)
-		{
-			MessageManager.error(Bukkit.getConsoleSender(), "Invalid Config Value: current-bill-period-start-date");
-		}
-		
-		return date;
-	}
-	
-	private BillingPeriod generateFirstBillingPeriod()
-	{
-		return new BillingPeriod(getFirstBillPeriodStartDate(), getBillingPeriodDuration());
-	}
-	
-	public BillingPeriod getCurrentBillingPeriod()
-	{
-		ArrayList<BillingPeriod> billingPeriods = billingPeriodHistory.getAllBillingPeriodHistory();
-		if(billingPeriods.size() == 0)
-		{
-			billingPeriods.add(generateFirstBillingPeriod());
-		}
-		
-		return billingPeriods.get(billingPeriods.size()-1);//the last billing period in the list will be the current billing period
 	}
 }

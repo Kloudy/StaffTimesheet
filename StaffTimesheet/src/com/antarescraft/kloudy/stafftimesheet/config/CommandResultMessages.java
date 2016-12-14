@@ -10,7 +10,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
  */
 public class CommandResultMessages
 {
-	private CommandResultMessages(){}
+	public CommandResultMessages(){}
 	
 	@ConfigElementKey(note = "List of command result messages")
 	private String commandResultMessages;

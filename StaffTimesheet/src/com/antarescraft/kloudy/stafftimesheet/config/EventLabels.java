@@ -10,7 +10,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
  */
 public class EventLabels 
 {
-	private EventLabels() {}
+	public EventLabels() {}
 	
 	@ConfigElementKey(note = "List of event labels. These labels are displayed in a staff member's logbook")
 	private String eventLabels;

@@ -17,7 +17,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffMember;
  */
 public class StaffMembersConfig
 {
-	private StaffMembersConfig(){}
+	public StaffMembersConfig(){}
 	
 	@ConfigElementMap()
 	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")

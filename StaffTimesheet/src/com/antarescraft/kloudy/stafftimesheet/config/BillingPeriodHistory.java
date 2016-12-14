@@ -13,7 +13,7 @@ import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
  */
 public class BillingPeriodHistory 
 {
-	private BillingPeriodHistory(){}
+	public BillingPeriodHistory(){}
 	
 	@ConfigProperty(key = "billing-period-history", note = "")
 	private HashMap<String, BillingPeriod> billingPeriodHistory;

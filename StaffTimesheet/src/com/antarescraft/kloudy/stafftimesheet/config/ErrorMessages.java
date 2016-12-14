@@ -10,7 +10,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
  */
 public class ErrorMessages
 {
-	private ErrorMessages(){}
+	public ErrorMessages(){}
 	
 	@ConfigElementKey(note = "List of error messages")
 	private String errorMessages;

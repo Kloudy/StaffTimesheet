@@ -32,7 +32,7 @@ public class StaffMember
 {
 	private StaffMember(){}
 	
-	private Player player;
+	//private Player player;
 	
 	@ConfigElementKey(note = "Staff member player name")
 	private String playerName;
@@ -132,19 +132,20 @@ public class StaffMember
 	
 	public Player getPlayer()
 	{
-		if(player == null)
-		{
+		//if(player == null)
+		//{
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
 				if(getUUID().equals(player.getUniqueId()))
 				{
-					this.player = player;
-					break;
+					return player;
+					//this.player = player;
+					//break;
 				}
 			}
-		}
+		//}
 		
-		return player;
+		return null;
 	}
 	
 	public double getPercentageTimeCompleted()

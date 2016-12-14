@@ -13,7 +13,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
  */
 public class ShiftStartStopMessages
 {
-	private ShiftStartStopMessages(){}
+	public ShiftStartStopMessages(){}
 	
 	@ConfigElementKey(note = "Messages displayed to staff members when they start or stop their shift")
 	private String shiftStartStopMessages;
