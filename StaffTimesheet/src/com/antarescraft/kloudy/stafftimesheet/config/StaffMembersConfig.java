@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementMap;
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
+import com.antarescraft.kloudy.plugincore.config.*;
+
 import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 
 /**

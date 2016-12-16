@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
+import com.antarescraft.kloudy.plugincore.config.*;
 
 /**
  * Contains all error message strings loaded from config
