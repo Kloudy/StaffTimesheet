@@ -249,7 +249,7 @@ public class ConfigParser
 									}
 									catch(Exception e){}
 								}
-
+								
 								field.set(obj, section.get(key));
 								
 								fieldSet = true;

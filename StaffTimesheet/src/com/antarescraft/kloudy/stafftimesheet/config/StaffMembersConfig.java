@@ -14,7 +14,7 @@ import com.antarescraft.kloudy.plugincore.config.*;
  */
 public class StaffMembersConfig
 {
-	public StaffMembersConfig(){}
+	private StaffMembersConfig(){}
 	
 	@ConfigElementMap()
 	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")
@@ -22,15 +22,7 @@ public class StaffMembersConfig
 	
 	public StaffMember getStaffMember(String playerName)
 	{
-		for(StaffMember staffMember : staffMembers.values())
-		{
-			if(staffMember.getPlayerName().equals(playerName))
-			{
-				return staffMember;
-			}
-		}
-		
-		return null;
+		return staffMembers.get(playerName);
 	}
 	
 	public void resetAllStaffMemberTime()
@@ -43,7 +35,7 @@ public class StaffMembersConfig
 	
 	public StaffMember getStaffMember(Player player)
 	{
-		return staffMembers.get(player.getUniqueId());
+		return staffMembers.get(player.getName());
 	}
 	
 	public Collection<StaffMember> getAllStaffMembers()

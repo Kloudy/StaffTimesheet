@@ -91,7 +91,7 @@ public class BillingPeriod
 		staffMemberSummary.setTimeGoal(staffMember.getTimeGoal());
 		staffMemberSummary.setLoggedTime(staffMember.getLoggedTime());
 		
-		save();
+		//save();
 	}
 
 	/*

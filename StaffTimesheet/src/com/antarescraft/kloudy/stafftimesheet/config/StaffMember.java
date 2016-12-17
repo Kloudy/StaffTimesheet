@@ -31,6 +31,8 @@ public class StaffMember
 {
 	private StaffMember(){}
 	
+	private Player player;
+	
 	@ConfigElementKey(note = "Staff member player name")
 	private String playerName;
 	
@@ -81,7 +83,7 @@ public class StaffMember
 		loggedTime = sumDuration;
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		save();
+		//save();
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
@@ -98,14 +100,14 @@ public class StaffMember
 		
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 
-		save();
+		//save();
 	}
 	
 	public void resetLoggedTime()
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(Duration.ZERO);
 		
-		save();
+		//save();
 	}
 	
 	public void logEntry(String text)
@@ -129,20 +131,19 @@ public class StaffMember
 	
 	public Player getPlayer()
 	{
-		//if(player == null)
-		//{
+		if(player == null)
+		{
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
 				if(getUUID().equals(player.getUniqueId()))
 				{
-					return player;
-					//this.player = player;
-					//break;
+					this.player = player;
+					break;
 				}
 			}
-		//}
+		}
 		
-		return null;
+		return player;
 	}
 	
 	public double getPercentageTimeCompleted()
