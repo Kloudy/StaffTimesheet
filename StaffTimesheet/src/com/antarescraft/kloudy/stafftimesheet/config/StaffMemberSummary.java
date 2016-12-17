@@ -1,39 +1,43 @@
-package com.antarescraft.kloudy.stafftimesheet;
+package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.time.Duration;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.plugincore.config.*;
 
 /**
  * Represents a staff member's activity (logged time & percentage of time goal logged) during a particular billing period
+ *
+ * This class is instantiated populated by the ConfigParser library
  */
 
 public class StaffMemberSummary
 {
+	@ConfigElementKey
+	private String playerUUIDString;
+	
+	@ConfigProperty(key = "player-name", note = "")
 	private String staffMemberName;
-	private UUID staffMemberUUID;
+	
+	@ConfigProperty(key = "percent-time-logged", note = "")
 	private double percentTimeCompleted;
-	private Duration timeGoal;
-	private Duration loggedTime;
+	
+	@ConfigProperty(key = "time-goal", note = "")
+	private String timeGoal;
+	
+	@ConfigProperty(key = "logged-time", note = "")
+	private String loggedTime;
+	
+	public StaffMemberSummary(){}
 	
 	public StaffMemberSummary(StaffMember staffMember)
 	{
 		staffMemberName = staffMember.getPlayerName();
-		staffMemberUUID = staffMember.getUUID();
+		playerUUIDString = staffMember.getUUID().toString();
 		percentTimeCompleted = staffMember.getPercentageTimeCompleted();
-		timeGoal = staffMember.getTimeGoal();
-		loggedTime = staffMember.getLoggedTime();
-	}
-	
-	public StaffMemberSummary(String staffMemberName, UUID staffMemberUUID, double percentTimeLogged, 
-			Duration timeGoal, Duration timeLogged)
-	{
-		this.staffMemberName = staffMemberName;
-		this.staffMemberUUID = staffMemberUUID;
-		this.percentTimeCompleted = percentTimeLogged;
-		this.timeGoal = timeGoal;
-		this.loggedTime = timeLogged;
+		timeGoal = TimeFormat.getDurationFormatString(staffMember.getTimeGoal());
+		loggedTime = TimeFormat.getDurationFormatString(staffMember.getLoggedTime());
 	}
 	
 	/*
@@ -47,7 +51,7 @@ public class StaffMemberSummary
 	
 	public UUID getStaffMemberUUID()
 	{
-		return staffMemberUUID;
+		return UUID.fromString(playerUUIDString);
 	}
 	
 	public double getPercentTimeCompleted()
@@ -57,12 +61,12 @@ public class StaffMemberSummary
 	
 	public String getTimeGoal()
 	{
-		return TimeFormat.getDurationFormatString(timeGoal);
+		return timeGoal;
 	}
 	
 	public String getLoggedTime()
 	{
-		return TimeFormat.getDurationFormatString(loggedTime);
+		return loggedTime;
 	}
 	
 	/*
@@ -76,11 +80,11 @@ public class StaffMemberSummary
 	
 	public void setTimeGoal(Duration timeGoal)
 	{
-		this.timeGoal = timeGoal;
+		this.timeGoal = TimeFormat.getDurationFormatString(timeGoal);
 	}
 	
 	public void setLoggedTime(Duration timeLogged)
 	{
-		this.loggedTime = timeLogged;
+		this.loggedTime = TimeFormat.getDurationFormatString(timeLogged);
 	}
 }

@@ -14,7 +14,7 @@ public class CommandResultMessages
 	@ConfigElementKey(note = "List of command result messages")
 	private String commandResultMessages;
 	
-	@ConfigProperty(key = "reset-staff-member-loggeed-time", note = "Message displayed after command /staff manage <player_name> reset is successfully executed")
+	@ConfigProperty(key = "reset-staff-member-logged-time", note = "Message displayed after command /staff manage <player_name> reset is successfully executed")
 	private String resetStaffMemberLoggedTime;
 	
 	@ConfigProperty(key = "add-logged-time-for-staff-member", note = "Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed ")

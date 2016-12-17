@@ -1,4 +1,4 @@
-package com.antarescraft.kloudy.stafftimesheet;
+package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
 /**
@@ -30,13 +31,11 @@ public class StaffMember
 {
 	private StaffMember(){}
 	
-	//private Player player;
-	
 	@ConfigElementKey(note = "Staff member player name")
 	private String playerName;
 	
 	@ConfigProperty(key = "uuid", note = "")
-	private String playerUUIDString;
+	public String playerUUIDString;
 	
 	@ConfigProperty(key = "clock-in-permission", note = "Permission to give the staff member when they clock in")
 	private String clockInPermission;

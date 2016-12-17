@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.earth2me.essentials.UserData;
 

@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -10,7 +9,6 @@ import com.antarescraft.kloudy.plugincore.config.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 import org.bukkit.Bukkit;
@@ -24,17 +22,21 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class StaffTimesheetConfig
 {	
-	public StaffTimesheetConfig() throws ConfigurationParseException, IOException
+	private StaffTimesheetConfig()
 	{
-		File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
-		YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
+		try
+		{
+			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
+			
+			staffMemberManager = ConfigParser.parse(staffYaml, StaffMembersConfig.class);
 		
-		staffMemberManager = ConfigParser.parse(staffYaml, StaffMembersConfig.class);
-	
-		File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
-		YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
-		
-		billingPeriodHistory = ConfigParser.parse(billingPeriodHistoryYaml, BillingPeriodHistory.class);
+			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
+			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
+			
+			billingPeriodHistory = ConfigParser.parse(billingPeriodHistoryYaml, BillingPeriodHistory.class);
+		}
+		catch(Exception e){e.printStackTrace();}
 	}
 	
 	private StaffMembersConfig staffMemberManager;

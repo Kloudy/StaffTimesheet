@@ -8,7 +8,7 @@ import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 
 /**
  * Base Page Model that all StaffTimesheet page models inherit from. Contains staff member methods needed by all child models

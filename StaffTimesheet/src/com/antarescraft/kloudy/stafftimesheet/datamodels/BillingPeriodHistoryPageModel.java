@@ -11,9 +11,9 @@ import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologuiapi.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.StaffMemberSummary;
+import com.antarescraft.kloudy.stafftimesheet.config.BillingPeriod;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMemberSummary;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel

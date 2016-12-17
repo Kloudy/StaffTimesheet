@@ -14,19 +14,19 @@ public class EventLabels
 	@ConfigElementKey(note = "List of event labels. These labels are displayed in a staff member's logbook")
 	private String eventLabels;
 	
-	@ConfigProperty(key = "shift-start-label", note = "Label displayed in the staff member's logbook when the staff member clocks in")
+	@ConfigProperty(key = "shift-start", note = "Label displayed in the staff member's logbook when the staff member clocks in")
 	private String shiftStart;
 	
-	@ConfigProperty(key = "shift-end-label-afk", note = "Label displayed in the staff member's logboo when the staff member is clocked out due to being afk")
+	@ConfigProperty(key = "shift-end-afk", note = "Label displayed in the staff member's logboo when the staff member is clocked out due to being afk")
 	private String shiftEndAfk;
 	
-	@ConfigProperty(key = "shift-end-label-disconnected", note = "Label displayed in the staff member's logbook when the staff member is clocked out due to being disconnected")
+	@ConfigProperty(key = "shift-end-disconnected", note = "Label displayed in the staff member's logbook when the staff member is clocked out due to being disconnected")
 	private String shiftEndDisconnected;
 	
-	@ConfigProperty(key = "shift-end-label-clocked-out", note = "Label displayed in the staff member's logbook when they clock out")
-	private String shiftEndClockedOut;
+	@ConfigProperty(key = "shift-end-clockout", note = "Label displayed in the staff member's logbook when they clock out")
+	private String shiftEndClockout;
 	
-	@ConfigProperty(key = "shift-end-label-plugin-disabled", note = "Label displayed in the staff member's logbook when they are clocked out due to the plugin being disabled")
+	@ConfigProperty(key = "shift-end-plugin-disabled", note = "Label displayed in the staff member's logbook when they are clocked out due to the plugin being disabled")
 	private String shiftEndPluginDisabled;
 	
 	/*
@@ -48,9 +48,9 @@ public class EventLabels
 		return shiftEndDisconnected;
 	}
 	
-	public String getShiftEndClockedOut()
+	public String getShiftEndClockout()
 	{
-		return shiftEndClockedOut;
+		return shiftEndClockout;
 	}
 	
 	public String getShiftEndPluginDisabled()

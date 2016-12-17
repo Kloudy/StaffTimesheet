@@ -1,5 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.plugincore.config.*;
 
 /**
@@ -9,7 +10,7 @@ import com.antarescraft.kloudy.plugincore.config.*;
  */
 public class ErrorMessages
 {
-	public ErrorMessages(){}
+	private ErrorMessages(){}
 	
 	@ConfigElementKey(note = "List of error messages")
 	private String errorMessages;
@@ -20,7 +21,7 @@ public class ErrorMessages
 	@ConfigProperty(key = "duration-overflow", note = "Error message displayed if a super admin tries to add more time to a staff member's time than the max duration value")
 	private String durationOverflow;
 	
-	@ConfigProperty(key = "no-staff", note = "Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml")
+	@ConfigProperty(key = "not-staff", note = "Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml")
 	private String notStaff;
 	
 	@ConfigProperty(key = "not-clocked-in", note = "Error message displayed if a player tries to use /staff shift end but they are not currently on the clock")
@@ -50,51 +51,51 @@ public class ErrorMessages
 
 	public String getDurationUnderflow() 
 	{
-		return durationUnderflow;
+		return MessageManager.setFormattingCodes(durationUnderflow);
 	}
 
 	public String getDurationOverflow()
 	{
-		return durationOverflow;
+		return MessageManager.setFormattingCodes(durationOverflow);
 	}
 
 	public String getNotStaff()
 	{
-		return notStaff;
+		return MessageManager.setFormattingCodes(notStaff);
 	}
 
 	public String getNotClockedIn() 
 	{
-		return notClockedIn;
+		return MessageManager.setFormattingCodes(notClockedIn);
 	}
 
 	public String getAlreadyClockedIn()
 	{
-		return alreadyClockedIn;
+		return MessageManager.setFormattingCodes(alreadyClockedIn);
 	}
 
 	public String getStaffMemberDoesNotExist()
 	{
-		return staffMemberDoesNotExist;
+		return MessageManager.setFormattingCodes(staffMemberDoesNotExist);
 	}
 
 	public String getErrorMessageNoStaffLog()
 	{
-		return errorMessageNoStaffLog;
+		return MessageManager.setFormattingCodes(errorMessageNoStaffLog);
 	}
 
 	public String getInvalidDurationFormat()
 	{
-		return errorMessageInvalidDurationFormat;
+		return MessageManager.setFormattingCodes(errorMessageInvalidDurationFormat);
 	}
 
 	public String getErrorMessageInvalidDateFormat()
 	{
-		return errorMessageInvalidDateFormat;
+		return MessageManager.setFormattingCodes(errorMessageInvalidDateFormat);
 	}
 
 	public String getErrorMessageStartDateEndDateMismatch()
 	{
-		return errorMessageStartDateEndDateMismatch;
+		return MessageManager.setFormattingCodes(errorMessageStartDateEndDateMismatch);
 	}
 }

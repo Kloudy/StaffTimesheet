@@ -26,9 +26,9 @@ shift-start-stop-messages:
 ################################################################################################
 
 command-result-messages:
-  reset-staff-member-logged-time-message: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
-  add-logged-time-for-staff-member-message: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
-  subtract-logged-time-for-staff-member-message: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
+  reset-staff-member-logged-time: "&aLogged time has been reset for this staff member."      #Message displayed after command /staff manage <player_name> reset is successfully executed
+  add-logged-time-for-staff-member: "&aSuccessfully added time for staff member."            #Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed 
+  subtract-logged-time-for-staff-member: "&aSuccessfully subtracted time for staff member."  #Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook
 
 
 
@@ -37,7 +37,7 @@ command-result-messages:
 ################################################################################################
 
 event-labels:
-  shift-start-label: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
+  shift-start: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
   shift-end-afk: "[&4AFK&r]"                          #Text to log when the staff member goes AFK
   shift-end-disconnected: "[&4Disconnected&r]"        #Text to log when the staff member disconnects from the server
   shift-end-clockout: "[&4Clocked Out&r]"             #Text to log when the staff member clocks out

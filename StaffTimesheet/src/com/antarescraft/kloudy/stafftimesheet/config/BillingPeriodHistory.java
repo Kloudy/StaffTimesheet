@@ -5,8 +5,6 @@ import java.util.HashMap;
 
 import com.antarescraft.kloudy.plugincore.config.*;
 
-import com.antarescraft.kloudy.stafftimesheet.BillingPeriod;
-
 /**
  * Contains all BillingPeriod objects loaded from config
  * 
@@ -16,6 +14,7 @@ public class BillingPeriodHistory
 {
 	public BillingPeriodHistory(){}
 	
+	@ConfigElementMap
 	@ConfigProperty(key = "billing-period-history", note = "")
 	private HashMap<String, BillingPeriod> billingPeriodHistory;
 	

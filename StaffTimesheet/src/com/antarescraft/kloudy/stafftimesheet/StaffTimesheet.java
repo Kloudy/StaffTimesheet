@@ -67,7 +67,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 		try 
 		{
 			config = ConfigParser.parse(getConfig(), 
-					StaffTimesheetConfig.class, String.format("plugins/%s/config.yml", getName()), 45);
+					StaffTimesheetConfig.class, String.format("plugins/%s/config-docs.yml", getName()), 45);
 		} 
 		catch (ConfigurationParseException | IOException e) {e.printStackTrace();}
 	}

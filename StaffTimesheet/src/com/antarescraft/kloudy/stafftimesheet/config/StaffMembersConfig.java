@@ -2,13 +2,10 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.plugincore.config.*;
-
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 
 /**
  * Contains all StaffMember objects loaded from config
@@ -21,7 +18,7 @@ public class StaffMembersConfig
 	
 	@ConfigElementMap()
 	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")
-	private HashMap<UUID, StaffMember> staffMembers;
+	private HashMap<String, StaffMember> staffMembers;
 	
 	public StaffMember getStaffMember(String playerName)
 	{

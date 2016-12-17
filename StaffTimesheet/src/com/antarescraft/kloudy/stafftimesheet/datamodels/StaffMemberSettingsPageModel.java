@@ -15,7 +15,7 @@ import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 
 import net.md_5.bungee.api.ChatColor;
 

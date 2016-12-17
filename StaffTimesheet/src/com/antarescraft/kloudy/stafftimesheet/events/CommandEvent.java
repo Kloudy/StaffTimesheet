@@ -15,8 +15,8 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDurationF
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.AdminTimesheetHomePageModel;
 import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
@@ -116,7 +116,7 @@ public class CommandEvent implements CommandExecutor
 
 			if(shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndClockedOut());
+				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndClockout());
 				sender.sendMessage(configManager.getShiftStartStopMessagesConfig().getShiftEndClockout(staffMember));				
 			}
 			else

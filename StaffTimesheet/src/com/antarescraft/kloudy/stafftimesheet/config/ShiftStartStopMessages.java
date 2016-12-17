@@ -2,8 +2,6 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 
 import com.antarescraft.kloudy.plugincore.config.*;
 
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
-
 import me.clip.placeholderapi.PlaceholderAPI;
 
 /**

@@ -1,43 +1,50 @@
-package com.antarescraft.kloudy.stafftimesheet;
+package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.UUID;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigParser;
+
+import com.antarescraft.kloudy.plugincore.config.*;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 /**
  * Represents a billing period - Contains a summary of each staff member's logged time during the billing period
+ * 
+ * This class is instantiated populated by the ConfigParser library
  */
+
 public class BillingPeriod 
-{
-	private Calendar startDate;
-	private Calendar endDate;
+{	
+	@ConfigElementKey
+	public String id;
 	
-	private HashMap<UUID, StaffMemberSummary> staffMemberSummaries;
+	@ConfigProperty(key = "start-date", note = "")
+	private String startDateString;
+	
+	@ConfigProperty(key = "end-date", note = "")
+	private String endDateString;
+	
+	@ConfigElementMap
+	@ConfigProperty(key = "staff-member-summaries", note = "")
+	private HashMap<String, StaffMemberSummary> staffMemberSummaries;
+	
+	public BillingPeriod(){}
 	
 	public BillingPeriod(Calendar startDate, int weeksInPeriod)
 	{
-		this.startDate = startDate;
+		startDateString = TimeFormat.getDateFormat(startDate);
 
 		Duration billingPeriodDuration = TimeFormat.getMinDuration().plusDays(weeksInPeriod * 7);
 		
-		endDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
 		endDate.setTimeInMillis((startDate.getTimeInMillis() + billingPeriodDuration.toMillis()));
 				
-		staffMemberSummaries = new HashMap<UUID, StaffMemberSummary>();
-	}
-	
-	public BillingPeriod(Calendar startDate, Calendar endDate, HashMap<UUID, StaffMemberSummary> staffMemberSummaries)
-	{
-		this.startDate = startDate;
-		this.endDate = endDate;
-		
-		this.staffMemberSummaries = staffMemberSummaries;
+		staffMemberSummaries = new HashMap<String, StaffMemberSummary>();
 	}
 	
 	private File getBillingPeriodYamlFile()
@@ -73,11 +80,11 @@ public class BillingPeriod
 	{
 		if(staffMember == null) return;
 		
-		StaffMemberSummary staffMemberSummary = staffMemberSummaries.get(staffMember.getUUID());
+		StaffMemberSummary staffMemberSummary = staffMemberSummaries.get(staffMember.getUUID().toString());
 		if(staffMemberSummary == null)
 		{	
 			staffMemberSummary = new StaffMemberSummary(staffMember);
-			staffMemberSummaries.put(staffMember.getUUID(), staffMemberSummary);
+			staffMemberSummaries.put(staffMember.getUUID().toString(), staffMemberSummary);
 		}
 		
 		staffMemberSummary.setPercentTimeCompleted(staffMember.getPercentageTimeCompleted());
@@ -93,7 +100,7 @@ public class BillingPeriod
 	
 	public String getId()
 	{
-		return TimeFormat.getDateFormat(startDate) + "-" + TimeFormat.getDateFormat(endDate);
+		return id;
 	}
 	
 	public StaffMemberSummary getStaffMemberSummary(StaffMember staffMember)
@@ -103,12 +110,24 @@ public class BillingPeriod
 	
 	public Calendar getStartDate()
 	{
-		return startDate;
+		try 
+		{
+			return TimeFormat.parseDateFormat(startDateString);
+		}
+		catch (InvalidDateFormatException e){}
+		
+		return null;
 	}
 	
 	public Calendar getEndDate()
 	{
-		return endDate;
+		try 
+		{
+			return TimeFormat.parseDateFormat(endDateString);
+		}
+		catch (InvalidDateFormatException e){}
+		
+		return null;
 	}
 	
 	@Override
@@ -118,7 +137,7 @@ public class BillingPeriod
 		{
 			BillingPeriod billingPeriod = (BillingPeriod)obj;
 			
-			return billingPeriod.getId().equals(this.getId());
+			return billingPeriod.getId().equals(id);
 		}
 		
 		return false;

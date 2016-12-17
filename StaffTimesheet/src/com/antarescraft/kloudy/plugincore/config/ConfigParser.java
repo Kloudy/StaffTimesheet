@@ -56,14 +56,22 @@ public class ConfigParser
 	 */
 	public static <T> T parse(ConfigurationSection section, Class<T> classType, String docsFilepath, int docsIndentColumn) throws ConfigurationParseException, IOException
 	{
-		StringBuilder docsBuilder = new StringBuilder();
+		StringBuilder docsBuilder = null;
+		
+		if(docsFilepath != null)
+		{
+			docsBuilder = new StringBuilder();
+		}
 		
 		T object = parse(section, classType, docsBuilder, "", docsIndentColumn);
 		
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(docsFilepath)));
-		bw.write(docsBuilder.toString());
-		bw.flush();
-		bw.close();
+		if(docsFilepath != null)
+		{
+			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(docsFilepath)));
+			bw.write(docsBuilder.toString());
+			bw.flush();
+			bw.close();
+		}
 		
 		return object;
 	}
@@ -75,13 +83,14 @@ public class ConfigParser
 		T obj = null;
 		try 
 		{
-			Constructor<?> constructor = classType.getDeclaredConstructor();
+			Constructor<T> constructor = classType.getDeclaredConstructor();
 			constructor.setAccessible(true);
-			constructor.newInstance();
+			obj = constructor.newInstance();
 		} 
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			
 			throw new ConfigurationParseException("Unable to create an instance of class " + classType.getName());
 		}
 		
@@ -96,6 +105,8 @@ public class ConfigParser
 			Field keyField = ConfigParser.getConfigElementKeyField(classType);
 			if(keyField != null)
 			{
+				keyField.setAccessible(true);
+				
 				boolean foundKeyAnnotation = false;
 				
 				// Attempt to find a matching ConfigElementKeyNote based on the current key of the config element
@@ -144,6 +155,8 @@ public class ConfigParser
 			boolean fieldSet = false;
 			boolean optional = false;
 			
+			if(!field.isAnnotationPresent(ConfigProperty.class))continue;
+			
 			writeDocs(field, section, docsBuilder, indent, docsIndentColumn);
 			
 			for(String key : keySet.toArray(new String[keySet.size()]))
@@ -152,27 +165,9 @@ public class ConfigParser
 
 				try
 				{
-					// ConfigElementKey field
-					if(field.isAnnotationPresent(ConfigElementKey.class))
-					{
-						try
-						{
-							field.set(obj, section.getName());
-							
-							fieldSet = true;
-							
-							break;
-						}
-						catch(IllegalArgumentException e)
-						{
-							throw new ConfigurationParseException(String.format("Field '%s' in class '%s' must be of type String to hold the config element's key",
-									field.getName(), classType.getName()));
-						}
-					}
-					
 					// ConfigPropery Field
 					ConfigProperty configProperty = field.getAnnotation(ConfigProperty.class);
-					if(configProperty != null && configProperty.key().equals(key))
+					if(configProperty.key().equals(key))
 					{
 						optional = (field.isAnnotationPresent(OptionalConfigProperty.class));
 
@@ -214,6 +209,7 @@ public class ConfigParser
 								}
 								catch (IllegalArgumentException e) 
 								{
+									e.printStackTrace();
 									throw new ConfigurationParseException(String.format("Field %s in class %s must be of type Map<String, ?> with the appropriate generic type to hold the ConfigurationElementMap", 
 											field.getName(), classType.getName()));
 								}
@@ -253,7 +249,7 @@ public class ConfigParser
 									}
 									catch(Exception e){}
 								}
-								
+
 								field.set(obj, section.get(key));
 								
 								fieldSet = true;
@@ -263,6 +259,8 @@ public class ConfigParser
 						}
 						catch(IllegalArgumentException e)
 						{
+							e.printStackTrace();
+							
 							throw new ConfigurationParseException(String.format("Type mismatch occured on field '%s' in class '%s' for config propery '%s'",
 									field.getName(), classType.getName(), section.getName() + "." + key));
 						}
@@ -270,12 +268,14 @@ public class ConfigParser
 				}
 				catch(IllegalAccessException ex)
 				{
+					ex.printStackTrace();
+					
 					throw new ConfigurationParseException(String.format("Unable to access field %s in class %s", 
 							field.getName(), classType.getName()));
 				}
 			}
 			
-			if(!fieldSet && !optional)
+			if(!fieldSet && !optional && !field.isAnnotationPresent(ConfigElementKey.class))
 			{
 				throw new ConfigurationParseException(String.format("No config property in the config file was found to match the required config property field '%s' in class '%s'", 
 						field.getName(), classType.getName()));
@@ -424,7 +424,6 @@ public class ConfigParser
 			} 
 			catch (Exception e)
 			{
-				e.printStackTrace();
 				//Annotation on the field is not a ConfigParser annotation
 			}
 		}

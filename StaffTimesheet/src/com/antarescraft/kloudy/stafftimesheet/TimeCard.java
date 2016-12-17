@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
+
 /**
  * Represents a staff member's time card
  */

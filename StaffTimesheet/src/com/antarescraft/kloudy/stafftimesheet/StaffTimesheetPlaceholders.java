@@ -3,6 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.util.Calendar;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMembersConfig;
 
 import org.bukkit.entity.Player;

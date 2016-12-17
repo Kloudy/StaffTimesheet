@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.config.BillingPeriod;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 import org.bukkit.Bukkit;

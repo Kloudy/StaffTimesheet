@@ -16,8 +16,8 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 
-import com.antarescraft.kloudy.stafftimesheet.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class IOManager 
