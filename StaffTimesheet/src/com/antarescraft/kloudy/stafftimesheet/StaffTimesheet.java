@@ -53,7 +53,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void onDisable()
 	{
-		ShiftManager.getInstance().clockOutAll(config.getEventLabelConfig().getShiftEndPluginDisabled());
+		//ShiftManager.getInstance().clockOutAll(config.getEventLabelConfig().getShiftEndPluginDisabled());
 		destroyPlayerGUIPages();
 	}
 	

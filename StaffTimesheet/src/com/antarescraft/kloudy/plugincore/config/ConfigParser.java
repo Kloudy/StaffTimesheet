@@ -168,10 +168,12 @@ public class ConfigParser
 			}
 		}
 		
-		for(Field field : classType.getFields())
+		for(Field field : classType.getDeclaredFields())
 		{
 			boolean fieldSet = false;
 			boolean optional = false;
+			
+			field.setAccessible(true);
 			
 			if(!field.isAnnotationPresent(ConfigProperty.class))continue;
 			
@@ -179,8 +181,6 @@ public class ConfigParser
 			
 			for(String key : keySet.toArray(new String[keySet.size()]))
 			{
-				field.setAccessible(true);
-
 				try
 				{
 					// ConfigPropery Field
@@ -189,11 +189,14 @@ public class ConfigParser
 					{
 						optional = (field.isAnnotationPresent(OptionalConfigProperty.class));
 
+						System.out.println("config property field: " + field.getName());
+						
 						try
 						{
 							// ConfigElement field
 							if(field.isAnnotationPresent(ConfigElement.class))
 							{
+								System.out.println("is config element");
 								ConfigurationSection elementSection = section.getConfigurationSection(key);
 								field.set(obj, parse(elementSection, field.getType(), docsBuilder, indent + "  ", docsIndentColumn));
 							
@@ -204,6 +207,7 @@ public class ConfigParser
 							// ConfigElementMap field
 							else if(field.isAnnotationPresent(ConfigElementMap.class))
 							{
+								System.out.println("is element map");
 								ParameterizedType genericMapType = (ParameterizedType) field.getGenericType();
 								Class<?> mapType = (Class<?>) genericMapType.getActualTypeArguments()[1];//HashMap<String, ?>
 								
@@ -216,6 +220,8 @@ public class ConfigParser
 									
 									elements.put(elementKey, parse(elementSection, mapType, docsBuilder, indent + "  ", docsIndentColumn));
 								}
+								
+								System.out.println("map field: " + field.getName() + " elements: " + elements);
 														
 								try 
 								{
@@ -235,6 +241,7 @@ public class ConfigParser
 							// Primitive field
 							else
 							{
+								System.out.println("is primitive");
 								// Check to make sure the value of the config property is between the min-max range defined by the annotation
 								Annotation primitiveAnnotation = findPrimitiveAnnotationClassByFieldType(field);
 								if(primitiveAnnotation != null && primitiveAnnotation.annotationType().isAnnotationPresent(RangedConfigProperty.class))
@@ -484,7 +491,7 @@ public class ConfigParser
 	
 	private static void saveObject(ConfigurationSection section, Object object) throws IOException
 	{
-		for(Field field : object.getClass().getFields())
+		for(Field field : object.getClass().getDeclaredFields())
 		{
 			field.setAccessible(true);
 			
