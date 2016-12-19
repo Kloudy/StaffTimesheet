@@ -94,18 +94,35 @@ public class ConfigParser
 			throw new ConfigurationParseException("Unable to create an instance of class " + classType.getName());
 		}
 		
-		if(!section.getName().equals("") && docsBuilder != null)//don't print root
+		// Find the ConfigElementKey field if it exists and append its note
+		Field keyField = ConfigParser.getConfigElementKeyField(classType);
+		if(keyField != null)
 		{
-			//print config section name
-			String currentLine = indent + section.getName() + ":";
-			docsBuilder.append("\n" + currentLine);
-			indent += "  ";
-			
-			// Find the ConfigElementKey field if it exists and append its note
-			Field keyField = ConfigParser.getConfigElementKeyField(classType);
-			if(keyField != null)
+			keyField.setAccessible(true);
+			try 
 			{
+				keyField.set(obj, section.getName());
+			} 
+			catch (IllegalArgumentException | IllegalAccessException e) 
+			{
+				throw new ConfigurationParseException("Unabled to set the element key field for class " + classType.getName());
+			}
+		
+			if(!section.getName().equals("") && docsBuilder != null)//don't print root
+			{
+				//print config section name
+				String currentLine = indent + section.getName() + ":";
+				docsBuilder.append("\n" + currentLine);
+				indent += "  ";
+				
 				keyField.setAccessible(true);
+				try
+				{
+					keyField.set(obj, section.getName());
+				} catch (IllegalArgumentException | IllegalAccessException e)
+				{
+					throw new ConfigurationParseException("Unable to set the element key field for class " + obj.getClass().getName());
+				}
 				
 				boolean foundKeyAnnotation = false;
 				
@@ -145,12 +162,13 @@ public class ConfigParser
 				{
 					docsBuilder.append(ConfigParser.getDocsIndentSpaces(currentLine, docsIndentColumn) + "#  " + keyAnnotation.note());
 				}				
-			}
 			
-			docsBuilder.append("\n");
+				
+				docsBuilder.append("\n");
+			}
 		}
 		
-		for(Field field : classType.getDeclaredFields())
+		for(Field field : classType.getFields())
 		{
 			boolean fieldSet = false;
 			boolean optional = false;
@@ -438,6 +456,7 @@ public class ConfigParser
 	 * @param path Configuration path in the yaml file that the input objects fields should be saved
 	 * @param object The Object whose instance fields will be saved into the yaml file at the specified path
 	 * @throws IOException 
+	 * @throws ConfigurationParseException 
 	 */
 	public static void saveObject(File yamlFile, String path, Object object) throws IOException
 	{
@@ -447,7 +466,6 @@ public class ConfigParser
 		}
 		
 		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(yamlFile);
-		ConfigurationSection section = yaml.createSection(path);
 		
 		if(object == null)
 		{
@@ -455,6 +473,8 @@ public class ConfigParser
 		}
 		else
 		{
+			ConfigurationSection section = yaml.createSection(path);
+			
 			saveObject(section, object);
 			
 			yaml.set(path, section);
@@ -464,8 +484,10 @@ public class ConfigParser
 	
 	private static void saveObject(ConfigurationSection section, Object object) throws IOException
 	{
-		for(Field field : object.getClass().getDeclaredFields())
+		for(Field field : object.getClass().getFields())
 		{
+			field.setAccessible(true);
+			
 			ConfigProperty configAnnotation = field.getDeclaredAnnotation(ConfigProperty.class);
 			if(configAnnotation != null)
 			{
@@ -490,7 +512,7 @@ public class ConfigParser
 						section.set(configAnnotation.key(), field.get(object));
 					}
 				}
-				catch (IllegalArgumentException | IllegalAccessException e) {}
+				catch (IllegalArgumentException | IllegalAccessException e) {e.printStackTrace();}
 			}
 		}
 	}

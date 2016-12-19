@@ -36,7 +36,7 @@ public class StaffMember
 	@ConfigElementKey(note = "Staff member player name")
 	private String playerName;
 	
-	@ConfigProperty(key = "uuid", note = "")
+	@ConfigProperty(key = "uuid", note = "The player's UUID")
 	public String playerUUIDString;
 	
 	@ConfigProperty(key = "clock-in-permission", note = "Permission to give the staff member when they clock in")
@@ -66,6 +66,7 @@ public class StaffMember
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 		try
 		{
+			System.out.println("Saving: " + playerName);
 			ConfigParser.saveObject(staffYaml, "staff-members." + playerName, this);
 		} catch (IOException e) {}
 	}
@@ -83,7 +84,7 @@ public class StaffMember
 		loggedTime = sumDuration;
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		//save();
+		save();
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
@@ -100,14 +101,14 @@ public class StaffMember
 		
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 
-		//save();
+		save();
 	}
 	
 	public void resetLoggedTime()
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(Duration.ZERO);
 		
-		//save();
+		save();
 	}
 	
 	public void logEntry(String text)
