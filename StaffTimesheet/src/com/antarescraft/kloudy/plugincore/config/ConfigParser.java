@@ -207,7 +207,7 @@ public class ConfigParser
 							// ConfigElementMap field
 							else if(field.isAnnotationPresent(ConfigElementMap.class))
 							{
-								System.out.println("is element map");
+								System.out.println("is element map on field " + field.getName());
 								ParameterizedType genericMapType = (ParameterizedType) field.getGenericType();
 								Class<?> mapType = (Class<?>) genericMapType.getActualTypeArguments()[1];//HashMap<String, ?>
 								

@@ -34,6 +34,7 @@ public class StaffTimesheetConfig
 			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
 			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
 			
+			System.out.println("Parsing billing period history");
 			billingPeriodHistory = ConfigParser.parse(billingPeriodHistoryYaml, BillingPeriodHistory.class);;
 		}
 		catch(Exception e){e.printStackTrace();}
