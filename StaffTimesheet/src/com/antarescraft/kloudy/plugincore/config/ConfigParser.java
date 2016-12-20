@@ -360,6 +360,8 @@ public class ConfigParser
 		Field keyField = getConfigElementKeyField(object.getClass());
 		if(keyField != null)
 		{
+			keyField.setAccessible(true);
+			
 			try
 			{
 				return (String) keyField.get(object);
@@ -529,12 +531,10 @@ public class ConfigParser
 						try
 						{
 							HashMap<?, ?> elementMap = (HashMap<?, ?>) field.get(object);
-
 							for(Object mapObject : elementMap.values())
 							{
-								System.out.println("map object key: " + getConfigObjectKey(mapObject));
 								ConfigurationSection elementSection = mapSection.createSection(getConfigObjectKey(mapObject));
-								saveObject(elementSection, field.get(object));
+								saveObject(elementSection, mapObject);
 							}
 						}
 						catch(ClassCastException e)

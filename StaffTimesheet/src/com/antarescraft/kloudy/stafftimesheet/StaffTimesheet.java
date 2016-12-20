@@ -3,7 +3,6 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.io.IOException;
 
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
-import com.antarescraft.kloudy.hologuiapi.PlayerData;
 import com.antarescraft.kloudy.plugincore.config.*;
 
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
@@ -25,7 +24,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 	{			
 		pluginName = getName();
 		
-		setMinSupportedApiVersion("1.0.2");
+		setMinSupportedApiVersion("1.0.4");
 		checkMinApiVersion();
 		
 		saveDefaultConfig();
@@ -53,8 +52,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void onDisable()
 	{
-		//ShiftManager.getInstance().clockOutAll(config.getEventLabelConfig().getShiftEndPluginDisabled());
-		destroyPlayerGUIPages();
+		ShiftManager.getInstance().clockOutAll(config.getEventLabelConfig().getShiftEndPluginDisabled());
+		this.getHoloGUIApi().destroyGUIPages(this);
 	}
 	
 	@Override
@@ -70,13 +69,5 @@ public class StaffTimesheet extends HoloGUIPlugin
 					StaffTimesheetConfig.class, String.format("plugins/%s/config-docs.yml", getName()), 45);
 		} 
 		catch (ConfigurationParseException | IOException e) {e.printStackTrace();}
-	}
-	
-	public void destroyPlayerGUIPages()
-	{
-		for(PlayerData playerData : PlayerData.getAllPlayerData())
-		{
-			if(playerData.getPlayerGUIPage() != null) playerData.getPlayerGUIPage().destroy();
-		}
 	}
 }

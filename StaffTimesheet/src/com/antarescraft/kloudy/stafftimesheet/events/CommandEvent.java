@@ -42,7 +42,7 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = false, permission = "staff.admin", subcommands = "reload")
 	public void reload(CommandSender sender, String[] args)
 	{
-		staffTimesheet.destroyPlayerGUIPages();
+		staffTimesheet.getHoloGUIApi().destroyGUIPages(staffTimesheet);
 		
 		staffTimesheet.reloadConfig();
 		
