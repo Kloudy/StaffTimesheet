@@ -21,7 +21,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 public class BillingPeriod 
 {	
 	@ConfigElementKey
-	public String id;
+	private String id;
 	
 	@ConfigProperty(key = "start-date", note = "")
 	private String startDateString;
@@ -43,7 +43,10 @@ public class BillingPeriod
 		
 		Calendar endDate = Calendar.getInstance();
 		endDate.setTimeInMillis((startDate.getTimeInMillis() + billingPeriodDuration.toMillis()));
-				
+		endDateString = TimeFormat.getDateFormat(endDate);
+		
+		id = startDateString + "-" + endDateString;
+		
 		staffMemberSummaries = new HashMap<String, StaffMemberSummary>();
 	}
 	
@@ -58,7 +61,7 @@ public class BillingPeriod
 		{
 			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), this);
 		} 
-		catch (IOException e) {}
+		catch (IOException | ConfigurationParseException e) {}
 	}
 	
 	/*
@@ -70,7 +73,7 @@ public class BillingPeriod
 		{
 			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), null);
 		} 
-		catch (IOException e){}
+		catch (IOException | ConfigurationParseException e){}
 	}
 	
 	/*
@@ -79,7 +82,7 @@ public class BillingPeriod
 	public void updateStaffMemberSummary(StaffMember staffMember)
 	{
 		if(staffMember == null) return;
-		
+				
 		StaffMemberSummary staffMemberSummary = staffMemberSummaries.get(staffMember.getUUID().toString());
 		if(staffMemberSummary == null)
 		{	
@@ -91,7 +94,7 @@ public class BillingPeriod
 		staffMemberSummary.setTimeGoal(staffMember.getTimeGoal());
 		staffMemberSummary.setLoggedTime(staffMember.getLoggedTime());
 		
-		//save();
+		save();
 	}
 
 	/*

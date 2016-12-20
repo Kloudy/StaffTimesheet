@@ -66,9 +66,8 @@ public class StaffMember
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 		try
 		{
-			System.out.println("Saving: " + playerName);
 			ConfigParser.saveObject(staffYaml, "staff-members." + playerName, this);
-		} catch (IOException e) {}
+		} catch (IOException | ConfigurationParseException e) {}
 	}
 	
 	public void addLoggedTime(Duration time) throws DurationOverflowException

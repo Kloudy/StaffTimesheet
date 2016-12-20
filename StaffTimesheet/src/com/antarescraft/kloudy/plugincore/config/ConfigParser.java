@@ -77,9 +77,7 @@ public class ConfigParser
 	}
 	
 	private static <T> T parse(ConfigurationSection section, Class<T> classType, StringBuilder docsBuilder, String indent, int docsIndentColumn)throws ConfigurationParseException
-	{
-		Set<String> keySet = section.getKeys(false);
-			
+	{	
 		T obj = null;
 		try 
 		{
@@ -179,6 +177,7 @@ public class ConfigParser
 			
 			writeDocs(field, section, docsBuilder, indent, docsIndentColumn);
 			
+			Set<String> keySet = section.getKeys(false);
 			for(String key : keySet.toArray(new String[keySet.size()]))
 			{
 				try
@@ -188,15 +187,12 @@ public class ConfigParser
 					if(configProperty.key().equals(key))
 					{
 						optional = (field.isAnnotationPresent(OptionalConfigProperty.class));
-
-						System.out.println("config property field: " + field.getName());
 						
 						try
 						{
 							// ConfigElement field
 							if(field.isAnnotationPresent(ConfigElement.class))
 							{
-								System.out.println("is config element");
 								ConfigurationSection elementSection = section.getConfigurationSection(key);
 								field.set(obj, parse(elementSection, field.getType(), docsBuilder, indent + "  ", docsIndentColumn));
 							
@@ -207,7 +203,6 @@ public class ConfigParser
 							// ConfigElementMap field
 							else if(field.isAnnotationPresent(ConfigElementMap.class))
 							{
-								System.out.println("is element map on field " + field.getName());
 								ParameterizedType genericMapType = (ParameterizedType) field.getGenericType();
 								Class<?> mapType = (Class<?>) genericMapType.getActualTypeArguments()[1];//HashMap<String, ?>
 								
@@ -220,9 +215,7 @@ public class ConfigParser
 									
 									elements.put(elementKey, parse(elementSection, mapType, docsBuilder, indent + "  ", docsIndentColumn));
 								}
-								
-								System.out.println("map field: " + field.getName() + " elements: " + elements);
-														
+																						
 								try 
 								{
 									field.set(obj, elements);
@@ -241,7 +234,6 @@ public class ConfigParser
 							// Primitive field
 							else
 							{
-								System.out.println("is primitive");
 								// Check to make sure the value of the config property is between the min-max range defined by the annotation
 								Annotation primitiveAnnotation = findPrimitiveAnnotationClassByFieldType(field);
 								if(primitiveAnnotation != null && primitiveAnnotation.annotationType().isAnnotationPresent(RangedConfigProperty.class))
@@ -302,8 +294,19 @@ public class ConfigParser
 			
 			if(!fieldSet && !optional && !field.isAnnotationPresent(ConfigElementKey.class))
 			{
-				throw new ConfigurationParseException(String.format("No config property in the config file was found to match the required config property field '%s' in class '%s'", 
-						field.getName(), classType.getName()));
+				if(field.isAnnotationPresent(ConfigElementMap.class))//if there are no elements present in the map, just set the field with an empty map
+				{
+					try 
+					{
+						field.set(obj, new HashMap<String, Object>());
+					}
+					catch (IllegalArgumentException | IllegalAccessException e){}
+				}
+				else
+				{
+					throw new ConfigurationParseException(String.format("No config property in the config file was found to match the required config property field '%s' in class '%s'", 
+							field.getName(), classType.getName()));
+				}				
 			}
 		}
 
@@ -347,6 +350,21 @@ public class ConfigParser
 			{
 				return field;
 			}
+		}
+		
+		return null;
+	}
+	
+	private static String getConfigObjectKey(Object object)
+	{
+		Field keyField = getConfigElementKeyField(object.getClass());
+		if(keyField != null)
+		{
+			try
+			{
+				return (String) keyField.get(object);
+			}
+			catch (IllegalArgumentException | IllegalAccessException e) {}
 		}
 		
 		return null;
@@ -465,7 +483,7 @@ public class ConfigParser
 	 * @throws IOException 
 	 * @throws ConfigurationParseException 
 	 */
-	public static void saveObject(File yamlFile, String path, Object object) throws IOException
+	public static void saveObject(File yamlFile, String path, Object object) throws IOException, ConfigurationParseException
 	{
 		if(!yamlFile.exists())
 		{
@@ -489,7 +507,7 @@ public class ConfigParser
 		}
 	}
 	
-	private static void saveObject(ConfigurationSection section, Object object) throws IOException
+	private static void saveObject(ConfigurationSection section, Object object) throws IOException, ConfigurationParseException
 	{
 		for(Field field : object.getClass().getDeclaredFields())
 		{
@@ -508,10 +526,20 @@ public class ConfigParser
 					else if(field.isAnnotationPresent(ConfigElementMap.class))
 					{
 						ConfigurationSection mapSection = section.createSection(configAnnotation.key());
-						for(String mapKey : mapSection.getKeys(false))
+						try
 						{
-							ConfigurationSection elementSection = mapSection.createSection(mapKey);
-							saveObject(elementSection, field.get(object));
+							HashMap<?, ?> elementMap = (HashMap<?, ?>) field.get(object);
+
+							for(Object mapObject : elementMap.values())
+							{
+								System.out.println("map object key: " + getConfigObjectKey(mapObject));
+								ConfigurationSection elementSection = mapSection.createSection(getConfigObjectKey(mapObject));
+								saveObject(elementSection, field.get(object));
+							}
+						}
+						catch(ClassCastException e)
+						{
+							throw new ConfigurationParseException();
 						}
 					}
 					else
