@@ -63,6 +63,10 @@ public class StaffMember
 	
 	private void save()
 	{
+		Thread.dumpStack();
+		System.out.println(String.format("Saving %s: {playerUUD: %s, clockInPermission: %s, loggedTime: %s, timeGoal: %s, startShiftOnLogin: %s}", 
+				playerName, playerUUIDString, clockInPermission, loggedTimeString, timeGoalString, startShiftOnLogin));
+		
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 		try
 		{

@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.config.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
@@ -40,6 +41,7 @@ public class BillingPeriodUpdateTask extends BukkitRunnable
 	public void run()
 	{
 		Calendar endDate = currentBillingPeriod.getEndDate();
+		System.out.print(TimeFormat.getDateFormat(currentBillingPeriod.getEndDate()));
 		Calendar now = Calendar.getInstance();
 		if(now.compareTo(endDate) >= 0)//we've rolled over into a new billing period
 		{
