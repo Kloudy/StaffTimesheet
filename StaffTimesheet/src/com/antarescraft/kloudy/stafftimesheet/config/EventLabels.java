@@ -11,7 +11,7 @@ public class EventLabels
 {
 	public EventLabels() {}
 	
-	@ConfigElementKey(note = "List of event labels. These labels are displayed in a staff member's logbook")
+	@ConfigElementKey
 	private String eventLabels;
 	
 	@ConfigProperty(key = "shift-start", note = "Label displayed in the staff member's logbook when the staff member clocks in")

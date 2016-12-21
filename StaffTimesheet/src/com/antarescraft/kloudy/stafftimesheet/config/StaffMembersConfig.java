@@ -16,7 +16,7 @@ public class StaffMembersConfig
 {
 	private StaffMembersConfig(){}
 	
-	@ConfigElementMap()
+	@ConfigElementMap
 	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")
 	private HashMap<String, StaffMember> staffMembers;
 	

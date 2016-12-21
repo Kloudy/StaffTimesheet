@@ -71,7 +71,7 @@ public class StaffTimesheetConfig
 	@ConfigProperty(key = "first-bill-period-start-date", note = "Start date for the first bill cycle (format: yyyy/mm/dd)")
 	private String firstBillPeriodStartDate;
 	
-	@StringConfigProperty(defaultValue = "PermissionsEx")
+	@OptionalConfigProperty
 	@ConfigProperty(key = "permissions-plugin", note = "The permissions plugin to use to give / remove staff permissions (PermissionsEx, GroupManager)")
 	private String permissionsPlugin;
 	

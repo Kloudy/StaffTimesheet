@@ -12,7 +12,7 @@ public class ErrorMessages
 {
 	private ErrorMessages(){}
 	
-	@ConfigElementKey(note = "List of error messages")
+	@ConfigElementKey
 	private String errorMessages;
 	
 	@ConfigProperty(key = "duration-underflow", note = "Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.")

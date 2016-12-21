@@ -33,7 +33,7 @@ public class StaffMember
 	
 	private Player player;
 	
-	@ConfigElementKey(note = "Staff member player name")
+	@ConfigElementKey
 	private String playerName;
 	
 	@ConfigProperty(key = "uuid", note = "The player's UUID")

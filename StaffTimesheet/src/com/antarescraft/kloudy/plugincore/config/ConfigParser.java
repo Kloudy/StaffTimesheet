@@ -110,9 +110,9 @@ public class ConfigParser
 			if(!section.getName().equals("") && docsBuilder != null)//don't print root
 			{
 				//print config section name
-				String currentLine = indent + section.getName() + ":";
-				docsBuilder.append("\n" + currentLine);
-				indent += "  ";
+				String currentLine = "\n" + indent + section.getName() + ":";
+				//docsBuilder.append("\n" + currentLine);
+				//indent += "  ";
 				
 				keyField.setAccessible(true);
 				try
@@ -142,7 +142,7 @@ public class ConfigParser
 					}
 				}
 				// There could be just a single ConfigElementKeyNote attached to the field
-				else
+				else if(keyField.isAnnotationPresent(ConfigElementKeyNote.class))
 				{
 					ConfigElementKeyNote keyNoteAnnotation = keyField.getDeclaredAnnotation(ConfigElementKeyNote.class);
 					if(keyNoteAnnotation != null && 
@@ -152,18 +152,19 @@ public class ConfigParser
 						foundKeyAnnotation = true;
 					}
 				}
-				
-				ConfigElementKey keyAnnotation = keyField.getDeclaredAnnotation(ConfigElementKey.class);
-				
-				// Didn't find a corresponding ConfigElementKeyNote annotation on the field
-				// Print the ConfigElementKey annotation's note if it exists
-				if(!foundKeyAnnotation && !keyAnnotation.note().equals(""))
+				else // There could be no ConfigElementKeyNote at all, get the note from the ConfigElementKey if it exists
 				{
-					docsBuilder.append(ConfigParser.getDocsIndentSpaces(currentLine, docsIndentColumn) + "#  " + keyAnnotation.note());
-				}				
-			
+					ConfigElementKey keyAnnotation = keyField.getDeclaredAnnotation(ConfigElementKey.class);
+					
+					// Didn't find a corresponding ConfigElementKeyNote annotation on the field
+					// Print the ConfigElementKey annotation's note if it exists
+					if(!foundKeyAnnotation && !keyAnnotation.note().equals(""))
+					{
+						docsBuilder.append(ConfigParser.getDocsIndentSpaces(currentLine, docsIndentColumn) + "#  " + keyAnnotation.note());
+					}
+				}
 				
-				docsBuilder.append("\n");
+				//docsBuilder.append("\n");
 			}
 		}
 		
