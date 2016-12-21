@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.antarescraft.kloudy.plugincore.config.*;
 
@@ -14,18 +13,12 @@ public class BillingPeriodHistory
 {
 	public BillingPeriodHistory(){}
 	
-	@ConfigElementMap
+	@ConfigElementList
 	@ConfigProperty(key = "billing-period-history", note = "")
-	private HashMap<String, BillingPeriod> billingPeriodHistory;
+	private ArrayList<BillingPeriod> billingPeriodHistory;
 	
 	public ArrayList<BillingPeriod> getAllBillingPeriodHistory()
 	{
-		ArrayList<BillingPeriod> history = new ArrayList<BillingPeriod>();
-		for(BillingPeriod billingPeriod : billingPeriodHistory.values())
-		{
-			history.add(billingPeriod);
-		}
-		
-		return history;
+		return billingPeriodHistory;
 	}
 }

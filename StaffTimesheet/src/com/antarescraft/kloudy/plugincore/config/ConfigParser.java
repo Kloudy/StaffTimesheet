@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -199,6 +200,37 @@ public class ConfigParser
 								fieldSet = true;
 								
 								break;
+							}
+							//ConfigElementList field
+							else if(field.isAnnotationPresent(ConfigElementList.class))
+							{
+								ParameterizedType genericMapType = (ParameterizedType) field.getGenericType();
+								Class<?> listType = (Class<?>) genericMapType.getActualTypeArguments()[0];//ArrayList<?>
+							
+								ConfigurationSection elementListSection = section.getConfigurationSection(key);
+								
+								ArrayList<Object> elements = new ArrayList<Object>();
+								for(String elementKey : elementListSection.getKeys(false))
+								{
+									ConfigurationSection elementSection = elementListSection.getConfigurationSection(elementKey);
+									
+									elements.add(parse(elementSection, listType, docsBuilder, indent + "  ", docsIndentColumn));
+								}
+																						
+								try 
+								{
+									field.set(obj, elements);
+									
+									fieldSet = true;
+									
+									break;
+								}
+								catch (IllegalArgumentException e) 
+								{
+									e.printStackTrace();
+									throw new ConfigurationParseException(String.format("Field %s in class %s must be of type AraryList<?> with the appropriate generic type to hold the ConfigElementList", 
+											field.getName(), classType.getName()));
+								}
 							}
 							// ConfigElementMap field
 							else if(field.isAnnotationPresent(ConfigElementMap.class))
@@ -524,6 +556,23 @@ public class ConfigParser
 					{
 						ConfigurationSection elementSection = section.createSection(configAnnotation.key());
 						saveObject(elementSection, field.get(object));
+					}
+					else if(field.isAnnotationPresent(ConfigElementList.class))
+					{
+						ConfigurationSection listSection = section.createSection(configAnnotation.key());
+						try
+						{
+							ArrayList<?> elementList = (ArrayList<?>) field.get(object);
+							for(Object listObject : elementList)
+							{
+								ConfigurationSection elementSection = listSection.createSection(getConfigObjectKey(listObject));
+								saveObject(elementSection, listObject);
+							}
+						}
+						catch(ClassCastException e)
+						{
+							throw new ConfigurationParseException();
+						}
 					}
 					else if(field.isAnnotationPresent(ConfigElementMap.class))
 					{
