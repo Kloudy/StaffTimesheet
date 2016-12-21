@@ -18,7 +18,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
  * This class is instantiated populated by the ConfigParser library
  */
 
-public class BillingPeriod implements Comparable<BillingPeriod>
+public class BillingPeriod
 {	
 	@ConfigElementKey
 	private String id;
@@ -108,7 +108,7 @@ public class BillingPeriod implements Comparable<BillingPeriod>
 	
 	public StaffMemberSummary getStaffMemberSummary(StaffMember staffMember)
 	{
-		return staffMemberSummaries.get(staffMember.getUUID());
+		return staffMemberSummaries.get(staffMember.getUUID().toString());
 	}
 	
 	public Calendar getStartDate()
@@ -144,12 +144,5 @@ public class BillingPeriod implements Comparable<BillingPeriod>
 		}
 		
 		return false;
-	}
-
-	@Override
-	public int compareTo(BillingPeriod billingPeriod)
-	{
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }
