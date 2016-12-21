@@ -1,5 +1,7 @@
 debug-mode: false       #Print debug information in the console
 
+permissions-plugin: "PermissionsEx"  #The permissions plugin to use to give / remove staff permissions. (PermissionsEx, GroupManager)
+
 billing-period-duration: 4       #(Default: 4 weeks) The number of weeks that are in the log cycle. Current logged hours of staff members resets after this amount of time.
                         #Log cycle reports are generated at the end of the log cycle
 
