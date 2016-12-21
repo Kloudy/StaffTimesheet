@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
-import com.antarescraft.kloudy.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
