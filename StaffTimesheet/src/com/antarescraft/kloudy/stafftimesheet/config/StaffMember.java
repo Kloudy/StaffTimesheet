@@ -53,6 +53,7 @@ public class StaffMember
 	@ConfigProperty(key = "logged-time", note = "Amount of time the")
 	private String loggedTimeString;
 	
+	@OptionalConfigProperty
 	@BooleanConfigProperty(defaultValue = false)
 	@ConfigProperty(key = "start-shift-on-login", note = "If true, the staff member will be automatically clocked in on login")
 	private boolean startShiftOnLogin;

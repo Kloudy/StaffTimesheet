@@ -170,7 +170,7 @@ public class ConfigParser
 		for(Field field : classType.getDeclaredFields())
 		{
 			boolean fieldSet = false;
-			boolean optional = false;
+			boolean optional = (field.isAnnotationPresent(OptionalConfigProperty.class));
 			
 			field.setAccessible(true);
 			
@@ -187,8 +187,6 @@ public class ConfigParser
 					ConfigProperty configProperty = field.getAnnotation(ConfigProperty.class);
 					if(configProperty.key().equals(key))
 					{
-						optional = (field.isAnnotationPresent(OptionalConfigProperty.class));
-						
 						try
 						{
 							// ConfigElement field
