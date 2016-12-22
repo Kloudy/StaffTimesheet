@@ -1,6 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
-import com.antarescraft.kloudy.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 /**
  * Contains all command result strings loaded from config

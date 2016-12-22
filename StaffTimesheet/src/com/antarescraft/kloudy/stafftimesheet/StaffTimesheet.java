@@ -3,7 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet;
 import java.io.IOException;
 
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
-import com.antarescraft.kloudy.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 import com.antarescraft.kloudy.stafftimesheet.events.AfkStatusChangeEventListener;
