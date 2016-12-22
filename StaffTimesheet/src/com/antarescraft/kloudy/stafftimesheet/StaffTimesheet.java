@@ -24,7 +24,7 @@ public class StaffTimesheet extends HoloGUIPlugin
 	{			
 		pluginName = getName();
 		
-		setMinSupportedApiVersion("1.0.4");
+		setMinSupportedApiVersion("1.0.5");
 		checkMinApiVersion();
 		
 		saveDefaultConfig();
