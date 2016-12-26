@@ -30,7 +30,8 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 	private ValueScrollerComponent timeGoalHMSScroller;
 	private ToggleSwitchComponent superAdminToggle;
 	private ToggleSwitchComponent startShiftOnLoginToggle;
-	private TextBoxComponent clockInPermissionTextBox;
+	private TextBoxComponent clockInCommandTextBox;
+	private TextBoxComponent clockOutCommandTextBox;
 	private TextBoxComponent rankTitleTextBox;
 	
 	private StaffMember staffMember;
@@ -55,8 +56,11 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		startShiftOnLoginToggle = (ToggleSwitchComponent)guiPage.getComponent("start-shift-on-login-toggle");
 		startShiftOnLoginToggle.setPlayerToggleSwitchState(player, staffMember.startShiftOnLogin());
 		
-		clockInPermissionTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-permission");
-		clockInPermissionTextBox.setPlayerTextBoxValue(player, staffMember.getClockInPermission());
+		clockInCommandTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-command");
+		clockInCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
+		
+		clockOutCommandTextBox = (TextBoxComponent)guiPage.getComponent("clock-out-command");
+		clockOutCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
 		
 		rankTitleTextBox = (TextBoxComponent)guiPage.getComponent("rank-title");
 		rankTitleTextBox.setPlayerTextBoxValue(player, staffMember.getRankTitle());
@@ -117,7 +121,8 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		staffMember.setLoggedTime((Duration)loggedTimeScroller.getPlayerScrollValue(player).getValue());
 		staffMember.setTimeGoal((Duration)timeGoalScroller.getPlayerScrollValue(player).getValue());
 		staffMember.setSuperAdmin(superAdminToggle.getPlayerToggleSwitchState(player));
-		staffMember.setClockInPermission(clockInPermissionTextBox.getPlayerTextBoxValue(player));
+		staffMember.setClockInCommand(clockInCommandTextBox.getPlayerTextBoxValue(player));
+		staffMember.setClockOutCommand(clockOutCommandTextBox.getPlayerTextBoxValue(player));
 		staffMember.setRankTitle(rankTitleTextBox.getPlayerTextBoxValue(player));
 		staffMember.setStartShiftOnLogin(startShiftOnLoginToggle.getPlayerToggleSwitchState(player));
 		

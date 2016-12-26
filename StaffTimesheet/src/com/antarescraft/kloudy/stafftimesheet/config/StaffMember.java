@@ -39,8 +39,13 @@ public class StaffMember
 	@ConfigProperty(key = "uuid", note = "The player's UUID")
 	public String playerUUIDString;
 	
-	@ConfigProperty(key = "clock-in-permission", note = "Permission to give the staff member when they clock in")
-	private String clockInPermission;
+	@OptionalConfigProperty
+	@ConfigProperty(key = "clock-in-command", note = "Command to execute when the staff member clocks in")
+	private String clockInCommand;
+	
+	@OptionalConfigProperty
+	@ConfigProperty(key = "clock-out-command", note = "Command to execute when the staff member clocks out")
+	private String clockOutCommand;
 	
 	@ConfigProperty(key = "rank-title", note = "Name of the staff member's rank")
 	private String rankTitle;
@@ -173,9 +178,14 @@ public class StaffMember
 		return UUID.fromString(playerUUIDString);
 	}
 	
-	public String getClockInPermission()
+	public String getClockInCommand()
 	{
-		return clockInPermission;
+		return clockInCommand;
+	}
+	
+	public String getClockOutCommand()
+	{
+		return clockOutCommand;
 	}
 	
 	public String getRankTitle()
@@ -254,9 +264,16 @@ public class StaffMember
 		save();
 	}
 	
-	public void setClockInPermission(String clockInPermission)
+	public void setClockInCommand(String clockInCommand)
 	{
-		this.clockInPermission = clockInPermission;
+		this.clockInCommand = clockInCommand;
+		
+		save();
+	}
+	
+	public void setClockOutCommand(String clockOutCommand)
+	{
+		this.clockOutCommand = clockOutCommand;
 		
 		save();
 	}

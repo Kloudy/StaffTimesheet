@@ -73,7 +73,7 @@ public class StaffTimesheetConfig
 	
 	@OptionalConfigProperty
 	@ConfigProperty(key = "permissions-plugin", note = "The permissions plugin to use to give / remove staff permissions (PermissionsEx, GroupManager)")
-	private String permissionsPlugin;
+	public static String permissionsPlugin;
 	
 	public Calendar getFirstBillPeriodStartDate()
 	{	

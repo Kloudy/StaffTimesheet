@@ -65,9 +65,11 @@ public class ShiftManager
 		{
 			TimeCard timeCard = new TimeCard(staffMember, System.currentTimeMillis());
 			timeCards.put(staffMember.getUUID(), timeCard);
-			
-			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s add %s", 
-					staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
+
+			if(staffMember.getClockInCommand() != null)
+			{
+				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), staffMember.getClockInCommand());
+			}
 			
 			staffMember.logEntry(clockInLabel);
 		}
@@ -101,8 +103,10 @@ public class ShiftManager
 					System.out.println(staffMember.getPlayer().getName() + " shift time: " + TimeFormat.getDurationFormatString(shiftTime));
 				}
 				
-				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), String.format("pex user %s remove %s",
-						staffMember.getPlayer().getName(), staffMember.getClockInPermission()));
+				if(staffMember.getClockOutCommand() != null)
+				{
+					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), staffMember.getClockOutCommand());
+				}
 												
 				timeCards.remove(staffMember.getUUID());
 				
