@@ -1,7 +1,8 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
-import com.antarescraft.kloudy.plugincore.config.*;
 
 /**
  * Contains all error message strings loaded from config
@@ -15,34 +16,34 @@ public class ErrorMessages
 	@ConfigElementKey
 	private String errorMessages;
 	
-	@ConfigProperty(key = "duration-underflow", note = "Error message displayed if a super admin tries to remove more time from a staff member than they have currently logged.")
+	@ConfigProperty(key = "duration-underflow")
 	private String durationUnderflow;
 	
-	@ConfigProperty(key = "duration-overflow", note = "Error message displayed if a super admin tries to add more time to a staff member's time than the max duration value")
+	@ConfigProperty(key = "duration-overflow")
 	private String durationOverflow;
 	
-	@ConfigProperty(key = "not-staff", note = "Error message displayed to the player if they attempt /staff shift start but they are not configured in staff-members.yml")
+	@ConfigProperty(key = "not-staff")
 	private String notStaff;
 	
-	@ConfigProperty(key = "not-clocked-in", note = "Error message displayed if a player tries to use /staff shift end but they are not currently on the clock")
+	@ConfigProperty(key = "not-clocked-in")
 	private String notClockedIn;
 
-	@ConfigProperty(key = "already-clocked-in", note = "Error message displayed if the player tries to clock in if they are already clocked in")
+	@ConfigProperty(key = "already-clocked-in")
 	private String alreadyClockedIn;
 	
-	@ConfigProperty(key = "staff-member-does-not-exist", note = "Error message displayed when an a staff command is run with a player name that doesn't belong to any staff member")
+	@ConfigProperty(key = "staff-member-does-not-exist")
 	private String staffMemberDoesNotExist;
 	
-	@ConfigProperty(key = "no-staff-log", note = "Error message displayed when the plugin is unable to load a staff member's logs")
+	@ConfigProperty(key = "no-staff-log")
 	private String errorMessageNoStaffLog;
 	
-	@ConfigProperty(key = "invalid-duration-format", note = "Error message displayed when an invalid duration format is entered from the user ")
+	@ConfigProperty(key = "invalid-duration-format")
 	private String errorMessageInvalidDurationFormat;
 	
-	@ConfigProperty(key = "invalid-date-format", note = "Error message displayed when an invalid date format is entered from the user")
+	@ConfigProperty(key = "invalid-date-format")
 	private String errorMessageInvalidDateFormat;
 	
-	@ConfigProperty(key = "start-date-end-date-mismatch", note = "Error message displayed when the user enters a range of dates in a command but the start date comes after the end date")
+	@ConfigProperty(key = "start-date-end-date-mismatch")
 	private String errorMessageStartDateEndDateMismatch;
 
 	/*

@@ -14,19 +14,19 @@ public class EventLabels
 	@ConfigElementKey
 	private String eventLabels;
 	
-	@ConfigProperty(key = "shift-start", note = "Label displayed in the staff member's logbook when the staff member clocks in")
+	@ConfigProperty(key = "shift-start")
 	private String shiftStart;
 	
-	@ConfigProperty(key = "shift-end-afk", note = "Label displayed in the staff member's logboo when the staff member is clocked out due to being afk")
+	@ConfigProperty(key = "shift-end-afk")
 	private String shiftEndAfk;
 	
-	@ConfigProperty(key = "shift-end-disconnected", note = "Label displayed in the staff member's logbook when the staff member is clocked out due to being disconnected")
+	@ConfigProperty(key = "shift-end-disconnected")
 	private String shiftEndDisconnected;
 	
-	@ConfigProperty(key = "shift-end-clockout", note = "Label displayed in the staff member's logbook when they clock out")
+	@ConfigProperty(key = "shift-end-clockout")
 	private String shiftEndClockout;
 	
-	@ConfigProperty(key = "shift-end-plugin-disabled", note = "Label displayed in the staff member's logbook when they are clocked out due to the plugin being disabled")
+	@ConfigProperty(key = "shift-end-plugin-disabled")
 	private String shiftEndPluginDisabled;
 	
 	/*

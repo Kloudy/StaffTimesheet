@@ -6,7 +6,10 @@ import java.time.Duration;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
+
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
@@ -23,14 +26,14 @@ public class BillingPeriod
 	@ConfigElementKey
 	private String id;
 	
-	@ConfigProperty(key = "start-date", note = "")
+	@ConfigProperty(key = "start-date")
 	private String startDateString;
 	
-	@ConfigProperty(key = "end-date", note = "")
+	@ConfigProperty(key = "end-date")
 	private String endDateString;
 	
 	@ConfigElementMap
-	@ConfigProperty(key = "staff-member-summaries", note = "")
+	@ConfigProperty(key = "staff-member-summaries")
 	private HashMap<String, StaffMemberSummary> staffMemberSummaries;
 	
 	public BillingPeriod(){}
@@ -59,9 +62,12 @@ public class BillingPeriod
 	{
 		try 
 		{
-			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), this);
+			ConfigParser.saveObject(StaffTimesheet.pluginName, getBillingPeriodYamlFile(), "billing-period-history." + getId(), this);
 		} 
-		catch (IOException | ConfigurationParseException e) {}
+		catch (IOException e)
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), String.format("An error occured while saving class %s to yml", this.getClass().getName()));
+		}
 	}
 	
 	/*
@@ -71,9 +77,12 @@ public class BillingPeriod
 	{
 		try 
 		{
-			ConfigParser.saveObject(getBillingPeriodYamlFile(), "billing-period-history." + getId(), null);
+			ConfigParser.saveObject(StaffTimesheet.pluginName, getBillingPeriodYamlFile(), "billing-period-history." + getId(), null);
 		} 
-		catch (IOException | ConfigurationParseException e){}
+		catch (IOException e)
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), String.format("An error occured while removinb class %s from yml"));
+		}
 	}
 	
 	/*

@@ -14,7 +14,7 @@ public class BillingPeriodHistory
 	public BillingPeriodHistory(){}
 	
 	@ConfigElementList
-	@ConfigProperty(key = "billing-period-history", note = "")
+	@ConfigProperty(key = "billing-period-history")
 	private ArrayList<BillingPeriod> billingPeriodHistory;
 	
 	public ArrayList<BillingPeriod> getAllBillingPeriodHistory()

@@ -29,12 +29,12 @@ public class StaffTimesheetConfig
 			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
 			
-			staffMemberManager = ConfigParser.parse(staffYaml, StaffMembersConfig.class);
+			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
 		
 			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
 			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
 			
-			billingPeriodHistory = ConfigParser.parse(billingPeriodHistoryYaml, BillingPeriodHistory.class);;
+			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
 		}
 		catch(Exception e){e.printStackTrace();}
 	}
@@ -44,35 +44,35 @@ public class StaffTimesheetConfig
 	private BillingPeriodHistory billingPeriodHistory;
 		
 	@ConfigElement
-	@ConfigProperty(key = "error-messages", note = "List of error messages")
+	@ConfigProperty(key = "error-messages")
 	private ErrorMessages errorMessages;
 	
 	@ConfigElement
-	@ConfigProperty(key = "event-labels", note = "List of event labels that get displayed in a staff member's logbook")
+	@ConfigProperty(key = "event-labels")
 	private EventLabels eventLabels;
 	
 	@ConfigElement
-	@ConfigProperty(key = "shift-start-stop-messages", note = "List of messages that get displayed to staff members when the start or stop their shift")
+	@ConfigProperty(key = "shift-start-stop-messages")
 	private ShiftStartStopMessages shiftStartStopMessages;
 	
 	@ConfigElement
-	@ConfigProperty(key = "command-result-messages", note = "List of messages displayed to the player after running a StaffTimesheet command")
+	@ConfigProperty(key = "command-result-messages")
 	private CommandResultMessages commandResultMessages;
 	
 	@OptionalConfigProperty
 	@BooleanConfigProperty(defaultValue = false)
-	@ConfigProperty(key = "debug-mode", note = "Print debug information in the console")
+	@ConfigProperty(key = "debug-mode")
 	public static boolean debugMode;
 	
 	@IntConfigProperty(defaultValue = 4, maxValue = Integer.MAX_VALUE, minValue = 0)
-	@ConfigProperty(key = "billing-period-duration", note = "")
+	@ConfigProperty(key = "billing-period-duration")
 	private int billingPeriodDuration;
 	
-	@ConfigProperty(key = "first-bill-period-start-date", note = "Start date for the first bill cycle (format: yyyy/mm/dd)")
+	@ConfigProperty(key = "first-bill-period-start-date")
 	private String firstBillPeriodStartDate;
 	
 	@OptionalConfigProperty
-	@ConfigProperty(key = "permissions-plugin", note = "The permissions plugin to use to give / remove staff permissions (PermissionsEx, GroupManager)")
+	@ConfigProperty(key = "permissions-plugin")
 	public static String permissionsPlugin;
 	
 	public Calendar getFirstBillPeriodStartDate()

@@ -13,6 +13,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -36,44 +37,48 @@ public class StaffMember
 	@ConfigElementKey
 	private String playerName;
 	
-	@ConfigProperty(key = "uuid", note = "The player's UUID")
+	@ConfigProperty(key = "uuid")
 	public String playerUUIDString;
 	
 	@OptionalConfigProperty
-	@ConfigProperty(key = "clock-in-command", note = "Command to execute when the staff member clocks in")
+	@ConfigProperty(key = "clock-in-command")
 	private String clockInCommand;
 	
 	@OptionalConfigProperty
-	@ConfigProperty(key = "clock-out-command", note = "Command to execute when the staff member clocks out")
+	@ConfigProperty(key = "clock-out-command")
 	private String clockOutCommand;
 	
-	@ConfigProperty(key = "rank-title", note = "Name of the staff member's rank")
+	@ConfigProperty(key = "rank-title")
 	private String rankTitle;
 	
 	@StringConfigProperty(defaultValue = "00:00:00")
-	@ConfigProperty(key = "time-goal", note = "Time goal for the staff member to reach in the billing cycle. Time format: 'hh:mm:ss'")
+	@ConfigProperty(key = "time-goal")
 	private String timeGoalString;
 	
 	@StringConfigProperty(defaultValue = "00:00:00")
-	@ConfigProperty(key = "logged-time", note = "Amount of time the")
+	@ConfigProperty(key = "logged-time")
 	private String loggedTimeString;
 	
 	@OptionalConfigProperty
 	@BooleanConfigProperty(defaultValue = false)
-	@ConfigProperty(key = "start-shift-on-login", note = "If true, the staff member will be automatically clocked in on login")
+	@ConfigProperty(key = "start-shift-on-login")
 	private boolean startShiftOnLogin;
 	
 	@BooleanConfigProperty(defaultValue = false)
-	@ConfigProperty(key = "super-admin", note = "If true, the staff member will be a super admin")
+	@ConfigProperty(key = "super-admin")
 	private boolean superAdmin;
 	
 	private void save()
 	{
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
-		try
+		try 
 		{
-			ConfigParser.saveObject(staffYaml, "staff-members." + playerName, this);
-		} catch (IOException | ConfigurationParseException e) {}
+			ConfigParser.saveObject(StaffTimesheet.pluginName, staffYaml, "staff-members." + playerName, this);
+		}
+		catch (IOException e)
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), String.format("An error occured while saving class %s to yml", this.getClass().getName()));
+		}
 	}
 	
 	public void addLoggedTime(Duration time) throws DurationOverflowException

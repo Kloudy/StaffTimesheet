@@ -17,16 +17,16 @@ public class StaffMemberSummary
 	@ConfigElementKey
 	private String playerUUIDString;
 	
-	@ConfigProperty(key = "player-name", note = "")
+	@ConfigProperty(key = "player-name")
 	private String staffMemberName;
 	
-	@ConfigProperty(key = "percent-time-logged", note = "")
+	@ConfigProperty(key = "percent-time-logged")
 	private double percentTimeCompleted;
 	
-	@ConfigProperty(key = "time-goal", note = "")
+	@ConfigProperty(key = "time-goal")
 	private String timeGoal;
 	
-	@ConfigProperty(key = "logged-time", note = "")
+	@ConfigProperty(key = "logged-time")
 	private String loggedTime;
 	
 	public StaffMemberSummary(){}

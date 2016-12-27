@@ -17,7 +17,7 @@ public class StaffMembersConfig
 	private StaffMembersConfig(){}
 	
 	@ConfigElementMap
-	@ConfigProperty(key = "staff-members", note = "List of staff member configurations")
+	@ConfigProperty(key = "staff-members")
 	private HashMap<String, StaffMember> staffMembers;
 	
 	public StaffMember getStaffMember(String playerName)

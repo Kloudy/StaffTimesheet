@@ -14,13 +14,13 @@ public class CommandResultMessages
 	@ConfigElementKey
 	private String commandResultMessages;
 	
-	@ConfigProperty(key = "reset-staff-member-logged-time", note = "Message displayed after command /staff manage <player_name> reset is successfully executed")
+	@ConfigProperty(key = "reset-staff-member-logged-time")
 	private String resetStaffMemberLoggedTime;
 	
-	@ConfigProperty(key = "add-logged-time-for-staff-member", note = "Message displayed after command /staff manage <player_name> add <formatted_time> is successfully executed ")
+	@ConfigProperty(key = "add-logged-time-for-staff-member")
 	private String addLoggedTimeForStaffMember;
 	
-	@ConfigProperty(key = "subtract-logged-time-for-staff-member", note = "Message displayed after command /staff manage <player_name> subtract <formatted_time> is successfully executed                             #Message displayed after command /staff logbook <player_name> <start_date> [end_date] is successfully executed and the command invoker is given the logbook")
+	@ConfigProperty(key = "subtract-logged-time-for-staff-member")
 	private String subtractLoggedTimeForStaffMember;
 	
 	/*

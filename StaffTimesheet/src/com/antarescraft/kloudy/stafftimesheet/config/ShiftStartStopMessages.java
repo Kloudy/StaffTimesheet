@@ -16,13 +16,13 @@ public class ShiftStartStopMessages
 	@ConfigElementKey
 	private String shiftStartStopMessages;
 	
-	@ConfigProperty(key = "shift-end-afk", note = "Displayed when a staff member is clocked out for being Afk")
+	@ConfigProperty(key = "shift-end-afk")
 	private String shiftEndAfk;
 	
-	@ConfigProperty(key = "shift-end-clockout", note = "Displayed when a staff member clocks out")
+	@ConfigProperty(key = "shift-end-clockout")
 	private String shiftEndClockout;
 	
-	@ConfigProperty(key = "shift-start", note = "Displayed when a staff member clocks in")
+	@ConfigProperty(key = "shift-start")
 	private String shiftStart;
 	
 	/*

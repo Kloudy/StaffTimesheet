@@ -1,7 +1,5 @@
 package com.antarescraft.kloudy.stafftimesheet;
 
-import java.io.IOException;
-
 import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
@@ -63,11 +61,6 @@ public class StaffTimesheet extends HoloGUIPlugin
 		
 		loadGUIPages();
 		
-		try 
-		{
-			config = ConfigParser.parse(getConfig(), 
-					StaffTimesheetConfig.class, String.format("plugins/%s/config-docs.yml", getName()), 45);
-		} 
-		catch (ConfigurationParseException | IOException e) {e.printStackTrace();}
+		config = ConfigParser.parse(pluginName, getConfig(), StaffTimesheetConfig.class);
 	}
 }
