@@ -55,7 +55,7 @@ admin-manage-staff:
         - "&lStaff Member: &c&l$model.staffMemberName();"
       position:
         x: 0
-        y: 0.75
+        y: 0.8
 
     staff-member-uuid:
       type: "label"
@@ -64,7 +64,7 @@ admin-manage-staff:
         - "&lUUID: &c&l$model.staffMemberUUID();"
       position:
         x: 0
-        y: 0.65
+        y: 0.75
 
     logged-time-scroller:
       type: "value-scroller"
@@ -131,7 +131,7 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: -0.2
-        y: 0.55
+        y: 0.65
 
     start-shift-on-login-toggle:
       type: "toggle-switch"
@@ -142,7 +142,7 @@ admin-manage-staff:
       onclick-sound: "UI_BUTTON_CLICK"
       position:
         x: 0.2
-        y: 0.55
+        y: 0.65
 
     clock-in-command:
       type: "text-box"

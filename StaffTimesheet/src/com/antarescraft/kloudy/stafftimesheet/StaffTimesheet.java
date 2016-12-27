@@ -26,8 +26,6 @@ public class StaffTimesheet extends HoloGUIPlugin
 		
 		setMinSupportedApiVersion("1.0.5");
 		checkMinApiVersion();
-		
-		saveDefaultConfig();
 
 		getHoloGUIApi().hookHoloGUIPlugin(this);
 		copyResourceConfigs(true);
@@ -59,6 +57,8 @@ public class StaffTimesheet extends HoloGUIPlugin
 	@Override
 	public void reloadConfig()
 	{
+		saveDefaultConfig();
+		
 		super.reloadConfig();
 		
 		loadGUIPages();
