@@ -22,23 +22,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class StaffTimesheetConfig
 {	
-	private StaffTimesheetConfig()
-	{
-		try
-		{
-			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
-			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
-			
-			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
-		
-			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
-			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
-			
-			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
-		}
-		catch(Exception e){e.printStackTrace();}
-	}
-	
 	private StaffMembersConfig staffMemberManager;
 	
 	private BillingPeriodHistory billingPeriodHistory;
@@ -75,6 +58,23 @@ public class StaffTimesheetConfig
 	@ConfigProperty(key = "permissions-plugin")
 	public static String permissionsPlugin;
 	
+	private StaffTimesheetConfig()
+	{
+		try
+		{
+			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
+			
+			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
+		
+			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
+			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
+			
+			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
+		}
+		catch(Exception e){e.printStackTrace();}
+	}
+	
 	public Calendar getFirstBillPeriodStartDate()
 	{	
 		Calendar date = null;
@@ -98,7 +98,7 @@ public class StaffTimesheetConfig
 	
 	public BillingPeriod getCurrentBillingPeriod()
 	{
-		ArrayList<BillingPeriod> billingPeriods = billingPeriodHistory.getAllBillingPeriodHistory();
+		ArrayList<BillingPeriod> billingPeriods = billingPeriodHistory.getBillingPeriodHistory();
 		if(billingPeriods.size() == 0)
 		{
 			billingPeriods.add(generateFirstBillingPeriod());

@@ -30,7 +30,7 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 	{
 		super(plugin, guiPage, player, staffMember);
 				
-		billingPeriodHistory = config.getBillingPeriodHistoryConfig().getAllBillingPeriodHistory();//read all billing history data from 'staff-member-billing-period-history.yml'
+		billingPeriodHistory = config.getBillingPeriodHistoryConfig().getBillingPeriodHistory();//read all billing history data from 'staff-member-billing-period-history.yml'
 			
 		page = billingPeriodHistory.size()-1;
 		

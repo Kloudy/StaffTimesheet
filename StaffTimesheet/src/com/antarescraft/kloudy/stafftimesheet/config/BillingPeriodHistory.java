@@ -11,13 +11,13 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  */
 public class BillingPeriodHistory 
 {
-	public BillingPeriodHistory(){}
+	private BillingPeriodHistory(){}
 	
 	@ConfigElementList
 	@ConfigProperty(key = "billing-period-history")
 	private ArrayList<BillingPeriod> billingPeriodHistory;
 	
-	public ArrayList<BillingPeriod> getAllBillingPeriodHistory()
+	public ArrayList<BillingPeriod> getBillingPeriodHistory()
 	{
 		return billingPeriodHistory;
 	}
