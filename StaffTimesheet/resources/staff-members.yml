@@ -14,7 +14,7 @@ staff-members:  #List of staff member configurations
     clock-in-command: "pex user Kloudy add mystaff.permission"      #(Optional) Command that gets executed when the staff member clocks in
     clock-out-command: "pex user Kloudy remove mystaff.permission"  #(Optional) Command that gets executed when the staff member clocks out
     time-goal: "15:00:00"                                           #(Default: "15:00:00") Monthly time goal for the staff member. Time format: "hh:mm:ss
-    rank-title: "Junior Mod"                                        #(Default: none) Name of staff member's rank
+    rank-title: "Super Admin"                                       #(Default: none) Name of staff member's rank
     logged-time: "00:00:00"                                         #(Default: "00:00:00") Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
     start-shift-on-login: false                                     #(Default: false) (true or false) if the plugin should start logging staff member's time as soon as they log in
   VersaillesBank:
@@ -24,5 +24,5 @@ staff-members:  #List of staff member configurations
     clock-out-permission: "pex user VersaillesBank remove mystaff.permission"
     time-goal: '15:00:00'
     rank-title: Junior Mod
-    logged-time: 00:00:12
+    logged-time: 00:00:00
     start-shift-on-login: true
