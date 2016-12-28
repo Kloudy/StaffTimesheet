@@ -13,7 +13,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
-import com.antarescraft.kloudy.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -68,12 +68,12 @@ public class StaffMember
 	@ConfigProperty(key = "super-admin")
 	private boolean superAdmin;
 	
-	private void save()
-	{
+	private void save(String fieldName)
+	{	
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 		try 
 		{
-			ConfigParser.saveObject(StaffTimesheet.pluginName, staffYaml, "staff-members." + playerName, this);
+			ConfigParser.saveObject(StaffTimesheet.pluginName, staffYaml, "staff-members." + playerName, this, fieldName);
 		}
 		catch (IOException e)
 		{
@@ -94,7 +94,7 @@ public class StaffMember
 		loggedTime = sumDuration;
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		save();
+		save("loggedTimeString");
 	}
 	
 	public void subtractLoggedTime(Duration time) throws DurationUnderflowException
@@ -111,14 +111,14 @@ public class StaffMember
 		
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 
-		save();
+		save("loggedTimeString");
 	}
 	
 	public void resetLoggedTime()
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(Duration.ZERO);
 		
-		save();
+		save("loggedTimeString");
 	}
 	
 	public void logEntry(String text)
@@ -252,49 +252,49 @@ public class StaffMember
 	{
 		loggedTimeString = TimeFormat.getDurationFormatString(loggedTime);
 		
-		save();
+		save("loggedTimeString");
 	}
 	
 	public void setTimeGoal(Duration timeGoal)
 	{
 		timeGoalString = TimeFormat.getDurationFormatString(timeGoal);
 		
-		save();
+		save("timeGoalString");
 	}
 	
 	public void setSuperAdmin(boolean superAdmin)
 	{
 		this.superAdmin = superAdmin;
 		
-		save();
+		save("superAdmin");
 	}
 	
 	public void setClockInCommand(String clockInCommand)
 	{
 		this.clockInCommand = clockInCommand;
 		
-		save();
+		save("clockInCommand");
 	}
 	
 	public void setClockOutCommand(String clockOutCommand)
 	{
 		this.clockOutCommand = clockOutCommand;
 		
-		save();
+		save("clockOutCommand");
 	}
 	
 	public void setRankTitle(String rankTitle)
 	{
 		this.rankTitle = rankTitle;
 		
-		save();
+		save("rankTitle");
 	}
 	
 	public void setStartShiftOnLogin(boolean startShiftOnLogin)
 	{
 		this.startShiftOnLogin = startShiftOnLogin;
 		
-		save();
+		save("startShiftOnLogin");
 	}
 	
 	@Override
