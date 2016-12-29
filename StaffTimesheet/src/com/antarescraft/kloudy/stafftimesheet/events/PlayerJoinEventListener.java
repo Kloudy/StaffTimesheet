@@ -6,16 +6,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class PlayerJoinEventListener implements Listener
 {
-	private StaffTimesheetConfig configManager;
+	private StaffTimesheet staffTimesheet;
 	
-	public PlayerJoinEventListener(StaffTimesheetConfig configManager)
+	public PlayerJoinEventListener(StaffTimesheet staffTimesheet)
 	{
-		this.configManager = configManager;
+		this.staffTimesheet = staffTimesheet;
 	}
 	
 	@EventHandler
@@ -23,12 +24,14 @@ public class PlayerJoinEventListener implements Listener
 	{
 		Player player = event.getPlayer();
 		
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		if(staffMember != null && staffMember.startShiftOnLogin())
 		{
-			ShiftManager.getInstance().clockIn(staffMember, configManager.getEventLabelConfig().getShiftStart());
+			ShiftManager.getInstance().clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
 			
-			staffMember.getPlayer().sendMessage(configManager.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
+			staffMember.getPlayer().sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
 		}
 	}
 }

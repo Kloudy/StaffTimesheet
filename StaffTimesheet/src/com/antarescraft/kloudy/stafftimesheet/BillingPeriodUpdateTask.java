@@ -13,15 +13,15 @@ import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class BillingPeriodUpdateTask extends BukkitRunnable
 {
-	private StaffTimesheetConfig config;
+	private StaffTimesheet staffTimesheet;
 	private BillingPeriod currentBillingPeriod;
 	private ShiftManager shiftManager;
 	
-	public BillingPeriodUpdateTask(StaffTimesheetConfig config)
-	{
-		this.config = config;
+	public BillingPeriodUpdateTask(StaffTimesheet staffTimesheet)
+	{		
+		this.staffTimesheet = staffTimesheet;
 		
-		currentBillingPeriod = config.getCurrentBillingPeriod();
+		currentBillingPeriod = StaffTimesheetConfig.getConfig(staffTimesheet).getCurrentBillingPeriod();
 		currentBillingPeriod.save();
 		
 		shiftManager = ShiftManager.getInstance();
@@ -43,12 +43,15 @@ public class BillingPeriodUpdateTask extends BukkitRunnable
 		Calendar now = Calendar.getInstance();
 		if(now.compareTo(endDate) >= 0)//we've rolled over into a new billing period
 		{
+			StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+			
 			BillingPeriod newBillingPeriod = new BillingPeriod(now, config.getBillingPeriodDuration());
 			newBillingPeriod.save();
 			
 			shiftManager.setCurrentBillingPeriod(newBillingPeriod);
 			
 			config.getStaffMembersConfig().resetAllStaffMemberTime();//resets all staff member time for the new billing period
+			config.addBillingPeriodToHistory(newBillingPeriod);
 		}
 	}
 }

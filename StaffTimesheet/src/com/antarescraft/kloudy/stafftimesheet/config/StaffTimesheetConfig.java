@@ -22,9 +22,30 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class StaffTimesheetConfig
 {	
+	private static StaffTimesheetConfig instance;
+	
 	private StaffMembersConfig staffMemberManager;
 	
 	private BillingPeriodHistory billingPeriodHistory;
+	
+	public static void loadConfig(StaffTimesheet staffTimesheet)
+	{
+		staffTimesheet.saveDefaultConfig();
+		staffTimesheet.reloadConfig();
+		staffTimesheet.loadGUIPages();
+		
+		instance = ConfigParser.parse(StaffTimesheet.pluginName, staffTimesheet.getConfig(), StaffTimesheetConfig.class);
+	}
+	
+	public static StaffTimesheetConfig getConfig(StaffTimesheet staffTimesheet)
+	{
+		if(instance == null)
+		{
+			instance = ConfigParser.parse(StaffTimesheet.pluginName, staffTimesheet.getConfig(), StaffTimesheetConfig.class);
+		}
+		
+		return instance;
+	}
 		
 	@ConfigElement
 	@ConfigProperty(key = "error-messages")
@@ -105,6 +126,11 @@ public class StaffTimesheetConfig
 		}
 		
 		return billingPeriods.get(billingPeriods.size()-1);//the last billing period in the list will be the current billing period
+	}
+	
+	public void addBillingPeriodToHistory(BillingPeriod billingPeriod)
+	{
+		billingPeriodHistory.getBillingPeriodHistory().add(billingPeriod);
 	}
 
 	/*

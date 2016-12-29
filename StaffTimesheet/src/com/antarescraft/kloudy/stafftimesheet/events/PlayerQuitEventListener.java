@@ -6,16 +6,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 public class PlayerQuitEventListener implements Listener
 {
-	private StaffTimesheetConfig configManager;
+	private StaffTimesheet staffTimesheet;
 	
-	public PlayerQuitEventListener(StaffTimesheetConfig configManager)
+	public PlayerQuitEventListener(StaffTimesheet staffTimesheet)
 	{
-		this.configManager = configManager;
+		this.staffTimesheet = staffTimesheet;
 	}
 	
 	@EventHandler
@@ -26,10 +27,12 @@ public class PlayerQuitEventListener implements Listener
 		{
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			
-			StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
+			StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+			
+			StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 			if(staffMember != null && shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndDisconnected());
+				shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndDisconnected());
 				
 				staffMember.logEntry("Logged out");
 			}

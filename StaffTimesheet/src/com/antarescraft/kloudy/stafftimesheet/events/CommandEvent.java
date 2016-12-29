@@ -24,12 +24,10 @@ import com.antarescraft.kloudy.stafftimesheet.datamodels.TimesheetHomePageModel;
 public class CommandEvent implements CommandExecutor
 {
 	private StaffTimesheet staffTimesheet;
-	private StaffTimesheetConfig configManager;
 	
-	public CommandEvent(StaffTimesheet staffTimesheet, StaffTimesheetConfig configManager)
+	public CommandEvent(StaffTimesheet staffTimesheet)
 	{
 		this.staffTimesheet = staffTimesheet;
-		this.configManager = configManager;
 	}
 	
 	@Override
@@ -54,24 +52,27 @@ public class CommandEvent implements CommandExecutor
 	public void openMenu(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
+		
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		
 		if(staffMember != null)
 		{
 			if(staffMember.isSuperAdmin())
 			{
-				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, configManager);
+				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, config);
 				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
 			}
 			else
 			{
-				TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, configManager);
+				TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, config);
 				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home", model);
 			}
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getNotStaff());
+			sender.sendMessage(config.getErrorMessageConfig().getNotStaff());
 		}
 	}
 	
@@ -81,25 +82,27 @@ public class CommandEvent implements CommandExecutor
 	{
 		Player player = (Player)sender;
 		
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		if(staffMember != null)
 		{
 			ShiftManager shiftManager = ShiftManager.getInstance();
 			
 			if(!shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockIn(staffMember, configManager.getEventLabelConfig().getShiftStart());
+				shiftManager.clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
 				
-				player.sendMessage(configManager.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
+				player.sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
 			}
 			else
 			{
-				player.sendMessage(configManager.getErrorMessageConfig().getAlreadyClockedIn());
+				player.sendMessage(config.getErrorMessageConfig().getAlreadyClockedIn());
 			}
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getNotStaff());
+			sender.sendMessage(config.getErrorMessageConfig().getNotStaff());
 		}
 	}
 	
@@ -109,24 +112,26 @@ public class CommandEvent implements CommandExecutor
 	{
 		Player player = (Player)sender;
 		
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(player);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		if(staffMember != null)
 		{
 			ShiftManager shiftManager = ShiftManager.getInstance();
 
 			if(shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockOut(staffMember, configManager.getEventLabelConfig().getShiftEndClockout());
-				sender.sendMessage(configManager.getShiftStartStopMessagesConfig().getShiftEndClockout(staffMember));				
+				shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndClockout());
+				sender.sendMessage(config.getShiftStartStopMessagesConfig().getShiftEndClockout(staffMember));				
 			}
 			else
 			{
-				sender.sendMessage(configManager.getErrorMessageConfig().getNotClockedIn());
+				sender.sendMessage(config.getErrorMessageConfig().getNotClockedIn());
 			}
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getNotStaff());
+			sender.sendMessage(config.getErrorMessageConfig().getNotStaff());
 		}
 	}
 	
@@ -134,16 +139,18 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = true, permission = "staff.admin", subcommands = "manage <player_name> reset")
 	public void resetStaffMemberTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(args[1]);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			staffMember.resetLoggedTime();
 			
-			sender.sendMessage(configManager.getCommandResultMessageConfig().getResetStaffMemberLoggedTime());
+			sender.sendMessage(config.getCommandResultMessageConfig().getResetStaffMemberLoggedTime());
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getStaffMemberDoesNotExist());
+			sender.sendMessage(config.getErrorMessageConfig().getStaffMemberDoesNotExist());
 		}
 	}
 	
@@ -151,7 +158,9 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = true, permission = "staff.admin", subcommands = "manage <player_name> add <formatted_time>")
 	public void addStaffMemberTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(args[1]);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			try
@@ -162,22 +171,22 @@ public class CommandEvent implements CommandExecutor
 				{
 					staffMember.addLoggedTime(time);
 					
-					sender.sendMessage(configManager.getCommandResultMessageConfig().getAddLoggedTimeForStaffMember());
+					sender.sendMessage(config.getCommandResultMessageConfig().getAddLoggedTimeForStaffMember());
 				}
 				catch(DurationOverflowException e)//trying to add more time than is allowed, set to max duration
 				{
-					sender.sendMessage(configManager.getErrorMessageConfig().getDurationOverflow());
+					sender.sendMessage(config.getErrorMessageConfig().getDurationOverflow());
 				}
 				
 			}
 			catch(InvalidDurationFormatException e)
 			{
-				sender.sendMessage(configManager.getErrorMessageConfig().getInvalidDurationFormat());
+				sender.sendMessage(config.getErrorMessageConfig().getInvalidDurationFormat());
 			}
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getStaffMemberDoesNotExist());
+			sender.sendMessage(config.getErrorMessageConfig().getStaffMemberDoesNotExist());
 		}
 	}
 	
@@ -185,7 +194,9 @@ public class CommandEvent implements CommandExecutor
 			mustBePlayer = false, permission = "staff.admin", subcommands = "manage <player_name> subtract <formatted_time>")
 	public void shiftAdminManageSubtractTime(CommandSender sender, String[] args)
 	{
-		StaffMember staffMember = configManager.getStaffMembersConfig().getStaffMember(args[1]);
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(args[1]);
 		if(staffMember != null)
 		{
 			try
@@ -197,26 +208,26 @@ public class CommandEvent implements CommandExecutor
 					{
 						staffMember.subtractLoggedTime(time);
 						
-						sender.sendMessage(configManager.getCommandResultMessageConfig().getSubtractLoggedTimeForStaffMember());
+						sender.sendMessage(config.getCommandResultMessageConfig().getSubtractLoggedTimeForStaffMember());
 					}
 					catch(DurationUnderflowException e)//trying to subtract more time than has been logged, set to min duration
 					{
-						sender.sendMessage(configManager.getErrorMessageConfig().getDurationUnderflow());
+						sender.sendMessage(config.getErrorMessageConfig().getDurationUnderflow());
 					}
 				}
 				else//trying to subtract more time than the staff member already has logged
 				{
-					sender.sendMessage(configManager.getErrorMessageConfig().getDurationUnderflow());
+					sender.sendMessage(config.getErrorMessageConfig().getDurationUnderflow());
 				}
 			}
 			catch(InvalidDurationFormatException e)
 			{
-				sender.sendMessage(configManager.getErrorMessageConfig().getInvalidDurationFormat());
+				sender.sendMessage(config.getErrorMessageConfig().getInvalidDurationFormat());
 			}
 		}
 		else
 		{
-			sender.sendMessage(configManager.getErrorMessageConfig().getStaffMemberDoesNotExist());
+			sender.sendMessage(config.getErrorMessageConfig().getStaffMemberDoesNotExist());
 		}
 	}
 }
