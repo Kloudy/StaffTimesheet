@@ -12,7 +12,6 @@ import com.earth2me.essentials.UserData;
 
 import net.ess3.api.events.AfkStatusChangeEvent;
 
-
 public class AfkStatusChangeEventListener implements Listener
 {
 	private StaffTimesheet staffTimesheet;
