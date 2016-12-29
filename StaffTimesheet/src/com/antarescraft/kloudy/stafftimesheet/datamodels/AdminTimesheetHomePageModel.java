@@ -16,6 +16,7 @@ import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.ListScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
+import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 /**
  * Represents a data model for the superadmin timesheet home page
@@ -68,7 +69,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 		
 		staffMemberSelector = (ValueScrollerComponent) guiPage.getComponent("staff-member-selector");
 		
-		Collection<StaffMember> staffMembers = (Collection<StaffMember>)configManager.getStaffMembersConfig().getAllStaffMembers();
+		Collection<StaffMember> staffMembers = (Collection<StaffMember>)StaffTimesheetConfig.getConfig(plugin).getStaffMembersConfig().getAllStaffMembers();
 		String[] staffMemberNames = new String[staffMembers.size()];
 		int viewerIndex = 0;
 		int i = 0;
@@ -101,7 +102,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			public void onScroll(AbstractScrollValue<?, ?> value) 
 			{
 				ListScrollValue listValue = (ListScrollValue)value;
-				staffMember = configManager.getStaffMembersConfig().getStaffMember(listValue.toString());
+				staffMember = StaffTimesheetConfig.getConfig(plugin).getStaffMembersConfig().getStaffMember(listValue.toString());
 			}
 		});
 		

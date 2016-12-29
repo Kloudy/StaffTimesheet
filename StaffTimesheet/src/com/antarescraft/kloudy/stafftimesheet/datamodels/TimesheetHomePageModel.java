@@ -14,7 +14,6 @@ import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 public class TimesheetHomePageModel extends BaseStaffTimesheetPageModel
 {
 	protected ItemButtonComponent logbookBtn;
-	protected StaffTimesheetConfig configManager;
 	
 	public TimesheetHomePageModel(final StaffTimesheet plugin, GUIPage guiPage, final Player player) 
 	{
