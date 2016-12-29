@@ -42,7 +42,7 @@ public class CommandEvent implements CommandExecutor
 	{
 		staffTimesheet.getHoloGUIApi().destroyGUIPages(staffTimesheet);
 		
-		staffTimesheet.reloadConfig();
+		StaffTimesheetConfig.loadConfig(staffTimesheet);
 		
 		MessageManager.info(sender, "Config values reloaded.");
 	}
@@ -61,12 +61,12 @@ public class CommandEvent implements CommandExecutor
 		{
 			if(staffMember.isSuperAdmin())
 			{
-				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player, config);
+				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player);
 				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home-admin", model);
 			}
 			else
 			{
-				TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player, config);
+				TimesheetHomePageModel model = new TimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home"), player);
 				staffTimesheet.getHoloGUIApi().openGUIPage(staffTimesheet, player, "timesheet-home", model);
 			}
 		}

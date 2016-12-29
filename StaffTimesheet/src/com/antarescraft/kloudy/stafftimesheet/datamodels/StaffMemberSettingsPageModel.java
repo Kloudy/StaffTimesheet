@@ -6,7 +6,6 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.TextBoxComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ToggleSwitchComponent;
@@ -15,6 +14,7 @@ import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.DurationScrollValue;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 
 import net.md_5.bungee.api.ChatColor;
@@ -36,7 +36,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 	
 	private StaffMember staffMember;
 
-	public StaffMemberSettingsPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember) 
+	public StaffMemberSettingsPageModel(final StaffTimesheet plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember) 
 	{
 		super(plugin, guiPage, player, staffMember);
 		

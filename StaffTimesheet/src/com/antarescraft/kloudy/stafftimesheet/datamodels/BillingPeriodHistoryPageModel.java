@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologuiapi.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMemberSummary;
@@ -26,11 +26,11 @@ public class BillingPeriodHistoryPageModel extends BaseStaffTimesheetPageModel
 	private ButtonComponent prevPageBtn;
 	private int page;
 	
-	public BillingPeriodHistoryPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember, final StaffTimesheetConfig config)
+	public BillingPeriodHistoryPageModel(StaffTimesheet plugin, GUIPage guiPage, Player player, StaffMember staffMember)
 	{
 		super(plugin, guiPage, player, staffMember);
 				
-		billingPeriodHistory = config.getBillingPeriodHistoryConfig().getBillingPeriodHistory();//read all billing history data from 'staff-member-billing-period-history.yml'
+		billingPeriodHistory = StaffTimesheetConfig.getConfig(plugin).getBillingPeriodHistoryConfig().getBillingPeriodHistory();//read all billing history data from 'staff-member-billing-period-history.yml'
 			
 		page = billingPeriodHistory.size()-1;
 		

@@ -6,7 +6,6 @@ import java.util.Collection;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
@@ -15,8 +14,8 @@ import com.antarescraft.kloudy.hologuiapi.handlers.ClickHandler;
 import com.antarescraft.kloudy.hologuiapi.handlers.ScrollHandler;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.AbstractScrollValue;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.ListScrollValue;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
-import com.antarescraft.kloudy.stafftimesheet.config.StaffTimesheetConfig;
 
 /**
  * Represents a data model for the superadmin timesheet home page
@@ -27,9 +26,9 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 	private ButtonComponent manageStaffMemberBtn;
 	private ButtonComponent billingPeriodHistoryBtn;
 	
-	public AdminTimesheetHomePageModel(final HoloGUIPlugin plugin, GUIPage guiPage, final Player player, final StaffTimesheetConfig configManager) 
+	public AdminTimesheetHomePageModel(final StaffTimesheet plugin, GUIPage guiPage, final Player player) 
 	{
-		super(plugin, guiPage, player, configManager);
+		super(plugin, guiPage, player);
 		
 		logbookBtn = (ItemButtonComponent) guiPage.getComponent("logbook-btn");
 		logbookBtn.registerClickHandler(player, new ClickHandler()
@@ -57,7 +56,7 @@ public class AdminTimesheetHomePageModel extends TimesheetHomePageModel
 			{
 				if(staffMember != null)
 				{
-					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember, configManager);
+					BillingPeriodHistoryPageModel billingPeriodHistoryModel = new BillingPeriodHistoryPageModel(plugin, plugin.getGUIPages().get("billing-period-history"), player, staffMember);
 					plugin.getHoloGUIApi().openGUIPage(plugin, player, "billing-period-history", billingPeriodHistoryModel);
 				}
 				else

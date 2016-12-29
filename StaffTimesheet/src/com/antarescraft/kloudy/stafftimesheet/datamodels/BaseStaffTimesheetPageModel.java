@@ -4,10 +4,10 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPageModel;
 import com.antarescraft.kloudy.stafftimesheet.ShiftManager;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 
 /**
@@ -18,7 +18,7 @@ public abstract class BaseStaffTimesheetPageModel extends PlayerGUIPageModel
 {
 	protected StaffMember staffMember;
 
-	public BaseStaffTimesheetPageModel(HoloGUIPlugin plugin, GUIPage guiPage, Player player, StaffMember staffMember)
+	public BaseStaffTimesheetPageModel(StaffTimesheet plugin, GUIPage guiPage, Player player, StaffMember staffMember)
 	{
 		super(plugin, guiPage, player);
 		

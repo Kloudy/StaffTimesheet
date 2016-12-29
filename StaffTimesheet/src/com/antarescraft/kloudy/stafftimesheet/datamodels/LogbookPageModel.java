@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 import org.bukkit.entity.Player;
 
-import com.antarescraft.kloudy.hologuiapi.HoloGUIPlugin;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ComponentPosition;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIComponentProperties;
@@ -19,6 +18,7 @@ import com.antarescraft.kloudy.hologuiapi.handlers.GUIPageLoadHandler;
 import com.antarescraft.kloudy.hologuiapi.playerguicomponents.PlayerGUIPage;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.hologuiapi.scrollvalues.DateScrollValue;
+import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
 import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
 
@@ -46,7 +46,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 	 * @param player 
 	 * @param staffMember Staff member whose logs are being looked up
 	 */
-	public LogbookPageModel(final HoloGUIPlugin plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
+	public LogbookPageModel(final StaffTimesheet plugin, final GUIPage guiPage, final Player player, final StaffMember staffMember)
 	{
 		super(plugin, guiPage, player, staffMember);
 				
