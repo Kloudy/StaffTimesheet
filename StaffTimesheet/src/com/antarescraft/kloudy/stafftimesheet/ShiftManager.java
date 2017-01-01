@@ -60,14 +60,17 @@ public class ShiftManager
 		return timeCards.get(staffMember.getUUID());
 	}
 	
-	public void clockIn(StaffMember staffMember, String clockInLabel)
+	/*
+	 * returns true if the staff member was successfully logged in, false otherwise
+	 */
+	public boolean clockIn(StaffMember staffMember, String clockInLabel)
 	{
 		if(!staffMember.getPlayer().hasPermission("staff.shift"))
 		{
 			MessageManager.error(Bukkit.getConsoleSender(), 
 					String.format("Staff member %s must have permission staff.shift to be able to clock in", staffMember.getPlayerName()));
 		
-			return;
+			return false;
 		}
 		
 		if(!timeCards.containsKey(staffMember.getUUID()))
@@ -82,6 +85,8 @@ public class ShiftManager
 			
 			staffMember.logEntry(clockInLabel);
 		}
+		
+		return true;
 	}
 	
 	public void clockOut(StaffMember staffMember, String shiftEndReasonLabel)

@@ -91,9 +91,9 @@ public class CommandEvent implements CommandExecutor
 			
 			if(!shiftManager.onTheClock(staffMember))
 			{
-				shiftManager.clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
+				boolean success = shiftManager.clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
 				
-				player.sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
+				if(success)player.sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
 			}
 			else
 			{
