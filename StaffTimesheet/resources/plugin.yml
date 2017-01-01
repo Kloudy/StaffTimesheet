@@ -1,6 +1,6 @@
 name: StaffTimesheet
 main: com.antarescraft.kloudy.stafftimesheet.StaffTimesheet
-version: 1.1.1
+version: 1.2
 author: Kloudy
 website: www.antarescraft.com
 
@@ -14,8 +14,8 @@ permissions:
   staff.*:
     description: Gives the staff member access to all commands and features
     children:
-      staff.admin
-      staff.shift
+      staff.admin: true
+      staff.shift: true
 
   staff.admin:
     description: Gives the staff member access to shift admin commands
@@ -23,4 +23,4 @@ permissions:
 
   staff.shift:
     description: Gives the player the ability to use shift commands
-    default: true
+    default: op

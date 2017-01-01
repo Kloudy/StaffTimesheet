@@ -30,7 +30,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
  */
 public class StaffMember
 {
-	private StaffMember(){System.out.println("made it to staff constructor");}
+	private StaffMember(){}
 	
 	private Player player;
 	
