@@ -23,19 +23,16 @@ public class PlayerQuitEventListener implements Listener
 	public void playerQuitEvent(PlayerQuitEvent event)
 	{
 		Player player = event.getPlayer();
-		if(player.hasPermission("shift.staff"))
+		ShiftManager shiftManager = ShiftManager.getInstance();
+		
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
+		if(staffMember != null && shiftManager.onTheClock(staffMember))
 		{
-			ShiftManager shiftManager = ShiftManager.getInstance();
+			shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndDisconnected());
 			
-			StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
-			
-			StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
-			if(staffMember != null && shiftManager.onTheClock(staffMember))
-			{
-				shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndDisconnected());
-				
-				staffMember.logEntry("Logged out");
-			}
+			staffMember.logEntry("Logged out");
 		}
 	}
 }

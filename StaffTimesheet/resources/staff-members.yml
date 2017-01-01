@@ -4,6 +4,24 @@
 ################################################################################################
 
 #                                Example Staff Member Config Format                            #
+#  Kloudy:                                                           #Staff member player name
+#    uuid: "b8a93b92-fab4-4906-b71d-309a051fb2d7"                    #Staff member uuid
+#    super-admin: true                                               #(Default: false) (true or false) if the staff member is a super admin
+#    clock-in-command: "pex user Kloudy add mystaff.permission"      #(Optional) Command that gets executed when the staff member clocks in
+#    clock-out-command: "pex user Kloudy remove mystaff.permission"  #(Optional) Command that gets executed when the staff member clocks out
+#    time-goal: "15:00:00"                                           #(Default: "15:00:00") Monthly time goal for the staff member. Time format: "hh:mm:ss
+#    rank-title: "Super Admin"                                       #(Default: none) Name of staff member's rank
+#    logged-time: "00:00:00"                                         #(Default: "00:00:00") Hours the staff member has logged this month. The plugin will update this value as they log hours, but you can override that amount and place in a different value. Time format: "hh:mm:ss                                                      
+#    start-shift-on-login: false                                     #(Default: false) (true or false) if the plugin should start logging staff member's time as soon as they log in
+#  VersaillesBank:
+#    uuid: b1bb041e-b998-452e-b664-7ef08162f0ca
+#    super-admin: false
+#    clock-in-permission: "pex user VersaillesBank add mystaff.permission"
+#    clock-out-permission: "pex user VersaillesBank remove mystaff.permission"
+#    time-goal: '15:00:00'
+#    rank-title: Junior Mod
+#    logged-time: 00:00:00
+#    start-shift-on-login: true
 
 staff-members:  #List of staff member configurations
 

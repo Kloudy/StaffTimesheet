@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.DurationOverflowException;
+import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.stafftimesheet.config.BillingPeriod;
 import com.antarescraft.kloudy.stafftimesheet.config.StaffMember;
@@ -61,6 +62,14 @@ public class ShiftManager
 	
 	public void clockIn(StaffMember staffMember, String clockInLabel)
 	{
+		if(!staffMember.getPlayer().hasPermission("staff.shift"))
+		{
+			MessageManager.error(Bukkit.getConsoleSender(), 
+					String.format("Staff member %s must have permission staff.shift to be able to clock in", staffMember.getPlayerName()));
+		
+			return;
+		}
+		
 		if(!timeCards.containsKey(staffMember.getUUID()))
 		{
 			TimeCard timeCard = new TimeCard(staffMember, System.currentTimeMillis());

@@ -14,9 +14,8 @@ permissions:
   staff.*:
     description: Gives the staff member access to all commands and features
     children:
-      hg.admin: true
-      hg.see: true
-      hg.stationary: true
+      staff.admin
+      staff.shift
 
   staff.admin:
     description: Gives the staff member access to shift admin commands
