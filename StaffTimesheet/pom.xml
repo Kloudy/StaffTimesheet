@@ -87,6 +87,7 @@
           <include>config.yml</include>
           <include>billing-period-history.yml</include>
           <include>staff-members.yml</include>
+          <include>staff-member-config-docs.yml</include>
         </includes>
       </resource>
       <resource>

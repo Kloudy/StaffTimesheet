@@ -32,8 +32,20 @@ public class IOManager
 				folder.mkdir();
 			}
 			
+			//copy the staff-member-config-docs.yml file into the plugin data folder
+			InputStream inputStream = staffTimesheet.getResource("staff-member-config-docs.yml");
+			File staffMemberConfigDocsYmlFile = new File(String.format("plugins/%s/staff-member-config-docs.yml", staffTimesheet.getName()));
+			if(!staffMemberConfigDocsYmlFile.exists())
+			{
+				FileOutputStream output = new FileOutputStream(staffMemberConfigDocsYmlFile);
+				output.write(IOUtils.toByteArray(inputStream));
+				
+				inputStream.close();
+				output.close();
+			}
+			
 			//copy the staff-members.yml file into the plugin data folder
-			InputStream inputStream = staffTimesheet.getResource("staff-members.yml");
+			inputStream = staffTimesheet.getResource("staff-members.yml");
 			File staffMembersYmlFile = new File(String.format("plugins/%s/staff-members.yml", staffTimesheet.getName()));
 			if(!staffMembersYmlFile.exists())
 			{
