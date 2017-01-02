@@ -52,13 +52,15 @@ public class CommandEvent implements CommandExecutor
 	public void openMenu(CommandSender sender, String[] args)
 	{
 		Player player = (Player)sender;
-		
+				
 		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
 		
 		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		
 		if(staffMember != null)
 		{
+			System.out.println("opening menu, has permission: " + staffMember.getPlayer().hasPermission("staff.shift"));
+			
 			if(staffMember.isSuperAdmin())
 			{
 				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player);
