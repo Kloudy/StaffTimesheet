@@ -60,7 +60,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		if(staffMember.getClockInCommand() != null)clockInCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
 		
 		clockOutCommandTextBox = (TextBoxComponent)guiPage.getComponent("clock-out-command");
-		if(staffMember.getClockOutCommand() != null)clockOutCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
+		if(staffMember.getClockOutCommand() != null)clockOutCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockOutCommand());
 		
 		rankTitleTextBox = (TextBoxComponent)guiPage.getComponent("rank-title");
 		rankTitleTextBox.setPlayerTextBoxValue(player, staffMember.getRankTitle());

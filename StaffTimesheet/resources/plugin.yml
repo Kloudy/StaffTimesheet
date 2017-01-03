@@ -12,6 +12,7 @@ commands:
 
 permissions:
   staff.*:
+    default: op
     description: Gives the staff member access to all commands and features
     children:
       staff.admin: true

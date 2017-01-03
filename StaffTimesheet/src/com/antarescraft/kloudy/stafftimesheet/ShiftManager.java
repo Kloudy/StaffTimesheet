@@ -64,9 +64,7 @@ public class ShiftManager
 	 * returns true if the staff member was successfully logged in, false otherwise
 	 */
 	public boolean clockIn(StaffMember staffMember, String clockInLabel)
-	{
-		System.out.println("clocking in, has permission: " + staffMember.getPlayer().hasPermission("staff.shift"));
-		
+	{		
 		if(!staffMember.getPlayer().hasPermission("staff.shift"))
 		{
 			MessageManager.error(Bukkit.getConsoleSender(), 

@@ -59,8 +59,6 @@ public class CommandEvent implements CommandExecutor
 		
 		if(staffMember != null)
 		{
-			System.out.println("opening menu, has permission: " + staffMember.getPlayer().hasPermission("staff.shift"));
-			
 			if(staffMember.isSuperAdmin())
 			{
 				AdminTimesheetHomePageModel model = new AdminTimesheetHomePageModel(staffTimesheet, staffTimesheet.getGUIPages().get("timesheet-home-admin"), player);

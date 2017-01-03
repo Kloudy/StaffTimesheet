@@ -29,9 +29,9 @@ public class PlayerJoinEventListener implements Listener
 		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
 		if(staffMember != null && staffMember.startShiftOnLogin())
 		{
-			ShiftManager.getInstance().clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
+			boolean success = ShiftManager.getInstance().clockIn(staffMember, config.getEventLabelConfig().getShiftStart());
 			
-			staffMember.getPlayer().sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
+			if(success)staffMember.getPlayer().sendMessage(config.getShiftStartStopMessagesConfig().getShiftStart(staffMember));
 		}
 	}
 }
