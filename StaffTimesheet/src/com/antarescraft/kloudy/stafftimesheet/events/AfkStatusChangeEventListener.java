@@ -44,7 +44,11 @@ public class AfkStatusChangeEventListener implements Listener
 			}
 			else
 			{
-				
+				if(!shiftManager.onTheClock(staffMember))
+				{
+					boolean success = shiftManager.clockIn(staffMember, config.getEventLabelConfig().getShiftStartReturnFromAfk());
+					if(success)player.sendMessage(config.getShiftStartStopMessagesConfig().getShiftStartReturnFromAfk(staffMember));
+				}
 			}
 		}
 	}

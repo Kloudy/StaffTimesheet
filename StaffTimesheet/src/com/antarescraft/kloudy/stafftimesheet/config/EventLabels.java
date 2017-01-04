@@ -17,6 +17,9 @@ public class EventLabels
 	@ConfigProperty(key = "shift-start")
 	private String shiftStart;
 	
+	@ConfigProperty(key = "shift-start-return-from-afk")
+	private String shiftStartReturnFromAfk;
+	
 	@ConfigProperty(key = "shift-end-afk")
 	private String shiftEndAfk;
 	
@@ -36,6 +39,11 @@ public class EventLabels
 	public String getShiftStart()
 	{
 		return shiftStart;
+	}
+	
+	public String getShiftStartReturnFromAfk()
+	{
+		return shiftStartReturnFromAfk;
 	}
 	
 	public String getShiftEndAfk()

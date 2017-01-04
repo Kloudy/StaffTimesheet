@@ -25,6 +25,9 @@ public class ShiftStartStopMessages
 	@ConfigProperty(key = "shift-start")
 	private String shiftStart;
 	
+	@ConfigProperty(key = "shift-start-return-from-afk")
+	private String shiftStartReturnFromAfk;
+	
 	/*
 	 * Getter Functions
 	 */
@@ -42,5 +45,10 @@ public class ShiftStartStopMessages
 	public String getShiftStart(StaffMember staffMember)
 	{
 		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftStart);
+	}
+	
+	public String getShiftStartReturnFromAfk(StaffMember staffMember)
+	{
+		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftStartReturnFromAfk);
 	}
 }
