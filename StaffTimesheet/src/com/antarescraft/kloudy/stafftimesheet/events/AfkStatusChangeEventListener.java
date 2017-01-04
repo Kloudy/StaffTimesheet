@@ -26,17 +26,25 @@ public class AfkStatusChangeEventListener implements Listener
 	{
 		UserData user = (UserData)event.getAffected();
 		
-		if(user.isAfk())
+		Player player = user.getBase();
+		
+		StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
+		
+		StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
+		ShiftManager shiftManager = ShiftManager.getInstance();
+		
+		if(staffMember != null)
 		{
-			Player player = user.getBase();
-			
-			StaffTimesheetConfig config = StaffTimesheetConfig.getConfig(staffTimesheet);
-			
-			StaffMember staffMember = config.getStaffMembersConfig().getStaffMember(player);
-			ShiftManager shiftManager = ShiftManager.getInstance();
-			if(staffMember != null && shiftManager.onTheClock(staffMember))
+			if(user.isAfk())
 			{
-				shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndAfk());
+				if(shiftManager.onTheClock(staffMember))
+				{
+					shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndAfk());
+				}
+			}
+			else
+			{
+				
 			}
 		}
 	}

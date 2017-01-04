@@ -16,6 +16,7 @@ shift-start-stop-messages:
   shift-end-afk: "&4Your shift has been automatically ended because you went afk! Hours This Month: %stafftimesheet_current-logged-time%. Your Monthly Goal: %stafftimesheet_time-goal%."
   shift-end-clockout: "&aShift ended. Your time has been logged! \nHours This Month: %stafftimesheet_current-logged-time%. \nYour Monthly Goal: %stafftimesheet_time-goal%. \nProgress: %stafftimesheet_percent-time-logged%"
   shift-start: "&aYour shift has started. Your time is being logged!"
+  shift-start-return-from-afk: "&aYou have been automatically clocked in after returning from being afk!"
 
 
 
@@ -37,11 +38,12 @@ command-result-messages:
 ################################################################################################
 
 event-labels:
-  shift-start: "[&aClocked In&r]"               #Text to log when the staff member starts their shift
-  shift-end-afk: "[&4AFK&r]"                          #Text to log when the staff member goes AFK
-  shift-end-disconnected: "[&4Disconnected&r]"        #Text to log when the staff member disconnects from the server
-  shift-end-clockout: "[&4Clocked Out&r]"             #Text to log when the staff member clocks out
-  shift-end-plugin-disabled: "[&4Plugin Disabled&r]"  #Text to log when the plugin is disabled
+  shift-start: "[&aClocked In&r]"                        #Text to log when the staff member starts their shift
+  shift-start-return-from-afk: "[&4Returned from Afk&r]" #Text to log when the staff member comes back from being afk
+  shift-end-afk: "[&4AFK&r]"                             #Text to log when the staff member goes AFK
+  shift-end-disconnected: "[&4Disconnected&r]"           #Text to log when the staff member disconnects from the server
+  shift-end-clockout: "[&4Clocked Out&r]"                #Text to log when the staff member clocks out
+  shift-end-plugin-disabled: "[&4Plugin Disabled&r]"     #Text to log when the plugin is disabled
 
 
 

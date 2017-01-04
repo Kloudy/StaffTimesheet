@@ -46,6 +46,8 @@ public class StaffMember
 	@ConfigProperty(key = "clock-out-command")
 	private String clockOutCommand;
 	
+	@OptionalConfigProperty
+	@StringConfigProperty(defaultValue = "")
 	@ConfigProperty(key = "rank-title")
 	private String rankTitle;
 	
@@ -65,6 +67,11 @@ public class StaffMember
 	@BooleanConfigProperty(defaultValue = false)
 	@ConfigProperty(key = "super-admin")
 	private boolean superAdmin;
+	
+	@OptionalConfigProperty
+	@BooleanConfigProperty(defaultValue = false)
+	@ConfigProperty(key = "start-shift-on-return-from-afk")
+	private boolean startShiftOnReturnFromAfk;
 	
 	private void save(String fieldName)
 	{	
