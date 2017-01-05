@@ -29,6 +29,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 	private ValueScrollerComponent timeGoalScroller;
 	private ValueScrollerComponent timeGoalHMSScroller;
 	private ToggleSwitchComponent superAdminToggle;
+	private ToggleSwitchComponent startShiftAfkToggle;
 	private ToggleSwitchComponent startShiftOnLoginToggle;
 	private TextBoxComponent clockInCommandTextBox;
 	private TextBoxComponent clockOutCommandTextBox;
@@ -52,6 +53,9 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		
 		superAdminToggle = (ToggleSwitchComponent)guiPage.getComponent("super-admin-toggle");
 		superAdminToggle.setPlayerToggleSwitchState(player, staffMember.isSuperAdmin());
+		
+		startShiftAfkToggle = (ToggleSwitchComponent)guiPage.getComponent("start-shift-on-return-from-afk-toggle");
+		startShiftAfkToggle.setPlayerToggleSwitchState(player, staffMember.startShiftOnReturnFromAfk());
 		
 		startShiftOnLoginToggle = (ToggleSwitchComponent)guiPage.getComponent("start-shift-on-login-toggle");
 		startShiftOnLoginToggle.setPlayerToggleSwitchState(player, staffMember.startShiftOnLogin());
@@ -125,6 +129,7 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		staffMember.setClockOutCommand(clockOutCommandTextBox.getPlayerTextBoxValue(player));
 		staffMember.setRankTitle(rankTitleTextBox.getPlayerTextBoxValue(player));
 		staffMember.setStartShiftOnLogin(startShiftOnLoginToggle.getPlayerToggleSwitchState(player));
+		staffMember.setStartShiftOnReturnFromAfk(this.startShiftAfkToggle.getPlayerToggleSwitchState(player));
 		
 		//update the current billing period summary with the changes
 		ShiftManager shiftManager = ShiftManager.getInstance();

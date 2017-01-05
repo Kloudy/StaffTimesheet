@@ -76,7 +76,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.75
+        x: -0.85
         y: 0.35
 
     logged-time-hms-scroller:
@@ -91,7 +91,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.75
+        x: -0.85
         y: 0.18
 
     time-goal-scroller:
@@ -104,7 +104,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.77
+        x: 0.87
         y: 0.35
 
     time-goal-hms-scroller:
@@ -119,7 +119,7 @@ admin-manage-staff:
       onscroll-sound-volume: 0.1
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.75
+        x: 0.85
         y: 0.18
 
     super-admin-toggle:
@@ -130,7 +130,18 @@ admin-manage-staff:
       off-value: "&4&lNO"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: -0.2
+        x: -0.45
+        y: 0.6
+
+    start-shift-on-return-from-afk-toggle:
+      type: "toggle-switch"
+      label: "&lClock-in After Afk: %start-shift-on-return-from-afk-toggle_value%"
+      always-show-label: true
+      on-value: "&a&lYes"
+      off-value: "&4&lNo"
+      onclick-sound: "UI_BUTTON_CLICK"
+      position:
+        x: 0
         y: 0.65
 
     start-shift-on-login-toggle:
@@ -141,8 +152,8 @@ admin-manage-staff:
       off-value: "&4&lNo"
       onclick-sound: "UI_BUTTON_CLICK"
       position:
-        x: 0.2
-        y: 0.65
+        x: 0.45
+        y: 0.6
 
     clock-in-command:
       type: "text-box"

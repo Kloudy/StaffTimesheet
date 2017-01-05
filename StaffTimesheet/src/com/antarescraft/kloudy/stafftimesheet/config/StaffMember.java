@@ -232,6 +232,11 @@ public class StaffMember
 		return startShiftOnLogin;
 	}
 	
+	public boolean startShiftOnReturnFromAfk()
+	{
+		return startShiftOnReturnFromAfk;
+	}
+	
 	public boolean isSuperAdmin()
 	{
 		return superAdmin;
@@ -288,6 +293,13 @@ public class StaffMember
 		this.startShiftOnLogin = startShiftOnLogin;
 		
 		save("startShiftOnLogin");
+	}
+	
+	public void setStartShiftOnReturnFromAfk(boolean startShiftOnReturnFromAfk)
+	{
+		this.startShiftOnReturnFromAfk = startShiftOnReturnFromAfk;
+		
+		save("startShiftOnReturnFromAfk");
 	}
 	
 	@Override
