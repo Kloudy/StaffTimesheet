@@ -35,11 +35,14 @@ public class AfkStatusChangeEventListener implements Listener
 		
 		if(staffMember != null)
 		{
-			if(user.isAfk())
+			if(event.getValue())
 			{
+				
 				if(shiftManager.onTheClock(staffMember))
 				{
 					shiftManager.clockOut(staffMember, config.getEventLabelConfig().getShiftEndAfk());
+				
+					player.sendMessage(config.getShiftStartStopMessagesConfig().getShiftEndAfk(staffMember));
 				}
 			}
 			else

@@ -61,10 +61,10 @@ public class StaffMemberSettingsPageModel extends BaseStaffTimesheetPageModel
 		startShiftOnLoginToggle.setPlayerToggleSwitchState(player, staffMember.startShiftOnLogin());
 		
 		clockInCommandTextBox = (TextBoxComponent)guiPage.getComponent("clock-in-command");
-		if(staffMember.getClockInCommand() != null)clockInCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
+		clockInCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockInCommand());
 		
 		clockOutCommandTextBox = (TextBoxComponent)guiPage.getComponent("clock-out-command");
-		if(staffMember.getClockOutCommand() != null)clockOutCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockOutCommand());
+		clockOutCommandTextBox.setPlayerTextBoxValue(player, staffMember.getClockOutCommand());
 		
 		rankTitleTextBox = (TextBoxComponent)guiPage.getComponent("rank-title");
 		rankTitleTextBox.setPlayerTextBoxValue(player, staffMember.getRankTitle());
