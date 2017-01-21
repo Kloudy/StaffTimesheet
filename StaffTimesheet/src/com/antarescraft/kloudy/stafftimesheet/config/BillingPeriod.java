@@ -21,7 +21,7 @@ import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
  * This class is instantiated populated by the ConfigParser library
  */
 
-public class BillingPeriod
+public class BillingPeriod implements ConfigObject
 {	
 	@ConfigElementKey
 	private String id;
@@ -154,4 +154,7 @@ public class BillingPeriod
 		
 		return false;
 	}
+
+	@Override
+	public void configParseComplete(){}
 }

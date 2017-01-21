@@ -1,6 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigObject;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 
@@ -9,7 +10,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class ErrorMessages
+public class ErrorMessages implements ConfigObject
 {
 	private ErrorMessages(){}
 	
@@ -98,5 +99,11 @@ public class ErrorMessages
 	public String getErrorMessageStartDateEndDateMismatch()
 	{
 		return MessageManager.setFormattingCodes(errorMessageStartDateEndDateMismatch);
+	}
+
+	@Override
+	public void configParseComplete() {
+		// TODO Auto-generated method stub
+		
 	}
 }

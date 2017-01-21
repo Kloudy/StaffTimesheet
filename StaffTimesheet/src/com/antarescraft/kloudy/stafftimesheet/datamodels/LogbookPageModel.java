@@ -1,14 +1,14 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import org.bukkit.entity.Player;
 
+import com.antarescraft.kloudy.hologuiapi.guicomponentproperties.LabelComponentProperties;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ComponentPosition;
-import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIComponentProperties;
+import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIComponentFactory;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.GUIPage;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.ItemButtonComponent;
 import com.antarescraft.kloudy.hologuiapi.guicomponents.LabelComponent;
@@ -116,7 +116,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 						
 						page++;
 						
-						if(backBtn.isHidden())
+						if(backBtn.getProperties().hidden)
 						{
 							playerGUIPage.renderComponent(backBtn);
 						}
@@ -145,7 +145,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 							playerGUIPage.removeComponent("prev-page-btn");
 						}
 						
-						if(nextBtn.isHidden())
+						if(nextBtn.getProperties().hidden)
 						{
 							playerGUIPage.renderComponent(nextBtn);
 						}
@@ -171,29 +171,36 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 	{		
 		if(logLines == null) return;
 		
-		GUIComponentProperties properties = new GUIComponentProperties(plugin, "log-label", guiPage.getId(), new ComponentPosition(0, 0.3),
-				null, 10, false, false);
+		LabelComponentProperties properties = new LabelComponentProperties();
+		properties.id = "log-label";
+		properties.position = new ComponentPosition(0, 0.3);
+		properties.labelDistance = 10.0;
 		
-		String[] logPage = new String[20];
-		Arrays.fill(logPage, "");
+		ArrayList<String> logPage = new ArrayList<String>();
 		
 		for(int i = 0; i < 10; i++)
 		{
 			if((page*10) + i >= logLines.size()) break;
 			
-			logPage[i*2] = logLines.get((page*10) + i);
+			logPage.add(i*2, logLines.get((page*10) + i));
 		}
 		
-		LabelComponent logLabel = new LabelComponent(properties, logPage);
+		properties.lines = logPage;
+		
+		LabelComponent logLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(logLabel);
 	}
 	
 	private void renderPageLabel()
 	{
-		GUIComponentProperties properties = new GUIComponentProperties(plugin, "page-label", guiPage.getId(), new ComponentPosition(0, -0.5),
-				null, 10, false, false);
+		LabelComponentProperties properties = new LabelComponentProperties();
+		properties.id = "log-label";
+		properties.position = new ComponentPosition(0, -0.5);
+		properties.labelDistance = 10.0;
+		properties.lines = new ArrayList<String>();
+		properties.lines.add("&lPage: $model.getCurrentPage();/$model.getTotalPages();");
 		
-		LabelComponent pageLabel = new LabelComponent(properties, new String[]{"&lPage: $model.getCurrentPage();/$model.getTotalPages();"});
+		LabelComponent pageLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(pageLabel);
 	}
 }

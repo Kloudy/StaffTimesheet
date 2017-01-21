@@ -7,7 +7,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class CommandResultMessages
+public class CommandResultMessages implements ConfigObject
 {
 	public CommandResultMessages(){}
 	
@@ -41,4 +41,7 @@ public class CommandResultMessages
 	{
 		return subtractLoggedTimeForStaffMember;
 	}
+
+	@Override
+	public void configParseComplete(){}
 }

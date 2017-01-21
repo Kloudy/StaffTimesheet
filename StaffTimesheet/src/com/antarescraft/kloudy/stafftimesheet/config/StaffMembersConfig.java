@@ -12,7 +12,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class StaffMembersConfig
+public class StaffMembersConfig implements ConfigObject
 {
 	private StaffMembersConfig(){}
 	
@@ -47,4 +47,7 @@ public class StaffMembersConfig
 	{
 		staffMembers.clear();
 	}
+
+	@Override
+	public void configParseComplete(){}
 }

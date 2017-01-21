@@ -9,7 +9,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class ShiftStartStopMessages
+public class ShiftStartStopMessages implements ConfigObject
 {
 	public ShiftStartStopMessages(){}
 	
@@ -51,4 +51,7 @@ public class ShiftStartStopMessages
 	{
 		return PlaceholderAPI.setPlaceholders(staffMember.getPlayer(), shiftStartReturnFromAfk);
 	}
+
+	@Override
+	public void configParseComplete(){}
 }

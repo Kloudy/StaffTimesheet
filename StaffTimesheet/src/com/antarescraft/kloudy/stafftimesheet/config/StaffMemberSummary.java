@@ -12,7 +12,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  * This class is instantiated populated by the ConfigParser library
  */
 
-public class StaffMemberSummary
+public class StaffMemberSummary implements ConfigObject
 {
 	@ConfigElementKey
 	private String playerUUIDString;
@@ -87,4 +87,7 @@ public class StaffMemberSummary
 	{
 		this.loggedTime = TimeFormat.getDurationFormatString(timeLogged);
 	}
+
+	@Override
+	public void configParseComplete() {}
 }

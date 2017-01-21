@@ -7,7 +7,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class EventLabels 
+public class EventLabels implements ConfigObject
 {
 	public EventLabels() {}
 	
@@ -65,4 +65,7 @@ public class EventLabels
 	{
 		return shiftEndPluginDisabled;
 	}
+
+	@Override
+	public void configParseComplete(){}
 }

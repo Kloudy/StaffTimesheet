@@ -20,7 +20,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class StaffTimesheetConfig
+public class StaffTimesheetConfig implements ConfigObject
 {	
 	private static StaffTimesheetConfig instance;
 	
@@ -171,4 +171,7 @@ public class StaffTimesheetConfig
 	{
 		return billingPeriodDuration;
 	}
+
+	@Override
+	public void configParseComplete() {}
 }

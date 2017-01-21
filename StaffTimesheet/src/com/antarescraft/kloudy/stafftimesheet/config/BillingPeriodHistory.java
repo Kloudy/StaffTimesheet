@@ -9,7 +9,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class BillingPeriodHistory 
+public class BillingPeriodHistory  implements ConfigObject
 {
 	private BillingPeriodHistory(){}
 	
@@ -21,4 +21,7 @@ public class BillingPeriodHistory
 	{
 		return billingPeriodHistory;
 	}
+
+	@Override
+	public void configParseComplete() {}
 }

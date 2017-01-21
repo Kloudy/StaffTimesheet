@@ -28,7 +28,7 @@ import com.antarescraft.kloudy.stafftimesheet.util.IOManager;
  * 
  * This class is instantiated populated by the ConfigParser library
  */
-public class StaffMember
+public class StaffMember implements ConfigObject
 {
 	private StaffMember(){}
 	
@@ -316,4 +316,7 @@ public class StaffMember
 		
 		return false;
 	}
+
+	@Override
+	public void configParseComplete(){}
 }
