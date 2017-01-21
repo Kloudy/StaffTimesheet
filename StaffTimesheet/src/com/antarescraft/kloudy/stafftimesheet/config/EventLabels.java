@@ -11,9 +11,6 @@ public class EventLabels implements ConfigObject
 {
 	public EventLabels() {}
 	
-	@ConfigElementKey
-	private String eventLabels;
-	
 	@ConfigProperty(key = "shift-start")
 	private String shiftStart;
 	

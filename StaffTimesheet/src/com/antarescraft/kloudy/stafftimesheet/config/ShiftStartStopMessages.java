@@ -13,9 +13,6 @@ public class ShiftStartStopMessages implements ConfigObject
 {
 	public ShiftStartStopMessages(){}
 	
-	@ConfigElementKey
-	private String shiftStartStopMessages;
-	
 	@ConfigProperty(key = "shift-end-afk")
 	private String shiftEndAfk;
 	

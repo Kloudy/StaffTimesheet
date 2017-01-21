@@ -1,6 +1,5 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigElementKey;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigObject;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
@@ -13,9 +12,6 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 public class ErrorMessages implements ConfigObject
 {
 	private ErrorMessages(){}
-	
-	@ConfigElementKey
-	private String errorMessages;
 	
 	@ConfigProperty(key = "duration-underflow")
 	private String durationUnderflow;
@@ -102,8 +98,5 @@ public class ErrorMessages implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void configParseComplete(){}
 }
