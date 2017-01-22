@@ -33,7 +33,10 @@ public class StaffTimesheetConfig implements ConfigObject
 	{
 		staffTimesheet.saveDefaultConfig();
 		staffTimesheet.reloadConfig();
+		
 		staffTimesheet.loadGUIPages();
+		
+		System.out.println("gui page count: " + staffTimesheet.getGUIPages().size());
 		
 		instance = ConfigParser.parse(StaffTimesheet.pluginName, staffTimesheet.getConfig(), StaffTimesheetConfig.class);
 	}
@@ -80,22 +83,7 @@ public class StaffTimesheetConfig implements ConfigObject
 	@ConfigProperty(key = "permissions-plugin")
 	public static String permissionsPlugin;
 	
-	private StaffTimesheetConfig()
-	{
-		try
-		{
-			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
-			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
-			
-			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
-		
-			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
-			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
-			
-			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
-		}
-		catch(Exception e){e.printStackTrace();}
-	}
+	private StaffTimesheetConfig(){}
 	
 	public Calendar getFirstBillPeriodStartDate()
 	{	
@@ -174,5 +162,23 @@ public class StaffTimesheetConfig implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(HashMap<String, Object> passthroughParams) {}
+	public void configParseComplete(HashMap<String, Object> passthroughParams) 
+	{
+		try
+		{
+			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
+			
+			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
+			System.out.println("staff members: " + staffMemberManager.getAllStaffMembers().size());
+			
+			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
+			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
+			
+			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
+		
+			System.out.println("billingPeriodHistory: " + billingPeriodHistory.getBillingPeriodHistory().size());
+		}
+		catch(Exception e){e.printStackTrace();}
+	}
 }
