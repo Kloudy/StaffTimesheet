@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
+import java.util.HashMap;
+
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -50,5 +52,5 @@ public class ShiftStartStopMessages implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(){}
+	public void configParseComplete(HashMap<String, Object> passthrougParams){}
 }

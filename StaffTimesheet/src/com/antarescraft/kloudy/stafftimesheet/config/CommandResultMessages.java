@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
+import java.util.HashMap;
+
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
 /**
@@ -9,7 +11,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
  */
 public class CommandResultMessages implements ConfigObject
 {
-	public CommandResultMessages(){}
+	private CommandResultMessages(){}
 	
 	@ConfigElementKey
 	private String commandResultMessages;
@@ -43,5 +45,5 @@ public class CommandResultMessages implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(){}
+	public void configParseComplete(HashMap<String, Object> passthrougParams){}
 }

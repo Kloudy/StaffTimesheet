@@ -156,5 +156,5 @@ public class BillingPeriod implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(){}
+	public void configParseComplete(HashMap<String, Object> passthrougParams){}
 }

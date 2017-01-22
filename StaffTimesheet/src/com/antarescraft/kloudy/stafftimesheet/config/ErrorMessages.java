@@ -1,5 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
+import java.util.HashMap;
+
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigObject;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
@@ -98,5 +100,5 @@ public class ErrorMessages implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(){}
+	public void configParseComplete(HashMap<String, Object> passthrougParams){}
 }

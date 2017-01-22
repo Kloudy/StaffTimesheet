@@ -3,6 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 
@@ -173,5 +174,5 @@ public class StaffTimesheetConfig implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete() {}
+	public void configParseComplete(HashMap<String, Object> passthroughParams) {}
 }
