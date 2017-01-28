@@ -83,7 +83,7 @@ admin-manage-staff:
       type: "value-scroller"
       always-show-label: true
       value-type: "list"
-      default-value:
+      list-items:
         - "Hours"
         - "Minutes"
         - "Seconds"
@@ -111,7 +111,7 @@ admin-manage-staff:
       type: "value-scroller"
       always-show-label: true
       value-type: "list"
-      default-value:
+      list-items:
         - "Hours"
         - "Minutes"
         - "Seconds"

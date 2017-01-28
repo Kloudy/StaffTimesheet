@@ -170,14 +170,11 @@ public class StaffTimesheetConfig implements ConfigObject
 			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
 			
 			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
-			System.out.println("staff members: " + staffMemberManager.getAllStaffMembers().size());
 			
 			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
 			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
 			
-			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);
-		
-			System.out.println("billingPeriodHistory: " + billingPeriodHistory.getBillingPeriodHistory().size());
+			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);		
 		}
 		catch(Exception e){e.printStackTrace();}
 	}

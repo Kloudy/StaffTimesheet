@@ -200,6 +200,8 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		properties.lines = new ArrayList<String>();
 		properties.lines.add("&lPage: $model.getCurrentPage();/$model.getTotalPages();");
 		
+		GUIComponentFactory.createLabelComponent(plugin, properties);
+		
 		LabelComponent pageLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(pageLabel);
 	}

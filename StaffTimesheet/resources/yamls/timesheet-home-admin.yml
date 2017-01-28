@@ -37,7 +37,7 @@ timesheet-home-admin:
       label: "&lSelect A Staff Member"
       always-show-label: true
       value-type: "list"
-      default-value:
+      list-items:
         - "%player_name%"
       onclick-sound: "UI_BUTTON_CLICK"
       onscroll-sound: "BLOCK_LAVA_POP"
