@@ -3,6 +3,7 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 import java.util.HashMap;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 /**
  * Contains all command result strings loaded from config

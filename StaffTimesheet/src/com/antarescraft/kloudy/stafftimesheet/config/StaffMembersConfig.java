@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 /**
  * Contains all StaffMember objects loaded from config

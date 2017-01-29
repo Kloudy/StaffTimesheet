@@ -13,6 +13,7 @@ import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 import com.antarescraft.kloudy.stafftimesheet.StaffTimesheet;
 
 /**

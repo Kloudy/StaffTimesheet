@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;

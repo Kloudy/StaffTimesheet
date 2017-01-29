@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 /**
  * Represents a staff member's activity (logged time & percentage of time goal logged) during a particular billing period

@@ -3,8 +3,8 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 import java.util.HashMap;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigObject;
-import com.antarescraft.kloudy.hologuiapi.plugincore.config.ConfigProperty;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 /**
  * Contains all error message strings loaded from config

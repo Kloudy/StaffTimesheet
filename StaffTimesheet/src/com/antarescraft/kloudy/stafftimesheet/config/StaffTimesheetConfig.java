@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
+import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.exceptions.InvalidDateFormatException;
 import com.antarescraft.kloudy.hologuiapi.plugincore.messaging.MessageManager;
