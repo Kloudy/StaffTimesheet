@@ -3,7 +3,6 @@ package com.antarescraft.kloudy.stafftimesheet.config;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.annotations.*;
@@ -39,14 +38,14 @@ public class StaffTimesheetConfig implements ConfigObject
 		
 		System.out.println("gui page count: " + staffTimesheet.getGUIPages().size());
 		
-		instance = ConfigParser.parse(StaffTimesheet.pluginName, staffTimesheet.getConfig(), StaffTimesheetConfig.class);
+		instance = ConfigParser.parse(staffTimesheet.getConfig(), StaffTimesheetConfig.class, StaffTimesheet.pluginName);
 	}
 	
 	public static StaffTimesheetConfig getConfig(StaffTimesheet staffTimesheet)
 	{
 		if(instance == null)
 		{
-			instance = ConfigParser.parse(StaffTimesheet.pluginName, staffTimesheet.getConfig(), StaffTimesheetConfig.class);
+			instance = ConfigParser.parse(staffTimesheet.getConfig(), StaffTimesheetConfig.class, StaffTimesheet.pluginName);
 		}
 		
 		return instance;
@@ -163,19 +162,19 @@ public class StaffTimesheetConfig implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(HashMap<String, Object> passthroughParams) 
+	public void configParseComplete(PassthroughParams params) 
 	{
 		try
 		{
 			File staffMembersYml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
 			YamlConfiguration staffYaml = YamlConfiguration.loadConfiguration(staffMembersYml);
 			
-			staffMemberManager = ConfigParser.parse(StaffTimesheet.pluginName, staffYaml, StaffMembersConfig.class);
+			staffMemberManager = ConfigParser.parse(staffYaml, StaffMembersConfig.class, StaffTimesheet.pluginName);
 			
 			File billingPeriodHistoryYml = new File(String.format("plugins/%s/billing-period-history.yml", StaffTimesheet.pluginName));
 			YamlConfiguration billingPeriodHistoryYaml = YamlConfiguration.loadConfiguration(billingPeriodHistoryYml);
 			
-			billingPeriodHistory = ConfigParser.parse(StaffTimesheet.pluginName, billingPeriodHistoryYaml, BillingPeriodHistory.class);		
+			billingPeriodHistory = ConfigParser.parse(billingPeriodHistoryYaml, BillingPeriodHistory.class, StaffTimesheet.pluginName);		
 		}
 		catch(Exception e){e.printStackTrace();}
 	}

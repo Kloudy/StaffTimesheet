@@ -1,7 +1,6 @@
 package com.antarescraft.kloudy.stafftimesheet.config;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.time.TimeFormat;
@@ -91,5 +90,5 @@ public class StaffMemberSummary implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(HashMap<String, Object> passthrougParams) {}
+	public void configParseComplete(PassthroughParams params) {}
 }

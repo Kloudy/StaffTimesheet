@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.UUID;
 
 import com.antarescraft.kloudy.hologuiapi.plugincore.config.*;
@@ -320,5 +319,5 @@ public class StaffMember implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(HashMap<String, Object> passthrougParams){}
+	public void configParseComplete(PassthroughParams params){}
 }

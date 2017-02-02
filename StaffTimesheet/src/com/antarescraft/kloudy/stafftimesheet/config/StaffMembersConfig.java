@@ -50,5 +50,5 @@ public class StaffMembersConfig implements ConfigObject
 	}
 
 	@Override
-	public void configParseComplete(HashMap<String, Object> passthrougParams){}
+	public void configParseComplete(PassthroughParams params){}
 }
