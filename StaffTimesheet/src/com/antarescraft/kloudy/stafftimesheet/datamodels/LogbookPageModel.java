@@ -117,7 +117,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 						
 						page++;
 						
-						if(backBtn.getProperties().hidden)
+						if(backBtn.getProperties().isHidden())
 						{
 							playerGUIPage.renderComponent(backBtn);
 						}
@@ -146,7 +146,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 							playerGUIPage.removeComponent("prev-page-btn");
 						}
 						
-						if(nextBtn.getProperties().hidden)
+						if(nextBtn.getProperties().isHidden())
 						{
 							playerGUIPage.renderComponent(nextBtn);
 						}
@@ -173,9 +173,9 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		if(logLines == null) return;
 		
 		LabelComponentProperties properties = new LabelComponentProperties();
-		properties.id = "log-label";
-		properties.position = new ComponentPosition(0, 0.3);
-		properties.labelDistance = 10.0;
+		properties.setId("log-label");
+		properties.setPosition(new ComponentPosition(0, 0.3));
+		properties.setLabelDistance(10.0);
 		
 		String[] logPage = new String[20];
 		Arrays.fill(logPage, "");
@@ -187,7 +187,7 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 			logPage[i*2] = logLines.get((page*10) + i);
 		}
 		
-		properties.lines = new ArrayList<String>(Arrays.asList(logPage));
+		properties.setLines(new ArrayList<String>(Arrays.asList(logPage)));
 		
 		LabelComponent logLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(logLabel);
@@ -196,11 +196,11 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 	private void renderPageLabel()
 	{
 		LabelComponentProperties properties = new LabelComponentProperties();
-		properties.id = "page-label";
-		properties.position = new ComponentPosition(0, -0.5);
-		properties.labelDistance = 10.0;
-		properties.lines = new ArrayList<String>();
-		properties.lines.add("&lPage: $model.getCurrentPage();/$model.getTotalPages();");
+		properties.setId("page-label");
+		properties.setPosition(new ComponentPosition(0, -0.5));
+		properties.setLabelDistance(10.0);
+		properties.setLines(new ArrayList<String>());
+		properties.getLines().add("&lPage: $model.getCurrentPage();/$model.getTotalPages();");
 				
 		LabelComponent pageLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(pageLabel);
