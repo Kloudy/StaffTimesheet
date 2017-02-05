@@ -77,6 +77,7 @@ public class StaffMember implements ConfigObject
 	private void save(String fieldName)
 	{	
 		File staffYaml = new File(String.format("plugins/%s/staff-members.yml", StaffTimesheet.pluginName));
+		
 		try 
 		{
 			ConfigParser.saveObject(StaffTimesheet.pluginName, staffYaml, "staff-members." + playerName, this, fieldName);

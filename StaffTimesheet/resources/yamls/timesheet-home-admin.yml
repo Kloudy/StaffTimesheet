@@ -94,7 +94,7 @@ timesheet-home-admin:
         z: 0
       position:
         x: 0
-        y: -0.48
+        y: -0.42
 
     staff-member-settings-btn:
       type: "button"

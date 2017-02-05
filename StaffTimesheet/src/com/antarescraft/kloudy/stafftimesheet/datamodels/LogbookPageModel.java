@@ -1,6 +1,7 @@
 package com.antarescraft.kloudy.stafftimesheet.datamodels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import org.bukkit.entity.Player;
@@ -176,16 +177,17 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 		properties.position = new ComponentPosition(0, 0.3);
 		properties.labelDistance = 10.0;
 		
-		ArrayList<String> logPage = new ArrayList<String>();
+		String[] logPage = new String[20];
+		Arrays.fill(logPage, "");
 		
 		for(int i = 0; i < 10; i++)
 		{
 			if((page*10) + i >= logLines.size()) break;
 			
-			logPage.add(i*2, logLines.get((page*10) + i));
+			logPage[i*2] = logLines.get((page*10) + i);
 		}
 		
-		properties.lines = logPage;
+		properties.lines = new ArrayList<String>(Arrays.asList(logPage));
 		
 		LabelComponent logLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(logLabel);
@@ -194,14 +196,12 @@ public class LogbookPageModel extends BaseStaffTimesheetPageModel
 	private void renderPageLabel()
 	{
 		LabelComponentProperties properties = new LabelComponentProperties();
-		properties.id = "log-label";
+		properties.id = "page-label";
 		properties.position = new ComponentPosition(0, -0.5);
 		properties.labelDistance = 10.0;
 		properties.lines = new ArrayList<String>();
 		properties.lines.add("&lPage: $model.getCurrentPage();/$model.getTotalPages();");
-		
-		GUIComponentFactory.createLabelComponent(plugin, properties);
-		
+				
 		LabelComponent pageLabel = GUIComponentFactory.createLabelComponent(plugin, properties);
 		playerGUIPage.renderComponent(pageLabel);
 	}

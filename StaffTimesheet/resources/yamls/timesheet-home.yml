@@ -78,7 +78,7 @@ timesheet-home:
         z: 0
       position:
         x: 0
-        y: -0.32
+        y: -0.26
 
     clock-out-btn:
       type: "button"
