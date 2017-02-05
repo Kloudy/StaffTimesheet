@@ -73,7 +73,7 @@ timesheet-log:
         z: 0
       position:
         x: 0.28
-        y: 0.46
+        y: 0.52
 
     next-page-btn:
       type: "button"
