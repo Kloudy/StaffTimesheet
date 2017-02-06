@@ -16,7 +16,7 @@ public class BillingPeriodHistory  implements ConfigObject
 	
 	@ConfigElementList
 	@ConfigProperty(key = "billing-period-history")
-	private ArrayList<BillingPeriod> billingPeriodHistory;
+	private ArrayList<BillingPeriod> billingPeriodHistory = new ArrayList<BillingPeriod>();
 	
 	public ArrayList<BillingPeriod> getBillingPeriodHistory()
 	{
