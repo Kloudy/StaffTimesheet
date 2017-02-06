@@ -35,9 +35,7 @@ public class StaffTimesheetConfig implements ConfigObject
 		staffTimesheet.reloadConfig();
 		
 		staffTimesheet.loadGUIPages();
-		
-		System.out.println("gui page count: " + staffTimesheet.getGUIPages().size());
-		
+				
 		instance = ConfigParser.parse(staffTimesheet.getConfig(), StaffTimesheetConfig.class, StaffTimesheet.pluginName);
 	}
 	

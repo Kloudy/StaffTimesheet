@@ -17,9 +17,10 @@ public class StaffMembersConfig implements ConfigObject
 {
 	private StaffMembersConfig(){}
 	
+	@OptionalConfigProperty
 	@ConfigElementMap
 	@ConfigProperty(key = "staff-members")
-	private HashMap<String, StaffMember> staffMembers;
+	private HashMap<String, StaffMember> staffMembers = new HashMap<String, StaffMember>();
 	
 	public StaffMember getStaffMember(String playerName)
 	{
