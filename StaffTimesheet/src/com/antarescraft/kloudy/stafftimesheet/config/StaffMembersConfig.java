@@ -22,11 +22,6 @@ public class StaffMembersConfig implements ConfigObject
 	@ConfigProperty(key = "staff-members")
 	private HashMap<String, StaffMember> staffMembers = new HashMap<String, StaffMember>();
 	
-	public StaffMember getStaffMember(String playerName)
-	{
-		return staffMembers.get(playerName);
-	}
-	
 	public void resetAllStaffMemberTime()
 	{
 		for(StaffMember staffMember : staffMembers.values())
@@ -35,9 +30,22 @@ public class StaffMembersConfig implements ConfigObject
 		}
 	}
 	
+	public StaffMember getStaffMember(String playerName)
+	{
+		return staffMembers.get(playerName);
+	}
+	
 	public StaffMember getStaffMember(Player player)
 	{
-		return staffMembers.get(player.getName());
+		for(StaffMember staffMember : staffMembers.values())
+		{
+			if(staffMember.getUUID().equals(player.getUniqueId()))
+			{
+				return staffMember;
+			}
+		}
+		
+		return null;
 	}
 	
 	public Collection<StaffMember> getAllStaffMembers()

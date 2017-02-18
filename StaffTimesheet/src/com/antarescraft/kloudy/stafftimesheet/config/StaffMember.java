@@ -321,4 +321,10 @@ public class StaffMember implements ConfigObject
 
 	@Override
 	public void configParseComplete(PassthroughParams params){}
+	
+	@Override
+	public String toString()
+	{
+		return ConfigParser.generateConfigString(StaffTimesheet.pluginName, this);
+	}
 }
