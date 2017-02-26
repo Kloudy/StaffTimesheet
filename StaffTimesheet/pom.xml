@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.antarescraft.kloudy.hologui</groupId>
   <artifactId>StaffTimesheet</artifactId>
-  <version>1.4.2</version>
+  <version>1.5</version>
    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -29,7 +29,7 @@
     	<groupId>com.antarescraft.kloudy.hologuiapi</groupId>
     	<artifactId>HoloGUIApi</artifactId>
     	<scope>provided</scope>
-    	<version>1.0.8</version>
+    	<version>1.1.2</version>
     </dependency>
     <dependency>
          <groupId>me.clip</groupId>
@@ -73,7 +73,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <outputFile>${plugin-folder}/StaffTimesheet.jar</outputFile>
+              <outputFile>${plugin-folder}/StaffTimesheet-v${version}.jar</outputFile>
             </configuration>
           </execution>
         </executions>
