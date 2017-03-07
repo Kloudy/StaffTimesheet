@@ -73,7 +73,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <outputFile>${plugin-folder}/StaffTimesheet-v${version}.jar</outputFile>
+              <outputFile>${plugin-folder}/StaffTimesheet.jar</outputFile>
             </configuration>
           </execution>
         </executions>
